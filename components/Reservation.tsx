@@ -9,18 +9,21 @@ const concerns = [
   "鉄粉・ザラつき",
   "細かな傷・線キズ",
   "ホイールの汚れ",
-  "室内の匂い",
+  "室内の匂い・汚れ",
   "コーティング希望",
+  "ヘッドライト黄ばみ",
   "その他",
 ];
 
 const treatmentOptions = [
-  "CH-001 ベーシック フェイシャル",
-  "CH-002 プレミアム美白ケア",
-  "CH-003 エイジングケア",
-  "CH-004 トータル リフトアップ",
-  "CH-005 ネイル & ホイールケア",
-  "CH-006 インナービューティ",
+  "ガラスコーティング",
+  "セラミックコーティング",
+  "磨き・研磨",
+  "ヘッドライトリペア",
+  "手洗い洗車",
+  "室内クリーニング",
+  "鉄粉除去",
+  "ホイール洗浄",
   "まだ決めていない（相談したい）",
 ];
 
@@ -57,19 +60,110 @@ export default function Reservation() {
         >
           <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
             <div className="w-8 h-[1px] bg-sunset" />
-            Free Counseling
+            Reservation
             <div className="w-8 h-[1px] bg-sunset" />
           </div>
           <h2 className="font-display text-4xl md:text-6xl text-midnight mb-6">
-            無料カウンセリング
-            <br />
-            <span className="candy-text">予約フォーム</span>
+            ご予約・
+            <span className="candy-text">ご相談</span>
           </h2>
           <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed">
-            まずはお気軽にご相談ください。愛車の状態を"診察"し、最適な施術プランをご提案します。
+            お気軽にご相談ください。愛車の状態を診察し、最適な施術プランをご提案します。
+            <br className="hidden md:block" />
+            無料カウンセリング実施中（車両状態確認・施術提案）
           </p>
         </motion.div>
 
+        {/* Contact methods */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12"
+        >
+          <a
+            href="tel:0486064977"
+            className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic group"
+          >
+            <div className="w-14 h-14 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome shrink-0 group-hover:animate-hydraulic-bounce">
+              <svg
+                className="w-6 h-6 text-midnight"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div className="text-[10px] tracking-wider text-midnight/50 uppercase mb-0.5">
+                お電話
+              </div>
+              <div className="font-display text-xl text-sunset font-bold">
+                048-606-4977
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/japanese_detailer_girl/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic group"
+          >
+            <div className="w-14 h-14 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome shrink-0 group-hover:animate-hydraulic-bounce">
+              <svg
+                className="w-6 h-6 text-midnight"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </div>
+            <div>
+              <div className="text-[10px] tracking-wider text-midnight/50 uppercase mb-0.5">
+                Instagram DM
+              </div>
+              <div className="font-display text-lg text-sunset font-bold">
+                @japanese_detailer_girl
+              </div>
+            </div>
+          </a>
+
+          <div className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic">
+            <div className="w-14 h-14 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome shrink-0">
+              <svg
+                className="w-6 h-6 text-midnight"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div className="text-[10px] tracking-wider text-midnight/50 uppercase mb-0.5">
+                お問い合わせフォーム
+              </div>
+              <div className="text-midnight font-semibold text-sm">
+                下記フォームからどうぞ
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Form */}
         <motion.form
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -82,16 +176,18 @@ export default function Reservation() {
           <div className="bg-midnight px-8 py-6 flex items-center justify-between">
             <div>
               <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono mb-1">
-                Consultation Form / No. 2025
+                Consultation Form
               </div>
               <div className="font-display text-cream text-xl">
-                CarWashHomie カウンセリングカルテ
+                お問い合わせフォーム
               </div>
             </div>
             <div className="hidden md:block text-right">
-              <div className="font-script text-sunset text-sm">Est. 2010</div>
-              <div className="text-chrome/60 text-[10px] tracking-wider uppercase">
-                The Auto Aesthetic Clinic
+              <div className="text-sunset text-sm font-semibold">
+                無料カウンセリング実施中
+              </div>
+              <div className="text-chrome/60 text-[10px] tracking-wider">
+                車両状態確認・施術提案
               </div>
             </div>
           </div>
@@ -115,12 +211,12 @@ export default function Reservation() {
                   </svg>
                 </div>
                 <h3 className="font-display text-3xl text-midnight mb-3">
-                  お申し込みありがとうございます
+                  お問い合わせありがとうございます
                 </h3>
                 <p className="text-midnight/60 leading-relaxed">
-                  24時間以内に Dr. ホーミーよりご連絡いたします。
+                  内容を確認の上、折り返しご連絡いたします。
                   <br />
-                  愛車の診察をお楽しみに。
+                  お急ぎの方はお電話（048-606-4977）またはInstagram DMでもご連絡ください。
                 </p>
               </div>
             ) : (
@@ -171,14 +267,14 @@ export default function Reservation() {
                       <input
                         type="text"
                         required
-                        placeholder="例: Chevrolet Impala '64"
+                        placeholder="例: トヨタ アルファード 2022年式"
                         className="input"
                       />
                     </Field>
                     <Field label="ボディカラー">
                       <input
                         type="text"
-                        placeholder="例: キャンディオレンジ"
+                        placeholder="例: ブラック"
                         className="input"
                       />
                     </Field>
@@ -229,10 +325,10 @@ export default function Reservation() {
 
                 {/* Note */}
                 <div className="mb-8">
-                  <Field label="追加メッセージ">
+                  <Field label="ご相談内容・ご希望日時">
                     <textarea
                       rows={4}
-                      placeholder="ご希望日時や、詳しいお悩みなどご自由にお書きください。"
+                      placeholder="ご希望日時や、詳しいお悩みなどご自由にお書きください。業者様向けのご依頼もこちらからどうぞ。"
                       className="input resize-none"
                     />
                   </Field>
@@ -245,7 +341,7 @@ export default function Reservation() {
                     className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-sunset-gradient text-midnight font-bold text-lg shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
                   >
                     <span className="w-2 h-2 rounded-full bg-midnight animate-pulse" />
-                    無料カウンセリングを予約する
+                    送信する
                     <svg
                       className="w-6 h-6 group-hover:translate-x-1 transition-transform"
                       fill="none"
@@ -261,7 +357,7 @@ export default function Reservation() {
                     </svg>
                   </button>
                   <p className="text-xs text-midnight/50 italic">
-                    ※ 24時間以内に Dr. ホーミーよりご連絡いたします。
+                    ※ お急ぎの方はお電話（048-606-4977）またはInstagram DMでもお気軽にどうぞ。
                   </p>
                 </div>
               </>

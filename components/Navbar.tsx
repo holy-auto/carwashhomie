@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 
 const nav = [
-  { label: "施術メニュー", href: "#services" },
-  { label: "Before / After", href: "#gallery" },
-  { label: "Dr. ホーミー", href: "#doctor" },
-  { label: "お客様の声", href: "#voice" },
-  { label: "カウンセリング", href: "#reservation" },
+  { label: "会社概要", href: "#about" },
+  { label: "施行事例", href: "#gallery" },
+  { label: "コーティング", href: "#coating" },
+  { label: "洗車サービス", href: "#wash" },
+  { label: "院長紹介", href: "#doctor" },
+  { label: "ご予約", href: "#reservation" },
   { label: "アクセス", href: "#access" },
 ];
 
@@ -40,17 +41,17 @@ export default function Navbar() {
             <div className="absolute -inset-1 rounded-full border border-sunset/40 animate-pulse" />
           </div>
           <div className="flex flex-col leading-none">
-            <span className="font-display text-xl text-cream tracking-wider">
-              CarWash<span className="text-sunset">Homie</span>
+            <span className="font-display text-lg text-cream tracking-wider">
+              Car Wash <span className="text-sunset">Homies</span>
             </span>
-            <span className="text-[10px] text-chrome/60 tracking-[0.2em] uppercase mt-0.5">
-              Auto Aesthetic Clinic
+            <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-0.5">
+              車の美容外科
             </span>
           </div>
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6">
           {nav.map((item) => (
             <a
               key={item.href}
@@ -115,7 +116,7 @@ export default function Navbar() {
             className="mt-2 text-center py-3 rounded-full bg-sunset-gradient text-midnight font-bold"
             onClick={() => setOpen(false)}
           >
-            無料カウンセリング予約
+            ご予約・ご相談
           </a>
         </nav>
       )}

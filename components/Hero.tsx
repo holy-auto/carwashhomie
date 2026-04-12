@@ -20,7 +20,7 @@ export default function Hero() {
       <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-sunset/40 via-sunset/10 to-transparent blur-3xl" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20 text-center">
-        {/* Top accent */}
+        {/* Opening badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -29,34 +29,47 @@ export default function Hero() {
         >
           <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
           <span className="text-sunset text-xs tracking-[0.3em] uppercase font-semibold">
-            Est. 2025 · With Love from the Homies
+            2025年 4月15日 OPEN
           </span>
           <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
         </motion.div>
 
         {/* Main headline */}
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl text-cream leading-[1.05] mb-6 tracking-tight"
+          className="mb-6"
         >
-          愛車にも、
-          <br />
-          <span className="candy-text">美容整形</span>
-          <span className="text-cream">という選択を。</span>
-        </motion.h1>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-cream leading-[1.05] tracking-tight">
+            <span className="candy-text">車</span>
+            <span className="text-cream">の</span>
+            <br />
+            <span className="candy-text">美容外科</span>
+          </h1>
+        </motion.div>
 
-        {/* Sub */}
+        {/* Sub tagline */}
         <motion.p
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-chrome/80 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mb-4"
         >
-          ローライダー専門の洗車・ディテーリングクリニック。
+          ただのコーティング屋さんじゃない。
           <br className="hidden md:block" />
-          そのボディ、くすんでませんか？—— ホーミーの流儀で、極上に仕上げます。
+          <span className="text-sunset font-semibold">車の美容外科</span>です。
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="text-chrome/60 text-sm max-w-xl mx-auto leading-relaxed mb-4"
+        >
+          塗装状態・使用環境・年式を診断し、本当に必要な処置を選択。
+          <br />
+          車両ごとに最適な施術計画をご提案します。
         </motion.p>
 
         <motion.div
@@ -65,7 +78,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.7 }}
           className="font-script text-2xl md:text-3xl chrome-text mb-12 tracking-widest"
         >
-          THE AUTO AESTHETIC CLINIC
+          CAR WASH HOMIES
         </motion.div>
 
         {/* CTAs */}
@@ -96,37 +109,31 @@ export default function Hero() {
             </svg>
           </a>
           <a
-            href="#services"
+            href="#coating"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-cream/30 text-cream hover:border-sunset hover:text-sunset transition-all backdrop-blur-sm"
           >
             施術メニューを見る
           </a>
         </motion.div>
 
-        {/* Stats bar (clinic style) */}
+        {/* Policy */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="mt-20 grid grid-cols-3 gap-4 md:gap-12 max-w-3xl mx-auto"
+          className="mt-20 max-w-3xl mx-auto"
         >
-          {[
-            { num: "1,200+", label: "年間施術台数" },
-            { num: "15年", label: "ディテーリング歴" },
-            { num: "98.7%", label: "お客様満足度" },
-          ].map((s) => (
-            <div
-              key={s.label}
-              className="text-center border-l border-sunset/30 first:border-l-0 px-2"
-            >
-              <div className="font-display text-3xl md:text-5xl text-sunset mb-1">
-                {s.num}
-              </div>
-              <div className="text-chrome/60 text-xs md:text-sm tracking-wider uppercase">
-                {s.label}
-              </div>
-            </div>
-          ))}
+          <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-semibold mb-4">
+            Our Policy
+          </div>
+          <p className="font-display text-2xl md:text-3xl text-cream leading-relaxed">
+            「車の寿命を延ばし、
+            <br className="md:hidden" />
+            <span className="candy-text">価値を守る</span>」
+          </p>
+          <p className="text-chrome/60 text-sm mt-3">
+            それが当院のポリシーです。
+          </p>
         </motion.div>
       </div>
 

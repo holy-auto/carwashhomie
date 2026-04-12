@@ -13,78 +13,108 @@ type Service = {
   icon: string;
 };
 
-const services: Service[] = [
+const coatingServices: Service[] = [
   {
-    code: "CH-001",
-    name: "ベーシック フェイシャル",
-    subtitle: "Basic Facial Treatment",
+    code: "CT-001",
+    name: "ガラスコーティング",
+    subtitle: "Glass Coating",
     description:
-      "手洗い洗車 + 簡易ワックス。日常のくすみを落とし、本来のツヤを取り戻す基本ケア。",
-    duration: "60分",
-    price: "¥3,980",
-    icon: "✨",
-  },
-  {
-    code: "CH-002",
-    name: "プレミアム美白ケア",
-    subtitle: "Premium Whitening Coating",
-    description:
-      "高純度ガラスコーティングで紫外線・酸性雨から長期保護。艶感とハリが数段アップ。",
-    duration: "3時間",
-    price: "¥29,800",
+      "高純度ガラス被膜で塗装面を長期保護。紫外線・酸性雨・鉄粉から愛車を守り、深みのある艶を持続させます。",
+    duration: "1日〜",
+    price: "お見積り",
     tag: "人気 No.1",
     icon: "💎",
   },
   {
-    code: "CH-003",
-    name: "エイジングケア",
-    subtitle: "Anti-Aging Full Restoration",
+    code: "CT-002",
+    name: "セラミックコーティング",
+    subtitle: "Ceramic Coating",
     description:
-      "鉄粉除去・ウォータースポット除去・軽度の傷消し磨き。年式を感じさせない若々しいボディに。",
-    duration: "5時間",
-    price: "¥49,800",
-    icon: "🔥",
+      "最高硬度の被膜形成で傷・汚れに強い圧倒的な防御力。新車の美しさを長期間キープ。",
+    duration: "2日〜",
+    price: "お見積り",
+    icon: "🛡️",
   },
   {
-    code: "CH-004",
-    name: "トータル リフトアップ",
-    subtitle: "Total Detailing & Lift",
+    code: "CT-003",
+    name: "磨き・研磨",
+    subtitle: "Paint Correction / Polishing",
     description:
-      "完全手磨きによるフルディテーリング。塗装の奥からくすみを取り除く最上級施術。",
-    duration: "1日",
-    price: "¥98,000",
-    tag: "LIMITED",
-    icon: "👑",
+      "塗装状態を診断し、年式・使用環境に合わせた最適な研磨。くすみ・小傷・水垢を除去し、塗装本来の輝きを復元。",
+    duration: "半日〜",
+    price: "お見積り",
+    icon: "✨",
   },
   {
-    code: "CH-005",
-    name: "ネイル & ホイールケア",
-    subtitle: "Rim Polish Treatment",
+    code: "CT-004",
+    name: "ヘッドライトリペア",
+    subtitle: "Headlight Restoration",
     description:
-      "ホイール専用洗浄 + ブレーキダスト除去 + クロームポリッシュ。足元の印象を格上げ。",
-    duration: "90分",
-    price: "¥12,800",
-    icon: "💅",
-  },
-  {
-    code: "CH-006",
-    name: "インナービューティ",
-    subtitle: "Interior Deep Cleansing",
-    description:
-      "室内クリーニング・革シート保湿・脱臭施術。見えない部分までホーミー仕上げ。",
-    duration: "2時間",
-    price: "¥18,800",
-    icon: "🌿",
+      "黄ばみ・くすみ・クラックを除去し、ヘッドライトの透明感と明るさを復活させます。",
+    duration: "2時間〜",
+    price: "お見積り",
+    icon: "💡",
   },
 ];
 
-export default function Services() {
+const washServices: Service[] = [
+  {
+    code: "WS-001",
+    name: "手洗い洗車",
+    subtitle: "Hand Wash",
+    description:
+      "プロの手洗いで傷をつけずに汚れを落とす基本ケア。車両の状態チェック付き。",
+    duration: "60分〜",
+    price: "お見積り",
+    icon: "🧽",
+  },
+  {
+    code: "WS-002",
+    name: "室内クリーニング",
+    subtitle: "Interior Deep Cleaning",
+    description:
+      "シート・ダッシュボード・マット等の室内全体を徹底洗浄。革シート保湿・脱臭まで。",
+    duration: "2時間〜",
+    price: "お見積り",
+    icon: "🌿",
+  },
+  {
+    code: "WS-003",
+    name: "鉄粉除去",
+    subtitle: "Iron Deposit Removal",
+    description:
+      "塗装面に刺さった鉄粉を除去し、ツルツルの手触りに。コーティング前の下地処理にも。",
+    duration: "1時間〜",
+    price: "お見積り",
+    icon: "🔬",
+  },
+  {
+    code: "WS-004",
+    name: "ホイール洗浄",
+    subtitle: "Wheel & Rim Cleaning",
+    description:
+      "ブレーキダスト・油汚れを専用クリーナーで分解除去。クロームの輝きを取り戻します。",
+    duration: "30分〜",
+    price: "お見積り",
+    icon: "💅",
+  },
+];
+
+function ServiceGrid({
+  id,
+  label,
+  title,
+  description,
+  services,
+}: {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  services: Service[];
+}) {
   return (
-    <section
-      id="services"
-      className="relative py-24 md:py-32 bg-cream overflow-hidden"
-    >
-      {/* Background decorative orange */}
+    <section id={id} className="relative py-24 md:py-32 overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-sunset/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-sunset/5 rounded-full blur-3xl" />
 
@@ -99,21 +129,19 @@ export default function Services() {
         >
           <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
             <div className="w-8 h-[1px] bg-sunset" />
-            Treatment Menu
+            {label}
             <div className="w-8 h-[1px] bg-sunset" />
           </div>
           <h2 className="font-display text-4xl md:text-6xl text-midnight mb-6 leading-tight">
-            施術メニュー
+            {title}
           </h2>
           <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed">
-            美容クリニックと同じ思想で、愛車の"お悩み"に合わせた施術プランをご提案します。
-            <br className="hidden md:block" />
-            初回は必ず無料カウンセリングから。
+            {description}
           </p>
         </motion.div>
 
         {/* Menu grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service, idx) => (
             <motion.article
               key={service.code}
@@ -149,7 +177,7 @@ export default function Services() {
               </h3>
 
               {/* Description */}
-              <p className="text-sm text-midnight/70 leading-relaxed mb-6 min-h-[4.5rem]">
+              <p className="text-sm text-midnight/70 leading-relaxed mb-6 min-h-[3rem]">
                 {service.description}
               </p>
 
@@ -168,18 +196,11 @@ export default function Services() {
                 </div>
                 <div className="text-right">
                   <div className="text-[10px] tracking-wider text-midnight/40 uppercase">
-                    料金（税込）
+                    料金
                   </div>
-                  <div className="font-display text-3xl text-sunset font-bold leading-none">
+                  <div className="font-display text-2xl text-sunset font-bold leading-none">
                     {service.price}
                   </div>
-                </div>
-              </div>
-
-              {/* Hover arrow */}
-              <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all">
-                <div className="w-8 h-8 rounded-full bg-sunset flex items-center justify-center text-cream">
-                  →
                 </div>
               </div>
             </motion.article>
@@ -192,20 +213,57 @@ export default function Services() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-16 text-center"
+          className="mt-12 text-center"
         >
           <p className="text-sm text-midnight/50 italic mb-4">
-            ※ 車種・状態により料金が変動する場合があります。事前カウンセリングで正確なお見積りをご提示いたします。
+            ※ 車種・状態により料金が変動します。無料カウンセリングで正確なお見積りをご提示いたします。
           </p>
           <a
             href="#reservation"
             className="inline-flex items-center gap-2 text-sunset font-bold hover:gap-4 transition-all"
           >
-            無料カウンセリング予約はこちら
+            ご予約・ご相談はこちら
             <span>→</span>
           </a>
         </motion.div>
       </div>
     </section>
+  );
+}
+
+export function CoatingServices() {
+  return (
+    <div className="bg-cream">
+      <ServiceGrid
+        id="coating"
+        label="Coating Service"
+        title="コーティングサービス"
+        description="塗装状態を診断し、車両ごとに最適なコーティングプランをご提案。車の寿命を延ばし、価値を守る施術です。"
+        services={coatingServices}
+      />
+    </div>
+  );
+}
+
+export function WashServices() {
+  return (
+    <div className="bg-ivory">
+      <ServiceGrid
+        id="wash"
+        label="Wash Service"
+        title="洗車サービス"
+        description="プロの手洗いで愛車を傷つけず、汚れだけを的確に除去。定期的なメンテナンスでコーティングの持ちも変わります。"
+        services={washServices}
+      />
+    </div>
+  );
+}
+
+export default function Services() {
+  return (
+    <>
+      <CoatingServices />
+      <WashServices />
+    </>
   );
 }

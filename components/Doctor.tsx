@@ -2,18 +2,18 @@
 
 import { motion } from "framer-motion";
 
-const certifications = [
-  "日本カーディテーリング協会 認定Aグレード",
-  "ローライダー オーナーズクラブ 公認施術士",
-  "ガラスコーティング マスター資格",
-  "クロームポリッシュ スペシャリスト",
+const profile = [
+  { label: "国家資格", value: "二級自動車整備士" },
+  { label: "専門", value: "整備 / 磨き / コーティング" },
+  { label: "実務経験", value: "約9年" },
+  { label: "Instagram", value: "@japanese_detailer_girl" },
 ];
 
-const profile = [
-  { label: "経験年数", value: "15年" },
-  { label: "年間施術台数", value: "1,200+" },
-  { label: "専門", value: "ローライダー / クラシックカー" },
-  { label: "出身", value: "East Los Angeles" },
+const achievements = [
+  "国家資格 二級自動車整備士",
+  "整備 / 磨き / コーティング 実務経験 約9年",
+  "イベント施工 / デモ実績多数",
+  "SNSを通じた情報発信・来院実績",
 ];
 
 export default function Doctor() {
@@ -35,14 +35,14 @@ export default function Doctor() {
         >
           <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
             <div className="w-8 h-[1px] bg-sunset" />
-            Meet Your Doctor
+            Meet the Director
             <div className="w-8 h-[1px] bg-sunset" />
           </div>
           <h2 className="font-display text-4xl md:text-6xl text-midnight mb-6">
-            Dr. ホーミー
+            院長紹介
           </h2>
           <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed">
-            愛車のかかりつけ医。ローライダーへの愛を込めて、一台一台を丁寧に"診察"します。
+            車の美容外科女医が、あなたの愛車を診察します。
           </p>
         </motion.div>
 
@@ -59,14 +59,12 @@ export default function Doctor() {
               {/* Frame */}
               <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-midnight via-midnight to-sunset/60 p-1 shadow-clinic">
                 <div className="w-full h-full rounded-xl bg-gradient-to-b from-midnight/90 via-midnight/70 to-sunset/40 relative overflow-hidden grain">
-                  {/* Silhouette "placeholder" */}
+                  {/* Silhouette */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative">
-                      {/* Body */}
                       <div className="w-48 h-48 rounded-full bg-gradient-to-b from-sunset/40 to-sunset/10 blur-2xl" />
-                      {/* Head icon */}
                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl">
-                        🧔🏽
+                        👩‍⚕️
                       </div>
                     </div>
                   </div>
@@ -75,27 +73,32 @@ export default function Doctor() {
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sunset to-transparent" />
                   {/* Name badge */}
                   <div className="absolute bottom-6 left-6 right-6">
-                    <div className="font-script text-sunset text-2xl mb-1 tracking-widest">
-                      DR. HOMIE
+                    <div className="font-display text-cream text-2xl mb-1">
+                      中山 春香
                     </div>
                     <div className="text-chrome/80 text-xs tracking-widest uppercase">
-                      Chief Detailing Officer
+                      Director / Japanese Detailer Girl
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Signature badge */}
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome rotate-12">
+              {/* Instagram badge */}
+              <a
+                href="https://www.instagram.com/japanese_detailer_girl/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome rotate-6 hover:rotate-0 transition-transform group"
+              >
                 <div className="text-center">
-                  <div className="text-[10px] text-midnight font-bold tracking-wider">
-                    SINCE
+                  <div className="text-midnight text-lg font-bold group-hover:scale-110 transition-transform">
+                    IG
                   </div>
-                  <div className="text-midnight font-display text-2xl leading-none">
-                    2010
+                  <div className="text-[8px] text-midnight/80 font-bold tracking-wider">
+                    FOLLOW
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </motion.div>
 
@@ -107,21 +110,25 @@ export default function Doctor() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-3"
           >
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sunset/10 border border-sunset/20 text-sunset text-xs font-bold tracking-wider uppercase mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-sunset" />
+              院長（代表者）
+            </div>
             <h3 className="font-display text-3xl md:text-4xl text-midnight mb-2">
-              "愛車は、オーナーの人生そのもの。"
+              中山 春香
             </h3>
-            <div className="font-script text-sunset text-xl mb-6 tracking-wider">
-              — Dr. Homie
+            <div className="text-sunset font-semibold mb-6">
+              車の美容外科女医 a.k.a JDG
             </div>
 
             <p className="text-midnight/70 leading-relaxed mb-8">
-              15歳のときに見たインパラの輝きに魅せられ、洗車とディテーリングの世界へ。
-              East LA で修行を積み、ローライダーカルチャーの深い理解を持つ数少ない日本人ディテーラー。
+              国家資格 二級自動車整備士。整備・磨き・コーティングの実務経験約9年。
+              イベント施工やデモの実績も多数持ち、SNSを通じた情報発信で
+              多くのお客様にご来院いただいています。
               <br />
               <br />
-              「一台一台に"カルテ"を作って、その車の履歴と状態を把握する。
-              だから次の施術で何をすべきかがわかる。ただの洗車じゃなく、
-              愛車の"主治医"でありたい。」
+              車の美容外科として、塗装状態・使用環境・年式を丁寧に診断。
+              お値段やニーズに合わせて、車のスタイリストとしてもお気軽にご相談ください。
             </p>
 
             {/* Profile grid */}
@@ -141,15 +148,15 @@ export default function Doctor() {
               ))}
             </div>
 
-            {/* Certifications */}
+            {/* Achievements */}
             <div>
               <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold mb-3">
-                Certifications
+                Profile
               </div>
               <ul className="space-y-2">
-                {certifications.map((c) => (
+                {achievements.map((a) => (
                   <li
-                    key={c}
+                    key={a}
                     className="flex items-start gap-3 text-sm text-midnight/80"
                   >
                     <span className="mt-1 w-4 h-4 rounded-full bg-sunset-gradient flex items-center justify-center shrink-0">
@@ -167,11 +174,24 @@ export default function Doctor() {
                         />
                       </svg>
                     </span>
-                    {c}
+                    {a}
                   </li>
                 ))}
               </ul>
             </div>
+
+            {/* Instagram CTA */}
+            <a
+              href="https://www.instagram.com/japanese_detailer_girl/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 mt-8 px-6 py-3 rounded-full border-2 border-sunset text-sunset font-bold hover:bg-sunset hover:text-midnight transition-all"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+              @japanese_detailer_girl をフォロー
+            </a>
           </motion.div>
         </div>
       </div>

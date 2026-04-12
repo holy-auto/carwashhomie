@@ -19,19 +19,20 @@ export default function Footer() {
               </div>
               <div className="flex flex-col leading-none">
                 <span className="font-display text-2xl text-cream tracking-wider">
-                  CarWash<span className="text-sunset">Homie</span>
+                  Car Wash <span className="text-sunset">Homies</span>
                 </span>
-                <span className="text-[10px] text-chrome/60 tracking-[0.2em] uppercase mt-1">
-                  Auto Aesthetic Clinic
+                <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-1">
+                  車の美容外科
                 </span>
               </div>
             </div>
             <p className="text-chrome/60 text-sm leading-relaxed mb-6 max-w-md">
-              ローライダー専門の洗車・ディテーリングクリニック。
-              美容外科の発想で、愛車のボディに極上の施術を提供します。
+              ただのコーティング屋さんじゃない、車の美容外科です。
+              塗装状態・使用環境・年式を診断し、車両ごとに最適な施術計画をご提案。
+              車の寿命を延ばし、価値を守ります。
             </p>
-            <div className="font-script text-sunset text-2xl tracking-widest">
-              With Love from the Homies
+            <div className="font-display text-sunset text-lg">
+              「車の寿命を延ばし、価値を守る」
             </div>
           </div>
 
@@ -42,11 +43,13 @@ export default function Footer() {
             </div>
             <ul className="space-y-3 text-sm">
               {[
-                { label: "施術メニュー", href: "#services" },
-                { label: "Before / After", href: "#gallery" },
-                { label: "Dr. ホーミー", href: "#doctor" },
-                { label: "お客様の声", href: "#voice" },
-                { label: "カウンセリング予約", href: "#reservation" },
+                { label: "会社概要", href: "#about" },
+                { label: "施行事例", href: "#gallery" },
+                { label: "コーティングサービス", href: "#coating" },
+                { label: "洗車サービス", href: "#wash" },
+                { label: "院長紹介", href: "#doctor" },
+                { label: "ご予約・ご相談", href: "#reservation" },
+                { label: "アクセス", href: "#access" },
               ].map((l) => (
                 <li key={l.href}>
                   <a
@@ -70,33 +73,42 @@ export default function Footer() {
                 <div className="text-[10px] text-chrome/40 uppercase tracking-wider">
                   Address
                 </div>
-                <div>東京都世田谷区 0-0-0</div>
+                <div>
+                  〒339-0021
+                  <br />
+                  埼玉県さいたま市岩槻区末田2421-2
+                </div>
               </li>
               <li>
                 <div className="text-[10px] text-chrome/40 uppercase tracking-wider">
                   Hours
                 </div>
-                <div>10:00 — 19:00（定休日: 火曜）</div>
+                <div>10:00 — 19:00（不定休）</div>
               </li>
               <li>
                 <div className="text-[10px] text-chrome/40 uppercase tracking-wider">
                   Phone
                 </div>
-                <div className="text-sunset font-semibold">03-0000-0000</div>
+                <a
+                  href="tel:0486064977"
+                  className="text-sunset font-semibold hover:text-sunset-300 transition-colors"
+                >
+                  048-606-4977
+                </a>
               </li>
             </ul>
 
             {/* Social */}
             <div className="flex gap-3 mt-6">
-              {["IG", "TW", "YT"].map((s) => (
-                <a
-                  key={s}
-                  href="#"
-                  className="w-9 h-9 rounded-full border border-sunset/30 flex items-center justify-center text-sunset text-xs font-bold hover:bg-sunset hover:text-midnight transition-all"
-                >
-                  {s}
-                </a>
-              ))}
+              <a
+                href="https://www.instagram.com/japanese_detailer_girl/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-sunset/30 flex items-center justify-center text-sunset text-xs font-bold hover:bg-sunset hover:text-midnight transition-all"
+                aria-label="Instagram"
+              >
+                IG
+              </a>
             </div>
           </div>
         </div>
@@ -106,16 +118,18 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-chrome/50">
-          <div>© 2025 CarWashHomie. All rights reserved. Est. 2010.</div>
+          <div>
+            © 2025 車の美容外科 Car Wash Homies. All rights reserved.
+            <br className="md:hidden" />
+            <span className="hidden md:inline"> · </span>
+            登録番号 T8810011150208
+          </div>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-sunset transition-colors">
               プライバシーポリシー
             </a>
             <a href="#" className="hover:text-sunset transition-colors">
               特定商取引法
-            </a>
-            <a href="#" className="hover:text-sunset transition-colors">
-              利用規約
             </a>
           </div>
         </div>
