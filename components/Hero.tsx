@@ -48,7 +48,7 @@ export default function Hero() {
             width={400}
             height={400}
             priority
-            className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto object-contain brightness-0 invert drop-shadow-[0_0_40px_rgba(255,107,26,0.3)]"
+            className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto object-contain rounded-2xl drop-shadow-[0_0_40px_rgba(255,107,26,0.4)]"
           />
         </motion.div>
 
