@@ -1,0 +1,228 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+
+type Case = {
+  id: string;
+  title: string;
+  model: string;
+  service: string;
+  age: string;
+  beforeColor: string;
+  afterColor: string;
+  beforeNote: string;
+  afterNote: string;
+};
+
+const cases: Case[] = [
+  {
+    id: "CASE-01",
+    title: "くすみ・水垢の改善",
+    model: "Chevrolet Impala '64",
+    service: "エイジングケア + プレミアム美白",
+    age: "施術歴: 初回",
+    beforeColor: "#5a4a3a",
+    afterColor: "#ff6b1a",
+    beforeNote: "塗装のくすみ・水垢が目立つ状態",
+    afterNote: "鏡面仕上げ、深みのあるキャンディオレンジが復活",
+  },
+  {
+    id: "CASE-02",
+    title: "ボディのリフトアップ",
+    model: "Cadillac DeVille '72",
+    service: "トータル リフトアップ",
+    age: "施術歴: 2回目",
+    beforeColor: "#6b5847",
+    afterColor: "#ffb347",
+    beforeNote: "経年劣化による塗装の白ボケ",
+    afterNote: "深みと艶が戻り、新車以上の仕上がりに",
+  },
+  {
+    id: "CASE-03",
+    title: "ホイール美白施術",
+    model: "Lincoln Continental '65",
+    service: "ネイル & ホイールケア",
+    age: "施術歴: 初回",
+    beforeColor: "#3d3028",
+    afterColor: "#e8e8ec",
+    beforeNote: "ブレーキダストで真っ黒な状態",
+    afterNote: "クロームの輝きが完全復活",
+  },
+];
+
+function Slider({ caseData }: { caseData: Case }) {
+  const [pos, setPos] = useState(50);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+
+  const updatePos = (clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const p = ((clientX - rect.left) / rect.width) * 100;
+    setPos(Math.max(0, Math.min(100, p)));
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-ew-resize select-none shadow-clinic border border-midnight/10"
+      onMouseDown={(e) => {
+        dragging.current = true;
+        updatePos(e.clientX);
+      }}
+      onMouseMove={(e) => dragging.current && updatePos(e.clientX)}
+      onMouseUp={() => (dragging.current = false)}
+      onMouseLeave={() => (dragging.current = false)}
+      onTouchStart={(e) => updatePos(e.touches[0].clientX)}
+      onTouchMove={(e) => updatePos(e.touches[0].clientX)}
+    >
+      {/* After (bottom layer) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse at center, ${caseData.afterColor} 0%, ${caseData.afterColor}dd 40%, #1a0f08 100%)`,
+        }}
+      >
+        <div className="absolute inset-0 grain" />
+        <div className="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-sunset text-midnight text-xs font-bold tracking-wider">
+          AFTER
+        </div>
+      </div>
+
+      {/* Before (clipped top layer) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          clipPath: `inset(0 ${100 - pos}% 0 0)`,
+          background: `radial-gradient(ellipse at center, ${caseData.beforeColor} 0%, ${caseData.beforeColor}dd 40%, #0a0604 100%)`,
+        }}
+      >
+        <div className="absolute inset-0 grain" />
+        <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-midnight/80 text-chrome text-xs font-bold tracking-wider border border-chrome/20">
+          BEFORE
+        </div>
+      </div>
+
+      {/* Slider handle */}
+      <div
+        className="absolute top-0 bottom-0 w-[3px] bg-sunset pointer-events-none"
+        style={{ left: `${pos}%` }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-sunset shadow-sunset-glow flex items-center justify-center">
+          <svg
+            className="w-5 h-5 text-midnight"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={3}
+              d="M8 7l-5 5 5 5M16 7l5 5-5 5"
+            />
+          </svg>
+        </div>
+      </div>
+
+      {/* Code label */}
+      <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-midnight/80 text-sunset text-[10px] font-mono tracking-widest border border-sunset/30">
+        {caseData.id}
+      </div>
+    </div>
+  );
+}
+
+export default function BeforeAfter() {
+  return (
+    <section
+      id="gallery"
+      className="relative py-24 md:py-32 bg-midnight overflow-hidden grain"
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-midnight via-midnight/95 to-midnight" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-sunset/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-sunset/10 rounded-full blur-3xl" />
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+            <div className="w-8 h-[1px] bg-sunset" />
+            Case Study
+            <div className="w-8 h-[1px] bg-sunset" />
+          </div>
+          <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
+            Before &<span className="candy-text"> After</span>
+          </h2>
+          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
+            症例写真でご確認ください。バーをドラッグすると施術前後の違いが一目でわかります。
+          </p>
+        </motion.div>
+
+        {/* Cases */}
+        <div className="space-y-20">
+          {cases.map((c, idx) => (
+            <motion.div
+              key={c.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7 }}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
+                idx % 2 === 1 ? "lg:[&>*:first-child]:order-last" : ""
+              }`}
+            >
+              <Slider caseData={c} />
+
+              {/* Clinical notes */}
+              <div className="lg:p-8">
+                <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono mb-3">
+                  {c.id} · {c.age}
+                </div>
+                <h3 className="font-display text-3xl md:text-4xl text-cream mb-4 leading-tight">
+                  {c.title}
+                </h3>
+                <div className="text-sunset text-sm font-semibold mb-6">
+                  {c.model}
+                </div>
+
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <span className="mt-1 px-2 py-0.5 rounded bg-chrome/20 text-chrome text-[10px] font-bold tracking-wider">
+                      施術前
+                    </span>
+                    <p className="text-chrome/70 text-sm leading-relaxed flex-1">
+                      {c.beforeNote}
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="mt-1 px-2 py-0.5 rounded bg-sunset text-midnight text-[10px] font-bold tracking-wider">
+                      施術後
+                    </span>
+                    <p className="text-cream text-sm leading-relaxed flex-1">
+                      {c.afterNote}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-sunset/20">
+                  <div className="text-[10px] tracking-wider text-chrome/50 uppercase mb-1">
+                    処方プラン
+                  </div>
+                  <div className="text-sunset font-semibold">{c.service}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
