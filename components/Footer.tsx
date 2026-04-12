@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="relative bg-midnight text-cream overflow-hidden grain">
@@ -13,14 +15,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome">
-                <span className="font-script text-midnight text-xl">C</span>
-              </div>
+            <div className="flex items-center gap-4 mb-6">
+              <Image
+                src="/logo.png"
+                alt="Car Wash Homies"
+                width={64}
+                height={64}
+                className="w-16 h-16 object-contain brightness-0 invert opacity-80"
+              />
               <div className="flex flex-col leading-none">
-                <span className="font-display text-2xl text-cream tracking-wider">
-                  Car Wash <span className="text-sunset">Homies</span>
-                </span>
                 <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-1">
                   車の美容外科
                 </span>

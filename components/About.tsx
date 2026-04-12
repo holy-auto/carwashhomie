@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function About() {
   return (
@@ -40,9 +41,13 @@ export default function About() {
           {/* Card header */}
           <div className="bg-midnight px-8 py-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-sunset-gradient flex items-center justify-center">
-                <span className="font-script text-midnight text-sm">C</span>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Car Wash Homies"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain brightness-0 invert"
+              />
               <div>
                 <div className="font-display text-cream text-lg">
                   車の美容外科

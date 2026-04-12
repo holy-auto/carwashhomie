@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -25,7 +26,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-midnight/60 border border-sunset/30 backdrop-blur-sm mb-8"
+          className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-midnight/60 border border-sunset/30 backdrop-blur-sm mb-10"
         >
           <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
           <span className="text-sunset text-xs tracking-[0.3em] uppercase font-semibold">
@@ -34,52 +35,48 @@ export default function Hero() {
           <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
         </motion.div>
 
-        {/* Main headline */}
+        {/* Logo image - hero center */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+          className="mb-8"
+        >
+          <Image
+            src="/logo.png"
+            alt="Car Wash Homies"
+            width={400}
+            height={400}
+            priority
+            className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto object-contain brightness-0 invert drop-shadow-[0_0_40px_rgba(255,107,26,0.3)]"
+          />
+        </motion.div>
+
+        {/* Subtitle */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
           className="mb-6"
         >
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-cream leading-[1.05] tracking-tight">
+          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-cream leading-[1.1] tracking-tight">
             <span className="candy-text">車</span>
             <span className="text-cream">の</span>
-            <br />
             <span className="candy-text">美容外科</span>
           </h1>
         </motion.div>
 
         {/* Sub tagline */}
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-chrome/80 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mb-4"
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="text-chrome/80 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mb-12"
         >
           ただのコーティング屋さんじゃない。
           <br className="hidden md:block" />
           <span className="text-sunset font-semibold">車の美容外科</span>です。
         </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="text-chrome/60 text-sm max-w-xl mx-auto leading-relaxed mb-4"
-        >
-          塗装状態・使用環境・年式を診断し、本当に必要な処置を選択。
-          <br />
-          車両ごとに最適な施術計画をご提案します。
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.7 }}
-          className="font-script text-2xl md:text-3xl chrome-text mb-12 tracking-widest"
-        >
-          CAR WASH HOMIES
-        </motion.div>
 
         {/* CTAs */}
         <motion.div
