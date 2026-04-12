@@ -9,27 +9,30 @@ import Reservation from "@/components/Reservation";
 import Access from "@/components/Access";
 import Footer from "@/components/Footer";
 import PinStripe from "@/components/PinStripe";
+import OpeningAnimation from "@/components/OpeningAnimation";
 
 export default function Home() {
   return (
-    <main className="relative overflow-x-hidden">
-      <Navbar />
-      <Hero />
-      <PinStripe />
-      <About />
-      <PinStripe />
-      <Services />
-      <PinStripe />
-      <BeforeAfter />
-      <PinStripe />
-      <Doctor />
-      <PinStripe />
-      <Testimonials />
-      <PinStripe />
-      <Reservation />
-      <PinStripe />
-      <Access />
-      <Footer />
-    </main>
+    <OpeningAnimation>
+      <main className="relative overflow-x-hidden">
+        <Navbar />
+        <Hero />
+        <PinStripe />
+        <About />
+        <PinStripe />
+        <Services />
+        <PinStripe />
+        <BeforeAfter />
+        <PinStripe />
+        <Doctor />
+        <PinStripe />
+        <Testimonials />
+        <PinStripe />
+        <Reservation />
+        <PinStripe />
+        <Access />
+        <Footer />
+      </main>
+    </OpeningAnimation>
   );
 }
