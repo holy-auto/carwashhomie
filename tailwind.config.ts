@@ -34,7 +34,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-playfair)", "Georgia", "serif"],
-        script: ["var(--font-monoton)", "Impact", "sans-serif"],
+        script: ["var(--font-blackletter)", "UnifrakturMaguntia", "serif"],
         body: ["var(--font-noto)", "system-ui", "sans-serif"],
       },
       backgroundImage: {

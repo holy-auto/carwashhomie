@@ -8,7 +8,6 @@ type Case = {
   title: string;
   model: string;
   service: string;
-  age: string;
   beforeColor: string;
   afterColor: string;
   beforeNote: string;
@@ -18,36 +17,33 @@ type Case = {
 const cases: Case[] = [
   {
     id: "CASE-01",
-    title: "くすみ・水垢の改善",
-    model: "Chevrolet Impala '64",
-    service: "エイジングケア + プレミアム美白",
-    age: "施術歴: 初回",
+    title: "塗装くすみの改善",
+    model: "施行車両",
+    service: "磨き + ガラスコーティング",
     beforeColor: "#5a4a3a",
     afterColor: "#ff6b1a",
-    beforeNote: "塗装のくすみ・水垢が目立つ状態",
-    afterNote: "鏡面仕上げ、深みのあるキャンディオレンジが復活",
+    beforeNote: "塗装のくすみ・水垢が目立つ状態。年式相応の経年劣化。",
+    afterNote: "鏡面仕上げで深みのある艶が復活。コーティングで長期保護。",
   },
   {
     id: "CASE-02",
-    title: "ボディのリフトアップ",
-    model: "Cadillac DeVille '72",
-    service: "トータル リフトアップ",
-    age: "施術歴: 2回目",
+    title: "ボディの艶感復元",
+    model: "施行車両",
+    service: "研磨 + セラミックコーティング",
     beforeColor: "#6b5847",
     afterColor: "#ffb347",
-    beforeNote: "経年劣化による塗装の白ボケ",
-    afterNote: "深みと艶が戻り、新車以上の仕上がりに",
+    beforeNote: "経年劣化と洗車傷による塗装面の白ボケ。光沢感の低下。",
+    afterNote: "研磨で傷を除去し、セラミックコーティングで新車以上の仕上がりに。",
   },
   {
     id: "CASE-03",
-    title: "ホイール美白施術",
-    model: "Lincoln Continental '65",
-    service: "ネイル & ホイールケア",
-    age: "施術歴: 初回",
+    title: "ヘッドライト黄ばみ除去",
+    model: "施行車両",
+    service: "ヘッドライトリペア",
     beforeColor: "#3d3028",
     afterColor: "#e8e8ec",
-    beforeNote: "ブレーキダストで真っ黒な状態",
-    afterNote: "クロームの輝きが完全復活",
+    beforeNote: "紫外線による黄ばみ・くすみで透明感を失った状態。",
+    afterNote: "クリアな透明感と明るさが完全復活。夜間の視認性も向上。",
   },
 ];
 
@@ -159,10 +155,10 @@ export default function BeforeAfter() {
             <div className="w-8 h-[1px] bg-sunset" />
           </div>
           <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
-            Before &<span className="candy-text"> After</span>
+            施行<span className="candy-text">事例</span>
           </h2>
           <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
-            症例写真でご確認ください。バーをドラッグすると施術前後の違いが一目でわかります。
+            施術前後の変化をご確認ください。バーをドラッグすると施術前後の違いが一目でわかります。
           </p>
         </motion.div>
 
@@ -184,14 +180,11 @@ export default function BeforeAfter() {
               {/* Clinical notes */}
               <div className="lg:p-8">
                 <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono mb-3">
-                  {c.id} · {c.age}
+                  {c.id}
                 </div>
                 <h3 className="font-display text-3xl md:text-4xl text-cream mb-4 leading-tight">
                   {c.title}
                 </h3>
-                <div className="text-sunset text-sm font-semibold mb-6">
-                  {c.model}
-                </div>
 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-start gap-3">
@@ -214,7 +207,7 @@ export default function BeforeAfter() {
 
                 <div className="pt-4 border-t border-sunset/20">
                   <div className="text-[10px] tracking-wider text-chrome/50 uppercase mb-1">
-                    処方プラン
+                    施術内容
                   </div>
                   <div className="text-sunset font-semibold">{c.service}</div>
                 </div>
@@ -222,6 +215,25 @@ export default function BeforeAfter() {
             </motion.div>
           ))}
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-16 text-center"
+        >
+          <a
+            href="https://www.instagram.com/japanese_detailer_girl/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 text-sunset font-bold hover:gap-5 transition-all"
+          >
+            Instagramでもっと施行事例を見る
+            <span>→</span>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

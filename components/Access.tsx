@@ -11,7 +11,7 @@ const info = [
       </svg>
     ),
     label: "所在地",
-    value: "〒154-0000 東京都世田谷区 0-0-0 ホーミービル 1F",
+    value: "〒339-0021 埼玉県さいたま市岩槻区末田2421-2",
   },
   {
     icon: (
@@ -20,16 +20,16 @@ const info = [
       </svg>
     ),
     label: "営業時間",
-    value: "10:00 — 19:00（最終受付 17:00）",
+    value: "10:00 — 19:00",
   },
   {
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
       </svg>
     ),
     label: "定休日",
-    value: "毎週火曜日・年末年始",
+    value: "不定休",
   },
   {
     icon: (
@@ -38,32 +38,24 @@ const info = [
       </svg>
     ),
     label: "電話番号",
-    value: "03-0000-0000",
+    value: "048-606-4977",
   },
 ];
 
 const access = [
   {
-    method: "電車",
-    icon: "🚃",
-    routes: [
-      "東急田園都市線「三軒茶屋駅」南口より徒歩8分",
-      "東急世田谷線「西太子堂駅」より徒歩5分",
-    ],
-  },
-  {
     method: "車",
     icon: "🚗",
     routes: [
-      "環七通り沿い、世田谷警察署交差点を南へ200m",
-      "店舗前に専用駐車場3台分あり（大型車OK）",
+      "東北自動車道「岩槻IC」より約10分",
+      "店舗前に駐車スペースあり（大型車OK）",
     ],
   },
   {
-    method: "バス",
-    icon: "🚌",
+    method: "電車",
+    icon: "🚃",
     routes: [
-      "東急バス「世田谷区民会館前」下車 徒歩3分",
+      "東武アーバンパークライン「岩槻駅」よりお車で約10分",
     ],
   },
 ];
@@ -95,7 +87,7 @@ export default function Access() {
             アクセス
           </h2>
           <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
-            愛車を連れて、お気軽にご来院ください。大型車も駐車可能です。
+            愛車を連れて、お気軽にご来院ください。
           </p>
         </motion.div>
 
@@ -109,17 +101,16 @@ export default function Access() {
             className="lg:col-span-3"
           >
             <div className="relative rounded-2xl overflow-hidden border border-sunset/20 shadow-clinic">
-              {/* Google Maps embed */}
               <div className="aspect-[4/3] lg:aspect-[16/10]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.0!2d139.6681!3d35.6436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z5LiJ6LuS6Iy25bGL!5e0!3m2!1sja!2sjp!4v1700000000000"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3230.5!2d139.7150!3d35.9430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z5bKp5qe95Yy65pyr55SwMjQyMS0y!5e0!3m2!1sja!2sjp!4v1700000000000"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="CarWashHomie アクセスマップ"
+                  title="車の美容外科 Car Wash Homies アクセスマップ"
                   className="w-full h-full"
                 />
               </div>
@@ -127,8 +118,8 @@ export default function Access() {
               {/* Map overlay label */}
               <div className="absolute top-4 left-4 px-4 py-2 rounded-full bg-midnight/80 border border-sunset/30 backdrop-blur-sm flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
-                <span className="text-sunset text-xs font-bold tracking-wider uppercase">
-                  CarWashHomie Clinic
+                <span className="text-sunset text-xs font-bold tracking-wider">
+                  車の美容外科 Car Wash Homies
                 </span>
               </div>
             </div>
@@ -138,10 +129,10 @@ export default function Access() {
               <span className="text-2xl">🅿️</span>
               <div>
                 <div className="text-cream text-sm font-semibold">
-                  専用駐車場 3台完備
+                  駐車スペース完備
                 </div>
                 <div className="text-chrome/60 text-xs">
-                  大型車・ローライダーOK。店舗正面にございます。
+                  大型車OK。店舗前にございます。
                 </div>
               </div>
             </div>
@@ -207,7 +198,7 @@ export default function Access() {
 
             {/* CTA */}
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=35.6436,139.6681"
+              href="https://www.google.com/maps/dir/?api=1&destination=35.9430,139.7150"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-full bg-sunset-gradient text-midnight font-bold shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"

@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const nav = [
-  { label: "施術メニュー", href: "#services" },
-  { label: "Before / After", href: "#gallery" },
-  { label: "Dr. ホーミー", href: "#doctor" },
-  { label: "お客様の声", href: "#voice" },
-  { label: "カウンセリング", href: "#reservation" },
+  { label: "会社概要", href: "#about" },
+  { label: "施行事例", href: "#gallery" },
+  { label: "コーティング", href: "#coating" },
+  { label: "洗車サービス", href: "#wash" },
+  { label: "院長紹介", href: "#doctor" },
+  { label: "ご予約", href: "#reservation" },
   { label: "アクセス", href: "#access" },
 ];
 
@@ -30,27 +32,25 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-3 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group">
-          <div className="relative">
-            <div className="w-10 h-10 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome group-hover:animate-hydraulic-bounce">
-              <span className="font-script text-midnight text-lg">C</span>
-            </div>
-            <div className="absolute -inset-1 rounded-full border border-sunset/40 animate-pulse" />
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Car Wash Homies"
+            width={48}
+            height={48}
+            className="w-12 h-12 object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
+          />
           <div className="flex flex-col leading-none">
-            <span className="font-display text-xl text-cream tracking-wider">
-              CarWash<span className="text-sunset">Homie</span>
-            </span>
-            <span className="text-[10px] text-chrome/60 tracking-[0.2em] uppercase mt-0.5">
-              Auto Aesthetic Clinic
+            <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-0.5">
+              車の美容外科
             </span>
           </div>
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6">
           {nav.map((item) => (
             <a
               key={item.href}
@@ -115,7 +115,7 @@ export default function Navbar() {
             className="mt-2 text-center py-3 rounded-full bg-sunset-gradient text-midnight font-bold"
             onClick={() => setOpen(false)}
           >
-            無料カウンセリング予約
+            ご予約・ご相談
           </a>
         </nav>
       )}

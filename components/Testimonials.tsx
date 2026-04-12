@@ -6,32 +6,29 @@ const voices = [
   {
     initial: "K",
     name: "K.T 様",
-    age: "42歳",
-    car: "Chevrolet Impala '64",
-    treatment: "プレミアム美白ケア",
+    car: "レクサス RX",
+    treatment: "ガラスコーティング",
     rating: 5,
     title: "もう他のお店には戻れません",
-    body: "10年所有してきた愛車が新車以上の輝きに。カウンセリングも丁寧で、施術内容をカルテで説明してくれるのが嬉しい。ローライダー乗りの気持ちがわかってる人に任せられる安心感。",
+    body: "新車購入時にコーティングをお願いしました。仕上がりの艶感が全く違います。カウンセリングも丁寧で、塗装状態をしっかり説明してくれるのが安心。美容外科というコンセプト、まさにその通りの施術でした。",
   },
   {
     initial: "M",
     name: "M.S 様",
-    age: "35歳",
-    car: "Cadillac DeVille '72",
-    treatment: "トータル リフトアップ",
+    car: "BMW 5シリーズ",
+    treatment: "磨き + セラミックコーティング",
     rating: 5,
     title: "ボディの透明感が別物",
-    body: "くすんでいたオレンジが深みのあるキャンディカラーに蘇って、駐車場で二度見されます。Dr.ホーミーの仕事は芸術。定期メンテで通う価値があります。",
+    body: "3年落ちのくすみが気になっていましたが、施術後は新車以上の輝き。駐車場で自分の車を二度見するようになりました。院長の仕事は本当に丁寧で芸術的です。",
   },
   {
     initial: "Y",
     name: "Y.H 様",
-    age: "51歳",
-    car: "Lincoln Continental '65",
-    treatment: "エイジングケア",
+    car: "トヨタ アルファード",
+    treatment: "室内クリーニング + コーティング",
     rating: 5,
-    title: "愛車の若返りを実感",
-    body: "年式相応の経年感に諦めかけていたけど、施術後は「これ本当に同じ車？」と家族にも驚かれる仕上がり。美容外科というコンセプトが的確で笑ってしまった。",
+    title: "家族全員で感動",
+    body: "子供の食べこぼしで汚れていた室内が完全復活。ボディもピカピカに。「これ本当に同じ車？」と妻にも驚かれました。定期的にお世話になります！",
   },
 ];
 
@@ -61,51 +58,8 @@ export default function Testimonials() {
             お客様の声
           </h2>
           <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
-            実際に施術を受けたホーミーたちの声をご紹介します。
+            実際に施術を受けたお客様の声をご紹介します。
           </p>
-        </motion.div>
-
-        {/* Overall rating */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-center gap-6 mb-16 flex-wrap"
-        >
-          <div className="text-center">
-            <div className="font-display text-6xl text-sunset leading-none mb-2">
-              4.98
-            </div>
-            <div className="flex gap-1 justify-center mb-1">
-              {"★★★★★".split("").map((s, i) => (
-                <span key={i} className="text-sunset text-lg">
-                  {s}
-                </span>
-              ))}
-            </div>
-            <div className="text-chrome/60 text-xs tracking-wider uppercase">
-              Based on 328 reviews
-            </div>
-          </div>
-          <div className="h-16 w-px bg-sunset/30" />
-          <div className="text-center">
-            <div className="font-display text-6xl text-sunset leading-none mb-2">
-              98.7%
-            </div>
-            <div className="text-chrome/60 text-xs tracking-wider uppercase">
-              お客様満足度
-            </div>
-          </div>
-          <div className="h-16 w-px bg-sunset/30" />
-          <div className="text-center">
-            <div className="font-display text-6xl text-sunset leading-none mb-2">
-              87%
-            </div>
-            <div className="text-chrome/60 text-xs tracking-wider uppercase">
-              リピート率
-            </div>
-          </div>
         </motion.div>
 
         {/* Testimonial cards */}
@@ -121,7 +75,7 @@ export default function Testimonials() {
             >
               {/* Quote mark */}
               <div className="absolute top-4 right-4 font-display text-8xl text-sunset/20 leading-none select-none">
-                "
+                &ldquo;
               </div>
 
               {/* Header */}
@@ -133,9 +87,7 @@ export default function Testimonials() {
                 </div>
                 <div>
                   <div className="text-cream font-semibold">{v.name}</div>
-                  <div className="text-chrome/60 text-xs">
-                    {v.age} · {v.car}
-                  </div>
+                  <div className="text-chrome/60 text-xs">{v.car}</div>
                 </div>
               </div>
 
