@@ -7,81 +7,186 @@ import { motion, AnimatePresence } from "framer-motion";
 function LowriderRear() {
   return (
     <svg
-      width="220"
-      height="160"
-      viewBox="0 0 220 160"
+      width="260"
+      height="200"
+      viewBox="0 0 260 200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_0_30px_rgba(255,107,26,0.5)]"
+      className="drop-shadow-[0_0_40px_rgba(255,107,26,0.4)]"
     >
-      {/* Car body - rear view */}
+      {/* === '64 IMPALA REAR VIEW === */}
+
+      {/* ── Vinyl top (black) ── */}
       <path
-        d="M40 95 L40 60 L50 45 L70 35 L150 35 L170 45 L180 60 L180 95"
-        stroke="#FF6B1A"
-        strokeWidth="2.5"
-        fill="#FF6B1A"
-        fillOpacity="0.12"
-      />
-      {/* Roof */}
-      <path
-        d="M70 35 L75 18 L145 18 L150 35"
-        stroke="#FF6B1A"
-        strokeWidth="2"
-        fill="#FF6B1A"
-        fillOpacity="0.08"
-      />
-      {/* Rear window */}
-      <path
-        d="M78 33 L82 22 L138 22 L142 33"
+        d="M72 38 L78 14 L182 14 L188 38"
         stroke="#FFB347"
+        strokeWidth="1"
+        fill="#1A0F08"
+        fillOpacity="0.7"
+      />
+      {/* Chrome trim around vinyl top */}
+      <path d="M72 38 L78 14 L182 14 L188 38" stroke="#FFB347" strokeWidth="0.8" fill="none" opacity="0.5" />
+
+      {/* ── Rear window ── */}
+      <path
+        d="M80 36 L84 18 L176 18 L180 36"
+        stroke="#88BBCC"
         strokeWidth="1.5"
-        fill="#FFB347"
+        fill="#88BBCC"
+        fillOpacity="0.15"
+      />
+      {/* Window reflections */}
+      <line x1="110" y1="19" x2="105" y2="35" stroke="#88BBCC" strokeWidth="0.6" opacity="0.3" />
+      <line x1="140" y1="19" x2="135" y2="35" stroke="#88BBCC" strokeWidth="0.6" opacity="0.3" />
+      <line x1="155" y1="19" x2="152" y2="35" stroke="#88BBCC" strokeWidth="0.6" opacity="0.2" />
+
+      {/* ── Main body (red, wide Impala shape) ── */}
+      <path
+        d="M35 100 L35 65 L42 48 L65 38 L195 38 L218 48 L225 65 L225 100"
+        stroke="#CC2222"
+        strokeWidth="2"
+        fill="#CC2222"
+        fillOpacity="0.25"
+      />
+      {/* Body fill panels */}
+      <path
+        d="M42 48 L65 38 L195 38 L218 48 L225 65 L225 95 L35 95 L35 65 Z"
+        fill="#CC2222"
         fillOpacity="0.12"
       />
-      {/* Window reflection */}
-      <line x1="95" y1="23" x2="90" y2="32" stroke="#FFB347" strokeWidth="0.5" opacity="0.4" />
-      <line x1="115" y1="23" x2="110" y2="32" stroke="#FFB347" strokeWidth="0.5" opacity="0.4" />
-      {/* Trunk line */}
-      <line x1="60" y1="50" x2="160" y2="50" stroke="#FFB347" strokeWidth="0.8" opacity="0.3" />
-      {/* Bumper */}
-      <rect x="38" y="92" width="144" height="12" rx="3" stroke="#FF6B1A" strokeWidth="2" fill="#FF6B1A" fillOpacity="0.1" />
-      {/* Chrome bumper trim */}
-      <rect x="50" y="96" width="120" height="4" rx="2" fill="#FFB347" fillOpacity="0.15" />
-      <line x1="50" y1="98" x2="170" y2="98" stroke="#FFB347" strokeWidth="0.8" opacity="0.4" />
-      {/* Left taillight */}
-      <rect x="42" y="70" width="14" height="20" rx="3" fill="#FF3333" fillOpacity="0.9">
-        <animate attributeName="opacity" values="0.9;0.5;0.9" dur="1s" repeatCount="indefinite" />
-      </rect>
-      <rect x="44" y="72" width="10" height="7" rx="2" fill="#FF6644" fillOpacity="0.6" />
-      <rect x="44" y="82" width="10" height="6" rx="2" fill="#FF3333" fillOpacity="0.4" />
-      {/* Right taillight */}
-      <rect x="164" y="70" width="14" height="20" rx="3" fill="#FF3333" fillOpacity="0.9">
-        <animate attributeName="opacity" values="0.9;0.5;0.9" dur="1s" repeatCount="indefinite" />
-      </rect>
-      <rect x="166" y="72" width="10" height="7" rx="2" fill="#FF6644" fillOpacity="0.6" />
-      <rect x="166" y="82" width="10" height="6" rx="2" fill="#FF3333" fillOpacity="0.4" />
-      {/* License plate area */}
-      <rect x="85" y="78" width="50" height="16" rx="2" stroke="#FFB347" strokeWidth="1" fill="#1A0F08" fillOpacity="0.6" />
-      <text x="110" y="90" textAnchor="middle" fill="#FFB347" fontSize="7" fontFamily="monospace" opacity="0.7">HOMIES</text>
-      {/* Exhaust pipes */}
-      <ellipse cx="58" cy="105" rx="5" ry="3" stroke="#FFB347" strokeWidth="1.2" fill="#1A0F08" />
-      <ellipse cx="162" cy="105" rx="5" ry="3" stroke="#FFB347" strokeWidth="1.2" fill="#1A0F08" />
-      {/* Undercarriage */}
-      <line x1="38" y1="105" x2="182" y2="105" stroke="#FF6B1A" strokeWidth="1.5" opacity="0.5" />
-      {/* Hydraulic arms */}
-      <line x1="55" y1="105" x2="55" y2="120" stroke="#FFB347" strokeWidth="2.5" />
-      <line x1="165" y1="105" x2="165" y2="120" stroke="#FFB347" strokeWidth="2.5" />
-      {/* Left rear wheel */}
-      <ellipse cx="55" cy="128" rx="20" ry="16" stroke="#FF6B1A" strokeWidth="2.5" fill="#1A0F08" />
-      <ellipse cx="55" cy="128" rx="10" ry="8" stroke="#FFB347" strokeWidth="1.2" fill="none" />
-      <ellipse cx="55" cy="128" rx="3" ry="2.5" fill="#FF6B1A" />
-      {/* Right rear wheel */}
-      <ellipse cx="165" cy="128" rx="20" ry="16" stroke="#FF6B1A" strokeWidth="2.5" fill="#1A0F08" />
-      <ellipse cx="165" cy="128" rx="10" ry="8" stroke="#FFB347" strokeWidth="1.2" fill="none" />
-      <ellipse cx="165" cy="128" rx="3" ry="2.5" fill="#FF6B1A" />
-      {/* Chrome side trim */}
-      <line x1="40" y1="65" x2="40" y2="90" stroke="#FFB347" strokeWidth="0.8" opacity="0.3" />
-      <line x1="180" y1="65" x2="180" y2="90" stroke="#FFB347" strokeWidth="0.8" opacity="0.3" />
+
+      {/* ── Chrome side trim (horizontal line like Impala) ── */}
+      <line x1="36" y1="68" x2="224" y2="68" stroke="#FFB347" strokeWidth="1.2" opacity="0.6" />
+      <line x1="36" y1="70" x2="224" y2="70" stroke="#FFB347" strokeWidth="0.5" opacity="0.3" />
+
+      {/* ── Trunk lid lines ── */}
+      <line x1="80" y1="45" x2="180" y2="45" stroke="#CC2222" strokeWidth="0.6" opacity="0.4" />
+      {/* Trunk keyhole */}
+      <circle cx="130" cy="52" r="1.5" fill="#FFB347" opacity="0.5" />
+
+      {/* ── Triple taillights LEFT ('64 Impala signature) ── */}
+      <g>
+        <rect x="36" y="74" width="10" height="7" rx="2" fill="#FF2222" fillOpacity="0.95">
+          <animate attributeName="opacity" values="1;0.4;1" dur="0.8s" repeatCount="indefinite" />
+        </rect>
+        <rect x="36" y="83" width="10" height="7" rx="2" fill="#FF2222" fillOpacity="0.8">
+          <animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.8s" begin="0.15s" repeatCount="indefinite" />
+        </rect>
+        <rect x="36" y="92" width="10" height="5" rx="1.5" fill="#FF4444" fillOpacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.2;0.6" dur="0.8s" begin="0.3s" repeatCount="indefinite" />
+        </rect>
+        {/* Chrome bezels */}
+        <rect x="35" y="73" width="12" height="9" rx="2.5" stroke="#FFB347" strokeWidth="0.7" fill="none" opacity="0.5" />
+        <rect x="35" y="82" width="12" height="9" rx="2.5" stroke="#FFB347" strokeWidth="0.7" fill="none" opacity="0.5" />
+        <rect x="35" y="91" width="12" height="7" rx="2" stroke="#FFB347" strokeWidth="0.7" fill="none" opacity="0.4" />
+      </g>
+
+      {/* ── Triple taillights RIGHT ── */}
+      <g>
+        <rect x="214" y="74" width="10" height="7" rx="2" fill="#FF2222" fillOpacity="0.95">
+          <animate attributeName="opacity" values="1;0.4;1" dur="0.8s" repeatCount="indefinite" />
+        </rect>
+        <rect x="214" y="83" width="10" height="7" rx="2" fill="#FF2222" fillOpacity="0.8">
+          <animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.8s" begin="0.15s" repeatCount="indefinite" />
+        </rect>
+        <rect x="214" y="92" width="10" height="5" rx="1.5" fill="#FF4444" fillOpacity="0.6">
+          <animate attributeName="opacity" values="0.6;0.2;0.6" dur="0.8s" begin="0.3s" repeatCount="indefinite" />
+        </rect>
+        <rect x="213" y="73" width="12" height="9" rx="2.5" stroke="#FFB347" strokeWidth="0.7" fill="none" opacity="0.5" />
+        <rect x="213" y="82" width="12" height="9" rx="2.5" stroke="#FFB347" strokeWidth="0.7" fill="none" opacity="0.5" />
+        <rect x="213" y="91" width="12" height="7" rx="2" stroke="#FFB347" strokeWidth="0.7" fill="none" opacity="0.4" />
+      </g>
+
+      {/* ── Taillight glow (ambient light) ── */}
+      <ellipse cx="41" cy="85" rx="18" ry="12" fill="#FF2222" fillOpacity="0.08">
+        <animate attributeName="fillOpacity" values="0.08;0.03;0.08" dur="0.8s" repeatCount="indefinite" />
+      </ellipse>
+      <ellipse cx="219" cy="85" rx="18" ry="12" fill="#FF2222" fillOpacity="0.08">
+        <animate attributeName="fillOpacity" values="0.08;0.03;0.08" dur="0.8s" repeatCount="indefinite" />
+      </ellipse>
+
+      {/* ── Chrome bumper ── */}
+      <rect x="30" y="100" width="200" height="10" rx="3" fill="#FFB347" fillOpacity="0.12" stroke="#FFB347" strokeWidth="1.2" opacity="0.7" />
+      {/* Bumper chrome highlight */}
+      <line x1="40" y1="103" x2="220" y2="103" stroke="#FFFFFF" strokeWidth="0.5" opacity="0.15" />
+      <line x1="40" y1="107" x2="220" y2="107" stroke="#FFB347" strokeWidth="0.5" opacity="0.3" />
+
+      {/* ── License plate ── */}
+      <rect x="100" y="83" width="60" height="18" rx="2" fill="#EEEEEE" fillOpacity="0.85" stroke="#FFB347" strokeWidth="0.8" />
+      <text x="130" y="95" textAnchor="middle" fill="#1A0F08" fontSize="8" fontFamily="monospace" fontWeight="bold" opacity="0.8">HOMIES</text>
+      {/* Plate frame chrome */}
+      <rect x="99" y="82" width="62" height="20" rx="2.5" stroke="#FFB347" strokeWidth="0.6" fill="none" opacity="0.4" />
+
+      {/* ── Exhaust pipe (single, offset left like Impala) ── */}
+      <ellipse cx="75" cy="112" rx="6" ry="3.5" stroke="#FFB347" strokeWidth="1" fill="#1A0F08" fillOpacity="0.8" />
+      <ellipse cx="75" cy="112" rx="3.5" ry="2" fill="#1A0F08" />
+
+      {/* ── Undercarriage ── */}
+      <line x1="30" y1="112" x2="230" y2="112" stroke="#CC2222" strokeWidth="1" opacity="0.3" />
+
+      {/* ── Hydraulic suspension arms ── */}
+      <line x1="55" y1="112" x2="55" y2="130" stroke="#FFB347" strokeWidth="2" opacity="0.7" />
+      <line x1="205" y1="112" x2="205" y2="130" stroke="#FFB347" strokeWidth="2" opacity="0.7" />
+      {/* Springs */}
+      <path d="M52 115 L58 118 L52 121 L58 124 L52 127" stroke="#FFB347" strokeWidth="0.8" fill="none" opacity="0.4" />
+      <path d="M202 115 L208 118 L202 121 L208 124 L202 127" stroke="#FFB347" strokeWidth="0.8" fill="none" opacity="0.4" />
+
+      {/* ── LEFT wire wheel + whitewall ── */}
+      <g>
+        {/* Tire (black) */}
+        <ellipse cx="55" cy="148" rx="26" ry="22" fill="#111111" />
+        {/* Whitewall */}
+        <ellipse cx="55" cy="148" rx="26" ry="22" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
+        {/* Inner tire */}
+        <ellipse cx="55" cy="148" rx="20" ry="16" fill="#1A1A1A" />
+        {/* Wire spoke hub */}
+        <ellipse cx="55" cy="148" rx="14" ry="11" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
+        {/* Wire spokes */}
+        {[0, 30, 60, 90, 120, 150].map((angle) => (
+          <line
+            key={angle}
+            x1={55 + Math.cos((angle * Math.PI) / 180) * 3}
+            y1={148 + Math.sin((angle * Math.PI) / 180) * 2.5}
+            x2={55 + Math.cos((angle * Math.PI) / 180) * 13}
+            y2={148 + Math.sin((angle * Math.PI) / 180) * 10}
+            stroke="#FFB347"
+            strokeWidth="0.5"
+            opacity="0.5"
+          />
+        ))}
+        {/* Chrome center cap (knock-off) */}
+        <ellipse cx="55" cy="148" rx="5" ry="4" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
+        {/* Knock-off spinner */}
+        <ellipse cx="55" cy="148" rx="2" ry="1.5" fill="#FFB347" fillOpacity="0.5" />
+      </g>
+
+      {/* ── RIGHT wire wheel + whitewall ── */}
+      <g>
+        <ellipse cx="205" cy="148" rx="26" ry="22" fill="#111111" />
+        <ellipse cx="205" cy="148" rx="26" ry="22" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
+        <ellipse cx="205" cy="148" rx="20" ry="16" fill="#1A1A1A" />
+        <ellipse cx="205" cy="148" rx="14" ry="11" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
+        {[0, 30, 60, 90, 120, 150].map((angle) => (
+          <line
+            key={angle}
+            x1={205 + Math.cos((angle * Math.PI) / 180) * 3}
+            y1={148 + Math.sin((angle * Math.PI) / 180) * 2.5}
+            x2={205 + Math.cos((angle * Math.PI) / 180) * 13}
+            y2={148 + Math.sin((angle * Math.PI) / 180) * 10}
+            stroke="#FFB347"
+            strokeWidth="0.5"
+            opacity="0.5"
+          />
+        ))}
+        <ellipse cx="205" cy="148" rx="5" ry="4" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
+        <ellipse cx="205" cy="148" rx="2" ry="1.5" fill="#FFB347" fillOpacity="0.5" />
+      </g>
+
+      {/* ── "IMPALA" emblem (chrome text on trunk) ── */}
+      <text x="130" y="62" textAnchor="middle" fill="#FFB347" fontSize="5" fontFamily="serif" letterSpacing="3" opacity="0.4">IMPALA</text>
+
+      {/* ── Chevy bowtie emblem (center trunk) ── */}
+      <path d="M126 55 L130 53 L134 55 L130 57 Z" fill="#FFB347" fillOpacity="0.35" />
     </svg>
   );
 }
