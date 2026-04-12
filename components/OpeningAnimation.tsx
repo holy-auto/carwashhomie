@@ -3,258 +3,217 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* ─── Pre-computed smoke particles ─── */
+/* ─── Pre-computed exhaust particles ─── */
 const SMOKE = [
-  { w: 10, h: 8, x: 82, yEnd: -35, xDrift: 12, dur: 1.6 },
-  { w: 8, h: 10, x: 85, yEnd: -45, xDrift: 18, dur: 1.9 },
-  { w: 12, h: 7, x: 80, yEnd: -30, xDrift: 8, dur: 2.1 },
-  { w: 7, h: 9, x: 84, yEnd: -40, xDrift: 15, dur: 1.7 },
-  { w: 9, h: 11, x: 81, yEnd: -50, xDrift: 20, dur: 2.3 },
+  { w: 10, h: 8, x: 78, yEnd: -35, xDrift: 12, dur: 1.6 },
+  { w: 8, h: 10, x: 80, yEnd: -45, xDrift: 18, dur: 1.9 },
+  { w: 12, h: 7, x: 76, yEnd: -30, xDrift: 8, dur: 2.1 },
+  { w: 7, h: 9, x: 79, yEnd: -40, xDrift: 15, dur: 1.7 },
+  { w: 9, h: 11, x: 77, yEnd: -50, xDrift: 20, dur: 2.3 },
 ];
 
-/* ─── '64 Impala side view — orange lowrider ─── */
+/* ─── Orange '64 Impala — side view ─── */
 function LowriderSide() {
   return (
     <svg
-      width="380"
-      height="150"
-      viewBox="0 0 380 150"
+      width="400"
+      height="180"
+      viewBox="100 160 400 160"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_0_50px_rgba(255,107,26,0.25)]"
+      className="drop-shadow-[0_0_40px_rgba(255,107,26,0.25)]"
     >
+      {/* Car Shadow */}
+      <ellipse cx="300" cy="305" rx="180" ry="12" fill="#000000" opacity="0.4" />
+
+      {/* === MAIN BODY (orange) === */}
+      <rect x="140" y="220" width="320" height="50" rx="5" fill="#FF6B1A" />
+
+      {/* Hood slope */}
+      <path d="M 140 220 L 150 200 L 210 200 L 220 220 Z" fill="#FF6B1A" />
+      {/* Trunk slope */}
+      <path d="M 460 220 L 450 200 L 390 200 L 380 220 Z" fill="#FF6B1A" />
+
+      {/* Body highlight (top strip) */}
+      <rect x="140" y="220" width="320" height="15" rx="3" fill="#FF8533" opacity="0.4" />
+
+      {/* === ROOF (white/cream) === */}
+      <path d="M 210 200 L 220 180 L 380 180 L 390 200 Z" fill="#F5F0E8" />
+      <rect x="220" y="180" width="160" height="20" fill="#F5F0E8" />
+
+      {/* Roof chrome trim */}
+      <path d="M 210 200 L 220 180 L 380 180 L 390 200" fill="none" stroke="#DAA520" strokeWidth="1" opacity="0.5" />
+
+      {/* === WINDOWS === */}
+      {/* Windshield */}
+      <path d="M 225 185 L 232 190 L 232 215 L 225 215 Z" fill="#1a1a1a" opacity="0.92" />
+      {/* Front side window */}
+      <rect x="234" y="190" width="64" height="25" rx="1" fill="#1a1a1a" opacity="0.88" />
+      {/* B-pillar */}
+      <rect x="300" y="188" width="4" height="27" fill="#F5F0E8" />
+      {/* Rear side window */}
+      <rect x="306" y="190" width="60" height="25" rx="1" fill="#1a1a1a" opacity="0.88" />
+      {/* C-pillar / rear window edge */}
+      <path d="M 368 190 L 375 185 L 375 215 L 368 215 Z" fill="#1a1a1a" opacity="0.85" />
+
+      {/* Window chrome surrounds */}
+      <path d="M 225 185 L 232 190 L 298 190 L 298 215 L 225 215 Z" fill="none" stroke="#DAA520" strokeWidth="0.8" opacity="0.4" />
+      <rect x="306" y="190" width="60" height="25" rx="1" fill="none" stroke="#DAA520" strokeWidth="0.8" opacity="0.4" />
+
+      {/* === CHROME BELTLINE === */}
+      <rect x="140" y="217" width="320" height="3" rx="1" fill="url(#chBelt)" />
       <defs>
-        {/* Orange candy paint */}
-        <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FF9040" />
-          <stop offset="35%" stopColor="#FF6B1A" />
-          <stop offset="70%" stopColor="#E55A10" />
-          <stop offset="100%" stopColor="#CC4E00" />
-        </linearGradient>
-        {/* Body highlight */}
-        <linearGradient id="paintHi" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fff" stopOpacity="0.12" />
-          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-        </linearGradient>
-        {/* Cream/white roof */}
-        <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F8F4EC" />
-          <stop offset="100%" stopColor="#E8E0D0" />
-        </linearGradient>
-        {/* Chrome */}
-        <linearGradient id="ch" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="chBelt" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#FFF8DC" />
-          <stop offset="25%" stopColor="#FFD700" />
-          <stop offset="50%" stopColor="#FFFACD" />
-          <stop offset="75%" stopColor="#DAA520" />
+          <stop offset="50%" stopColor="#DAA520" />
           <stop offset="100%" stopColor="#B8860B" />
         </linearGradient>
-        {/* Bumper */}
-        <linearGradient id="bump" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="chBump" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#E8DCC8" />
           <stop offset="30%" stopColor="#FFD700" />
           <stop offset="50%" stopColor="#FFF8DC" />
           <stop offset="70%" stopColor="#DAA520" />
           <stop offset="100%" stopColor="#8B7536" />
         </linearGradient>
-        {/* Tire */}
-        <radialGradient id="tire">
-          <stop offset="0%" stopColor="#1a1a1a" />
-          <stop offset="70%" stopColor="#111" />
-          <stop offset="100%" stopColor="#0a0a0a" />
-        </radialGradient>
-        {/* Taillight */}
-        <radialGradient id="tl" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0%" stopColor="#FF4444" />
-          <stop offset="60%" stopColor="#DD0000" />
-          <stop offset="100%" stopColor="#990000" />
-        </radialGradient>
-        {/* Headlight */}
-        <radialGradient id="hl">
-          <stop offset="0%" stopColor="#FFFDE0" />
-          <stop offset="100%" stopColor="#FFD700" stopOpacity="0.6" />
+        <radialGradient id="tireFill">
+          <stop offset="0%" stopColor="#2a2a2a" />
+          <stop offset="80%" stopColor="#1a1a1a" />
+          <stop offset="100%" stopColor="#111" />
         </radialGradient>
       </defs>
 
-      {/* ── Ground shadow ── */}
-      <ellipse cx="195" cy="138" rx="170" ry="7" fill="rgba(0,0,0,0.4)" />
+      {/* Lower chrome / rocker trim */}
+      <rect x="140" y="268" width="320" height="2" rx="1" fill="#DAA520" opacity="0.6" />
 
-      {/* ── BODY (full shape with wheel wells) ── */}
-      <path
-        d="
-          M 32 98
-          L 32 62
-          L 38 56
-          L 125 52
-          L 135 33
-          L 142 27
-          L 275 24
-          L 295 27
-          L 305 33
-          L 318 50
-          L 355 54
-          L 362 58
-          L 362 98
-          L 324 98
-          A 22 22 0 0 1 280 98
-          L 118 98
-          A 22 22 0 0 1 74 98
-          L 32 98
-          Z
-        "
-        fill="url(#paint)"
-        stroke="#B84200"
-        strokeWidth="0.8"
-      />
+      {/* === BODY PINSTRIPES (cream) === */}
+      <line x1="142" y1="238" x2="458" y2="238" stroke="#FFF8F0" strokeWidth="2" opacity="0.6" />
+      <line x1="142" y1="255" x2="458" y2="255" stroke="#FFF8F0" strokeWidth="2" opacity="0.6" />
 
-      {/* Body top highlight */}
-      <path
-        d="M 38 56 L 125 52 L 355 54 L 362 58 L 362 68 L 32 68 L 32 62 Z"
-        fill="url(#paintHi)"
-      />
+      {/* === FRONT BUMPER === */}
+      <rect x="132" y="208" width="10" height="62" rx="4" fill="url(#chBump)" />
 
-      {/* Lower body shadow */}
-      <path
-        d="M 32 85 L 362 85 L 362 98 L 324 98 A 22 22 0 0 1 280 98 L 118 98 A 22 22 0 0 1 74 98 L 32 98 Z"
-        fill="rgba(0,0,0,0.12)"
-      />
+      {/* === REAR BUMPER === */}
+      <rect x="458" y="208" width="10" height="62" rx="4" fill="url(#chBump)" />
 
-      {/* ── ROOF (cream) ── */}
-      <path
-        d="
-          M 125 52
-          L 135 33
-          L 142 27
-          L 275 24
-          L 295 27
-          L 305 33
-          L 318 50
-          L 125 50
-          Z
-        "
-        fill="url(#roof)"
-        stroke="url(#ch)"
-        strokeWidth="0.6"
-      />
+      {/* === HEADLIGHTS === */}
+      <circle cx="145" cy="230" r="6" fill="#FFFDE0" stroke="#DAA520" strokeWidth="0.8" />
+      <circle cx="145" cy="230" r="3" fill="#FFF" opacity="0.7" />
+      {/* Turn signal */}
+      <circle cx="145" cy="250" r="5" fill="#FF6B1A" opacity="0.6" stroke="#DAA520" strokeWidth="0.6" />
 
-      {/* ── WINDOWS ── */}
-      {/* Windshield */}
-      <path d="M 127 51 L 137 34 L 167 30 L 167 49 Z" fill="#1a1a1a" opacity="0.92" />
-      {/* Front side window */}
-      <path d="M 170 30 L 228 27 L 228 48 L 170 49 Z" fill="#1a1a1a" opacity="0.88" />
-      {/* B-pillar */}
-      <line x1="228" y1="27" x2="228" y2="48" stroke="url(#ch)" strokeWidth="2" />
-      {/* Rear side window */}
-      <path d="M 231 27 L 274 25 L 293 28 L 305 34 L 316 48 L 231 48 Z" fill="#1a1a1a" opacity="0.88" />
+      {/* === TAILLIGHTS (triple Impala style) === */}
+      <rect x="455" y="225" width="6" height="8" rx="2" fill="#FF2222">
+        <animate attributeName="opacity" values="1;0.5;1" dur="0.8s" repeatCount="indefinite" />
+      </rect>
+      <rect x="455" y="235" width="6" height="8" rx="2" fill="#DD0000" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.8s" begin="0.15s" repeatCount="indefinite" />
+      </rect>
+      <rect x="455" y="245" width="6" height="8" rx="2" fill="#CC0000" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="0.8s" begin="0.3s" repeatCount="indefinite" />
+      </rect>
+      {/* Taillight chrome bezels */}
+      <rect x="454" y="224" width="8" height="10" rx="2.5" fill="none" stroke="#DAA520" strokeWidth="0.7" />
+      <rect x="454" y="234" width="8" height="10" rx="2.5" fill="none" stroke="#DAA520" strokeWidth="0.7" />
+      <rect x="454" y="244" width="8" height="10" rx="2.5" fill="none" stroke="#DAA520" strokeWidth="0.7" />
 
-      {/* Window chrome trim */}
-      <path
-        d="M 127 51 L 137 34 L 167 30 L 228 27 L 274 25 L 293 28 L 305 34 L 318 50"
-        stroke="url(#ch)"
-        strokeWidth="1"
-        fill="none"
-      />
+      {/* === DOOR LINE === */}
+      <line x1="300" y1="200" x2="300" y2="268" stroke="#E55300" strokeWidth="0.8" opacity="0.35" />
 
-      {/* ── CHROME BELTLINE ── */}
-      <line x1="32" y1="54" x2="362" y2="54" stroke="url(#ch)" strokeWidth="2.5" />
+      {/* === DOOR HANDLE === */}
+      <rect x="310" y="237" width="14" height="3" rx="1.5" fill="#DAA520" />
 
-      {/* ── BODY PINSTRIPES (cream, like reference) ── */}
-      <line x1="34" y1="68" x2="360" y2="68" stroke="#FFF8F0" strokeWidth="1.8" opacity="0.7" />
-      <line x1="34" y1="86" x2="360" y2="86" stroke="#FFF8F0" strokeWidth="1.8" opacity="0.7" />
-
-      {/* ── FRONT CHROME BUMPER ── */}
-      <rect x="24" y="56" width="10" height="44" rx="3" fill="url(#bump)" />
-      <line x1="29" y1="60" x2="29" y2="96" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" />
-
-      {/* ── REAR CHROME BUMPER ── */}
-      <rect x="360" y="56" width="10" height="44" rx="3" fill="url(#bump)" />
-      <line x1="365" y1="60" x2="365" y2="96" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" />
-
-      {/* ── HEADLIGHT ── */}
-      <rect x="32" y="58" width="14" height="9" rx="2" fill="url(#hl)" stroke="url(#ch)" strokeWidth="0.6" />
-
-      {/* ── TAILLIGHTS ── */}
+      {/* === FRONT WHEEL === */}
       <g>
-        <rect x="356" y="58" width="6" height="10" rx="1.5" fill="url(#tl)">
-          <animate attributeName="opacity" values="1;0.5;1" dur="0.8s" repeatCount="indefinite" />
-        </rect>
-        <rect x="356" y="70" width="6" height="8" rx="1.5" fill="url(#tl)" opacity="0.7">
-          <animate attributeName="opacity" values="0.7;0.3;0.7" dur="0.8s" begin="0.15s" repeatCount="indefinite" />
-        </rect>
-        <rect x="356" y="80" width="6" height="6" rx="1" fill="url(#tl)" opacity="0.5">
-          <animate attributeName="opacity" values="0.5;0.2;0.5" dur="0.8s" begin="0.3s" repeatCount="indefinite" />
-        </rect>
-        {/* Chrome bezels */}
-        <rect x="355" y="57" width="8" height="12" rx="2" stroke="url(#ch)" strokeWidth="0.7" fill="none" />
-        <rect x="355" y="69" width="8" height="10" rx="2" stroke="url(#ch)" strokeWidth="0.7" fill="none" />
-        <rect x="355" y="79" width="8" height="8" rx="1.5" stroke="url(#ch)" strokeWidth="0.6" fill="none" />
-      </g>
-
-      {/* ── DOOR LINE ── */}
-      <line x1="200" y1="51" x2="200" y2="96" stroke="#B84200" strokeWidth="0.8" opacity="0.4" />
-
-      {/* ── DOOR HANDLE ── */}
-      <rect x="212" y="68" width="14" height="3" rx="1.5" fill="url(#ch)" />
-
-      {/* ── GAS CAP ── */}
-      <circle cx="340" cy="68" r="2.5" stroke="url(#ch)" strokeWidth="0.6" fill="#CC4E00" />
-
-      {/* ── FRONT WHEEL ── */}
-      <g>
-        <circle cx="96" cy="108" r="22" fill="url(#tire)" />
-        <circle cx="96" cy="108" r="22" stroke="#0a0a0a" strokeWidth="1.2" fill="none" />
-        {/* Whitewall */}
-        <circle cx="96" cy="108" r="18" stroke="#EEEEDD" strokeWidth="4" fill="none" opacity="0.7" />
+        {/* Tire */}
+        <circle cx="200" cy="275" r="30" fill="#3a3a3a" />
+        <circle cx="200" cy="275" r="28" fill="none" stroke="#EEEEDD" strokeWidth="4" />
+        <circle cx="200" cy="275" r="25" fill="url(#tireFill)" />
         {/* Rim */}
-        <circle cx="96" cy="108" r="13" fill="#1a1a1a" stroke="url(#ch)" strokeWidth="1" />
+        <circle cx="200" cy="275" r="15" fill="#333" stroke="#DAA520" strokeWidth="1" />
         {/* Wire spokes */}
         {[0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5].map((a) => (
           <line
             key={a}
-            x1={96 + Math.cos((a * Math.PI) / 180) * 3}
-            y1={108 + Math.sin((a * Math.PI) / 180) * 3}
-            x2={96 + Math.cos((a * Math.PI) / 180) * 12}
-            y2={108 + Math.sin((a * Math.PI) / 180) * 12}
+            x1={200 + Math.cos((a * Math.PI) / 180) * 4}
+            y1={275 + Math.sin((a * Math.PI) / 180) * 4}
+            x2={200 + Math.cos((a * Math.PI) / 180) * 14}
+            y2={275 + Math.sin((a * Math.PI) / 180) * 14}
             stroke="#DAA520"
-            strokeWidth="0.4"
-            opacity="0.6"
+            strokeWidth="0.5"
+            opacity="0.7"
           />
         ))}
         {/* Center cap / knock-off */}
-        <circle cx="96" cy="108" r="5" fill="#333" stroke="url(#ch)" strokeWidth="1" />
-        <circle cx="96" cy="108" r="2.5" fill="url(#ch)" opacity="0.7" />
+        <circle cx="200" cy="275" r="6" fill="#444" stroke="#DAA520" strokeWidth="1.2" />
+        <circle cx="200" cy="275" r="3" fill="#DAA520" opacity="0.6" />
       </g>
 
-      {/* ── REAR WHEEL ── */}
+      {/* === REAR WHEEL === */}
       <g>
-        <circle cx="300" cy="108" r="22" fill="url(#tire)" />
-        <circle cx="300" cy="108" r="22" stroke="#0a0a0a" strokeWidth="1.2" fill="none" />
-        <circle cx="300" cy="108" r="18" stroke="#EEEEDD" strokeWidth="4" fill="none" opacity="0.7" />
-        <circle cx="300" cy="108" r="13" fill="#1a1a1a" stroke="url(#ch)" strokeWidth="1" />
+        <circle cx="400" cy="275" r="30" fill="#3a3a3a" />
+        <circle cx="400" cy="275" r="28" fill="none" stroke="#EEEEDD" strokeWidth="4" />
+        <circle cx="400" cy="275" r="25" fill="url(#tireFill)" />
+        <circle cx="400" cy="275" r="15" fill="#333" stroke="#DAA520" strokeWidth="1" />
         {[0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5].map((a) => (
           <line
             key={a}
-            x1={300 + Math.cos((a * Math.PI) / 180) * 3}
-            y1={108 + Math.sin((a * Math.PI) / 180) * 3}
-            x2={300 + Math.cos((a * Math.PI) / 180) * 12}
-            y2={108 + Math.sin((a * Math.PI) / 180) * 12}
+            x1={400 + Math.cos((a * Math.PI) / 180) * 4}
+            y1={275 + Math.sin((a * Math.PI) / 180) * 4}
+            x2={400 + Math.cos((a * Math.PI) / 180) * 14}
+            y2={275 + Math.sin((a * Math.PI) / 180) * 14}
             stroke="#DAA520"
-            strokeWidth="0.4"
-            opacity="0.6"
+            strokeWidth="0.5"
+            opacity="0.7"
           />
         ))}
-        <circle cx="300" cy="108" r="5" fill="#333" stroke="url(#ch)" strokeWidth="1" />
-        <circle cx="300" cy="108" r="2.5" fill="url(#ch)" opacity="0.7" />
+        <circle cx="400" cy="275" r="6" fill="#444" stroke="#DAA520" strokeWidth="1.2" />
+        <circle cx="400" cy="275" r="3" fill="#DAA520" opacity="0.6" />
       </g>
 
-      {/* ── Wheel well chrome trim ── */}
-      <path d="M 74 98 A 22 22 0 0 1 118 98" stroke="url(#ch)" strokeWidth="1" fill="none" />
-      <path d="M 278 98 A 22 22 0 0 1 322 98" stroke="url(#ch)" strokeWidth="1" fill="none" />
+      {/* Wheel well chrome arcs */}
+      <path d="M 170 270 A 30 30 0 0 1 230 270" fill="none" stroke="#DAA520" strokeWidth="1" opacity="0.4" />
+      <path d="M 370 270 A 30 30 0 0 1 430 270" fill="none" stroke="#DAA520" strokeWidth="1" opacity="0.4" />
     </svg>
   );
 }
 
-/* ─── Exhaust smoke (side view — exits from rear) ─── */
+/* ─── City silhouette background ─── */
+function CitySilhouette() {
+  return (
+    <div className="absolute inset-0 flex items-end justify-center pointer-events-none" style={{ bottom: "28%" }}>
+      <svg
+        width="500"
+        height="220"
+        viewBox="150 40 350 230"
+        fill="none"
+        opacity="0.2"
+      >
+        <rect x="180" y="80" width="40" height="190" fill="#3a3a3a" />
+        <rect x="230" y="100" width="35" height="170" fill="#3a3a3a" />
+        <rect x="275" y="50" width="50" height="220" fill="#3a3a3a" />
+        <rect x="335" y="70" width="45" height="200" fill="#3a3a3a" />
+        <rect x="390" y="90" width="38" height="180" fill="#3a3a3a" />
+        <rect x="438" y="110" width="32" height="160" fill="#3a3a3a" />
+        {/* Window lights */}
+        {[190, 240, 290, 345, 400].map((bx, bi) =>
+          [0, 1, 2, 3, 4].map((row) => (
+            <rect
+              key={`${bi}-${row}`}
+              x={bx + 5}
+              y={90 + bi * 10 + row * 28}
+              width="4"
+              height="6"
+              fill="#FF6B1A"
+              opacity={0.15 + (bi + row) * 0.04}
+            />
+          ))
+        )}
+      </svg>
+    </div>
+  );
+}
+
+/* ─── Exhaust smoke ─── */
 function ExhaustSmoke() {
   return (
     <>
@@ -265,7 +224,7 @@ function ExhaustSmoke() {
           style={{
             width: `${p.w}px`,
             height: `${p.h}px`,
-            right: `${p.x - 80}%`,
+            right: `${p.x - 76}%`,
             bottom: "30%",
           }}
           animate={{
@@ -362,49 +321,36 @@ export default function OpeningAnimation({
                   key="scene"
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="fixed inset-0 z-[100] bg-midnight overflow-hidden"
+                  className="fixed inset-0 z-[100] bg-[#4a4a4a] overflow-hidden"
                 >
                   <div className="absolute inset-0 grain pointer-events-none" />
 
-                  {/* Night sky */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#0a0604] via-midnight to-[#2a1f16]" />
+                  {/* Sky gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#3a3a3a] via-[#4a4a4a] to-[#555]" />
 
-                  {/* Stars */}
-                  {Array.from({ length: 20 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute w-0.5 h-0.5 bg-cream/40 rounded-full"
-                      style={{
-                        left: `${10 + ((i * 4.3) % 80)}%`,
-                        top: `${5 + ((i * 7.1) % 35)}%`,
-                      }}
-                    />
-                  ))}
+                  {/* City silhouette */}
+                  <CitySilhouette />
 
-                  {/* Moon */}
-                  <div className="absolute top-[10%] right-[18%] w-8 h-8 rounded-full bg-cream/20 blur-[1px] shadow-[0_0_20px_rgba(255,248,240,0.1)]" />
-
-                  {/* Ground / road line */}
-                  <div className="absolute bottom-[28%] left-0 right-0 h-px bg-sunset/20" />
+                  {/* Ground */}
                   <div
                     className="absolute bottom-0 left-0 right-0"
                     style={{
                       height: "28%",
-                      background:
-                        "linear-gradient(180deg, #2a1f16 0%, #1e150e 50%, #1A0F08 100%)",
+                      background: "linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 100%)",
                     }}
                   />
+                  <div className="absolute bottom-[28%] left-0 right-0 h-px bg-white/5" />
 
-                  {/* Exhaust smoke */}
+                  {/* Exhaust */}
                   {phase === "driving" && <ExhaustSmoke />}
 
                   {/* ── Lowrider ── */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-[24%]">
+                  <div className="absolute inset-0 flex items-end justify-center pb-[20%]">
                     <motion.div
                       animate={
                         phase === "departing"
                           ? {
-                              x: [0, -100, -800],
+                              x: [0, -100, -900],
                               opacity: [1, 1, 0],
                             }
                           : { x: 0 }
@@ -414,15 +360,13 @@ export default function OpeningAnimation({
                         ease: [0.4, 0, 0.2, 1],
                       }}
                     >
-                      {/* Hop animation — front lifts, rear stays planted */}
+                      {/* Front-end hop — rear axle stays planted */}
                       <motion.div
-                        style={{ transformOrigin: "79% 85%" }}
+                        style={{ transformOrigin: "67% 90%" }}
                         animate={
                           phase === "driving"
                             ? {
-                                rotate: [
-                                  0, -6, 0, -3, 0, -5, 0, -2, 0,
-                                ],
+                                rotate: [0, -5, 0, -2.5, 0, -4, 0, -1.5, 0],
                               }
                             : { rotate: 0 }
                         }
@@ -441,7 +385,7 @@ export default function OpeningAnimation({
                     </motion.div>
                   </div>
 
-                  {/* Text overlay */}
+                  {/* Text */}
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -454,9 +398,9 @@ export default function OpeningAnimation({
                   </motion.div>
 
                   {/* Loading bar */}
-                  <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+                  <div className="absolute bottom-6 left-0 right-0 flex justify-center">
                     <div className="w-48">
-                      <div className="w-full h-[2px] bg-midnight-50 rounded-full overflow-hidden">
+                      <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden">
                         <motion.div
                           className="h-full bg-sunset-gradient rounded-full"
                           initial={{ width: "0%" }}
@@ -471,7 +415,7 @@ export default function OpeningAnimation({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1 }}
-                        className="text-center mt-2 text-chrome/40 text-[10px] tracking-[0.3em] uppercase"
+                        className="text-center mt-2 text-white/30 text-[10px] tracking-[0.3em] uppercase"
                       >
                         Entering the Clinic...
                       </motion.div>
