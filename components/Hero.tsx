@@ -6,19 +6,18 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-midnight grain">
-      {/* Background candy paint glow */}
-      <div className="absolute inset-0 bg-candy-paint opacity-60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-midnight/80 via-transparent to-midnight" />
+      {/* Subtle clinic ambient light */}
+      <div className="absolute inset-0 bg-gradient-to-b from-midnight via-midnight-100 to-midnight" />
 
-      {/* Animated chrome rings */}
+      {/* Elegant thin chrome rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <div className="w-[800px] h-[800px] rounded-full border border-sunset/10 animate-pulse" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-sunset/20 animate-pulse [animation-delay:500ms]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-sunset/30 animate-pulse [animation-delay:1000ms]" />
+        <div className="w-[800px] h-[800px] rounded-full border border-chrome/5" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-chrome/10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-chrome/10" />
       </div>
 
-      {/* Sunset glow at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-sunset/40 via-sunset/10 to-transparent blur-3xl" />
+      {/* Single subtle sunset accent at bottom */}
+      <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-sunset/15 rounded-full blur-3xl" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20 text-center">
         {/* Opening badge */}
@@ -26,13 +25,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-midnight/60 border border-sunset/30 backdrop-blur-sm mb-10"
+          className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-midnight-50/40 border border-chrome/20 backdrop-blur-sm mb-10"
         >
-          <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
-          <span className="text-sunset text-xs tracking-[0.3em] uppercase font-semibold">
+          <span className="w-1.5 h-1.5 rounded-full bg-sunset animate-pulse" />
+          <span className="text-chrome/80 text-xs tracking-[0.3em] uppercase font-semibold">
             2025年 4月15日 OPEN
           </span>
-          <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-sunset animate-pulse" />
         </motion.div>
 
         {/* Logo image - hero center */}
@@ -60,10 +59,16 @@ export default function Hero() {
           className="mb-6"
         >
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-cream leading-[1.1] tracking-tight">
-            <span className="candy-text">車</span>
-            <span className="text-cream">の</span>
+            <span className="text-cream">車の</span>
             <span className="candy-text">美容外科</span>
           </h1>
+          <div className="mt-3 flex items-center justify-center gap-4">
+            <span className="h-[1px] w-12 bg-chrome/30" />
+            <span className="text-chrome/50 text-[10px] tracking-[0.4em] uppercase">
+              Automotive Aesthetic Clinic
+            </span>
+            <span className="h-[1px] w-12 bg-chrome/30" />
+          </div>
         </motion.div>
 
         {/* Sub tagline */}
@@ -120,8 +125,10 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1.1 }}
           className="mt-20 max-w-3xl mx-auto"
         >
-          <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-semibold mb-4">
+          <div className="inline-flex items-center gap-3 text-[10px] tracking-[0.3em] text-chrome/50 uppercase font-semibold mb-4">
+            <span className="h-[1px] w-6 bg-chrome/20" />
             Our Policy
+            <span className="h-[1px] w-6 bg-chrome/20" />
           </div>
           <p className="font-display text-2xl md:text-3xl text-cream leading-relaxed">
             「車の寿命を延ばし、

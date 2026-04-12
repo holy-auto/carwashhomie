@@ -149,13 +149,13 @@ export default function BeforeAfter() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
-            <div className="w-8 h-[1px] bg-sunset" />
+          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+            <div className="w-8 h-[1px] bg-chrome/20" />
             Case Study
-            <div className="w-8 h-[1px] bg-sunset" />
+            <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
           <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
-            施行<span className="candy-text">事例</span>
+            施術<span className="text-sunset">事例</span>
           </h2>
           <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
             施術前後の変化をご確認ください。バーをドラッグすると施術前後の違いが一目でわかります。

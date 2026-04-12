@@ -49,10 +49,10 @@ export default function Testimonials() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
-            <div className="w-8 h-[1px] bg-sunset" />
+          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+            <div className="w-8 h-[1px] bg-chrome/20" />
             Customer Voice
-            <div className="w-8 h-[1px] bg-sunset" />
+            <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
           <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
             お客様の声
