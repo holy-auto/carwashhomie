@@ -46,7 +46,7 @@ export default function About() {
                 alt="Car Wash Homies"
                 width={40}
                 height={40}
-                className="w-10 h-10 object-contain brightness-0 invert"
+                className="w-10 h-10 object-contain rounded-md"
               />
               <div>
                 <div className="font-display text-cream text-lg">

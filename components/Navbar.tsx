@@ -40,7 +40,7 @@ export default function Navbar() {
             alt="Car Wash Homies"
             width={48}
             height={48}
-            className="w-12 h-12 object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
+            className="w-12 h-12 object-contain rounded-md opacity-90 group-hover:opacity-100 transition-opacity"
           />
           <div className="flex flex-col leading-none">
             <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-0.5">

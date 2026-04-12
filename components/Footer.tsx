@@ -21,7 +21,7 @@ export default function Footer() {
                 alt="Car Wash Homies"
                 width={64}
                 height={64}
-                className="w-16 h-16 object-contain brightness-0 invert opacity-80"
+                className="w-16 h-16 object-contain rounded-lg opacity-90"
               />
               <div className="flex flex-col leading-none">
                 <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-1">
