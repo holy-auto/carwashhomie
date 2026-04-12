@@ -413,7 +413,7 @@ export default function OpeningAnimation({
                           phase === "driving"
                             ? {
                                 rotate: [
-                                  0, -4, 0, -2, 0, -3.5, 0, -1.5, 0,
+                                  0, 4, 0, 2, 0, 3.5, 0, 1.5, 0,
                                 ],
                               }
                             : { rotate: 0 }
