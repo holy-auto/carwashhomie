@@ -125,61 +125,61 @@ function LowriderRear() {
       <line x1="30" y1="112" x2="230" y2="112" stroke="#CC2222" strokeWidth="1" opacity="0.3" />
 
       {/* ── Hydraulic suspension arms ── */}
-      <line x1="55" y1="112" x2="55" y2="130" stroke="#FFB347" strokeWidth="2" opacity="0.7" />
-      <line x1="205" y1="112" x2="205" y2="130" stroke="#FFB347" strokeWidth="2" opacity="0.7" />
+      <line x1="55" y1="112" x2="55" y2="120" stroke="#FFB347" strokeWidth="2" opacity="0.7" />
+      <line x1="205" y1="112" x2="205" y2="120" stroke="#FFB347" strokeWidth="2" opacity="0.7" />
       {/* Springs */}
-      <path d="M52 115 L58 118 L52 121 L58 124 L52 127" stroke="#FFB347" strokeWidth="0.8" fill="none" opacity="0.4" />
-      <path d="M202 115 L208 118 L202 121 L208 124 L202 127" stroke="#FFB347" strokeWidth="0.8" fill="none" opacity="0.4" />
+      <path d="M52 113 L58 115 L52 117 L58 119" stroke="#FFB347" strokeWidth="0.8" fill="none" opacity="0.4" />
+      <path d="M202 113 L208 115 L202 117 L208 119" stroke="#FFB347" strokeWidth="0.8" fill="none" opacity="0.4" />
 
       {/* ── LEFT wire wheel + whitewall ── */}
       <g>
         {/* Tire (black) */}
-        <circle cx="55" cy="148" r="24" fill="#111111" />
+        <circle cx="55" cy="130" r="18" fill="#111111" />
         {/* Whitewall */}
-        <circle cx="55" cy="148" r="24" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
+        <circle cx="55" cy="130" r="18" stroke="#EEEEEE" strokeWidth="3" fill="none" opacity="0.7" />
         {/* Inner tire */}
-        <circle cx="55" cy="148" r="18" fill="#1A1A1A" />
+        <circle cx="55" cy="130" r="14" fill="#1A1A1A" />
         {/* Wire spoke hub */}
-        <circle cx="55" cy="148" r="12" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
+        <circle cx="55" cy="130" r="9" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
         {/* Wire spokes */}
         {[0, 30, 60, 90, 120, 150].map((angle) => (
           <line
             key={angle}
-            x1={55 + Math.cos((angle * Math.PI) / 180) * 3}
-            y1={148 + Math.sin((angle * Math.PI) / 180) * 3}
-            x2={55 + Math.cos((angle * Math.PI) / 180) * 11}
-            y2={148 + Math.sin((angle * Math.PI) / 180) * 11}
+            x1={55 + Math.cos((angle * Math.PI) / 180) * 2.5}
+            y1={130 + Math.sin((angle * Math.PI) / 180) * 2.5}
+            x2={55 + Math.cos((angle * Math.PI) / 180) * 8.5}
+            y2={130 + Math.sin((angle * Math.PI) / 180) * 8.5}
             stroke="#FFB347"
             strokeWidth="0.5"
             opacity="0.5"
           />
         ))}
         {/* Chrome center cap (knock-off) */}
-        <circle cx="55" cy="148" r="4.5" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
+        <circle cx="55" cy="130" r="3.5" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
         {/* Knock-off spinner */}
-        <circle cx="55" cy="148" r="2" fill="#FFB347" fillOpacity="0.5" />
+        <circle cx="55" cy="130" r="1.5" fill="#FFB347" fillOpacity="0.5" />
       </g>
 
       {/* ── RIGHT wire wheel + whitewall ── */}
       <g>
-        <circle cx="205" cy="148" r="24" fill="#111111" />
-        <circle cx="205" cy="148" r="24" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
-        <circle cx="205" cy="148" r="18" fill="#1A1A1A" />
-        <circle cx="205" cy="148" r="12" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
+        <circle cx="205" cy="130" r="18" fill="#111111" />
+        <circle cx="205" cy="130" r="18" stroke="#EEEEEE" strokeWidth="3" fill="none" opacity="0.7" />
+        <circle cx="205" cy="130" r="14" fill="#1A1A1A" />
+        <circle cx="205" cy="130" r="9" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
         {[0, 30, 60, 90, 120, 150].map((angle) => (
           <line
             key={angle}
-            x1={205 + Math.cos((angle * Math.PI) / 180) * 3}
-            y1={148 + Math.sin((angle * Math.PI) / 180) * 3}
-            x2={205 + Math.cos((angle * Math.PI) / 180) * 11}
-            y2={148 + Math.sin((angle * Math.PI) / 180) * 11}
+            x1={205 + Math.cos((angle * Math.PI) / 180) * 2.5}
+            y1={130 + Math.sin((angle * Math.PI) / 180) * 2.5}
+            x2={205 + Math.cos((angle * Math.PI) / 180) * 8.5}
+            y2={130 + Math.sin((angle * Math.PI) / 180) * 8.5}
             stroke="#FFB347"
             strokeWidth="0.5"
             opacity="0.5"
           />
         ))}
-        <circle cx="205" cy="148" r="4.5" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
-        <circle cx="205" cy="148" r="2" fill="#FFB347" fillOpacity="0.5" />
+        <circle cx="205" cy="130" r="3.5" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
+        <circle cx="205" cy="130" r="1.5" fill="#FFB347" fillOpacity="0.5" />
       </g>
 
       {/* ── "IMPALA" emblem (chrome text on trunk) ── */}
@@ -389,7 +389,7 @@ export default function OpeningAnimation({
                   {/* Exhaust smoke */}
                   {phase === "driving" && <ExhaustSmoke />}
 
-                  {/* Lowrider — hops during driving, shrinks + drives away during departing */}
+                  {/* Lowrider — front-end hop during driving, drives away during departing */}
                   <motion.div
                     className="absolute left-1/2 -translate-x-1/2 bottom-[22%]"
                     animate={
@@ -403,37 +403,40 @@ export default function OpeningAnimation({
                     }
                     transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                   >
-                    <motion.div
-                      animate={
-                        phase === "driving"
-                          ? {
-                              y: [0, -25, 0, -12, 0, -20, 0, -8, 0],
-                              rotateX: [0, 3, 0, -2, 0, 2, 0, -1, 0],
-                            }
-                          : { y: 0, rotateX: 0 }
-                      }
-                      transition={
-                        phase === "driving"
-                          ? { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
-                          : { duration: 0.3 }
-                      }
-                    >
-                      <LowriderRear />
-                    </motion.div>
+                    {/* Perspective wrapper for 3D tilt */}
+                    <div style={{ perspective: 400 }}>
+                      <motion.div
+                        style={{ transformOrigin: "center bottom" }}
+                        animate={
+                          phase === "driving"
+                            ? {
+                                rotateX: [0, 15, 0, 8, 0, 12, 0, 5, 0],
+                              }
+                            : { rotateX: 0 }
+                        }
+                        transition={
+                          phase === "driving"
+                            ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" }
+                            : { duration: 0.3 }
+                        }
+                      >
+                        <LowriderRear />
+                      </motion.div>
+                    </div>
 
                     {/* Ground shadow */}
                     <motion.div
                       animate={
                         phase === "driving"
                           ? {
-                              scaleX: [1, 0.7, 1, 0.85, 1, 0.75, 1, 0.9, 1],
-                              opacity: [0.3, 0.15, 0.3, 0.2, 0.3, 0.15, 0.3, 0.2, 0.3],
+                              scaleX: [1, 0.85, 1, 0.9, 1, 0.85, 1, 0.95, 1],
+                              opacity: [0.3, 0.2, 0.3, 0.25, 0.3, 0.2, 0.3, 0.25, 0.3],
                             }
                           : { opacity: 0 }
                       }
                       transition={
                         phase === "driving"
-                          ? { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
+                          ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" }
                           : { duration: 0.5 }
                       }
                       className="mx-auto mt-1 w-40 h-3 bg-sunset/30 rounded-full blur-md"
