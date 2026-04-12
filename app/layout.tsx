@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Monoton, Noto_Sans_JP } from "next/font/google";
+import { Playfair_Display, UnifrakturMaguntia, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -8,10 +8,10 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const monoton = Monoton({
+const blackletter = UnifrakturMaguntia({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-monoton",
+  variable: "--font-blackletter",
   display: "swap",
 });
 
@@ -51,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${playfair.variable} ${monoton.variable} ${notoSansJp.variable}`}
+      className={`${playfair.variable} ${blackletter.variable} ${notoSansJp.variable}`}
     >
       <body className="font-body bg-cream text-midnight antialiased">
         {children}
