@@ -19,7 +19,7 @@ export default function Hero() {
       {/* Single subtle sunset accent at bottom */}
       <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-sunset/15 rounded-full blur-3xl" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-16 text-center">
         {/* Opening badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -123,7 +123,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="mt-20 max-w-3xl mx-auto"
+          className="mt-16 max-w-3xl mx-auto"
         >
           <div className="inline-flex items-center gap-3 text-[10px] tracking-[0.3em] text-chrome/50 uppercase font-semibold mb-4">
             <span className="h-[1px] w-6 bg-chrome/20" />
@@ -139,12 +139,19 @@ export default function Hero() {
             それが当院のポリシーです。
           </p>
         </motion.div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/60 animate-bounce">
-        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
-        <div className="w-[1px] h-8 bg-gradient-to-b from-sunset to-transparent" />
+        {/* Scroll indicator — inline so it always stays below the policy */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="mt-16 flex flex-col items-center gap-2 text-cream/50"
+        >
+          <span className="text-[10px] tracking-[0.3em] uppercase animate-bounce">
+            Scroll
+          </span>
+          <div className="w-[1px] h-8 bg-gradient-to-b from-sunset to-transparent" />
+        </motion.div>
       </div>
     </section>
   );
