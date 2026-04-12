@@ -134,52 +134,52 @@ function LowriderRear() {
       {/* ── LEFT wire wheel + whitewall ── */}
       <g>
         {/* Tire (black) */}
-        <ellipse cx="55" cy="148" rx="26" ry="22" fill="#111111" />
+        <circle cx="55" cy="148" r="24" fill="#111111" />
         {/* Whitewall */}
-        <ellipse cx="55" cy="148" rx="26" ry="22" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
+        <circle cx="55" cy="148" r="24" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
         {/* Inner tire */}
-        <ellipse cx="55" cy="148" rx="20" ry="16" fill="#1A1A1A" />
+        <circle cx="55" cy="148" r="18" fill="#1A1A1A" />
         {/* Wire spoke hub */}
-        <ellipse cx="55" cy="148" rx="14" ry="11" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
+        <circle cx="55" cy="148" r="12" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
         {/* Wire spokes */}
         {[0, 30, 60, 90, 120, 150].map((angle) => (
           <line
             key={angle}
             x1={55 + Math.cos((angle * Math.PI) / 180) * 3}
-            y1={148 + Math.sin((angle * Math.PI) / 180) * 2.5}
-            x2={55 + Math.cos((angle * Math.PI) / 180) * 13}
-            y2={148 + Math.sin((angle * Math.PI) / 180) * 10}
+            y1={148 + Math.sin((angle * Math.PI) / 180) * 3}
+            x2={55 + Math.cos((angle * Math.PI) / 180) * 11}
+            y2={148 + Math.sin((angle * Math.PI) / 180) * 11}
             stroke="#FFB347"
             strokeWidth="0.5"
             opacity="0.5"
           />
         ))}
         {/* Chrome center cap (knock-off) */}
-        <ellipse cx="55" cy="148" rx="5" ry="4" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
+        <circle cx="55" cy="148" r="4.5" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
         {/* Knock-off spinner */}
-        <ellipse cx="55" cy="148" rx="2" ry="1.5" fill="#FFB347" fillOpacity="0.5" />
+        <circle cx="55" cy="148" r="2" fill="#FFB347" fillOpacity="0.5" />
       </g>
 
       {/* ── RIGHT wire wheel + whitewall ── */}
       <g>
-        <ellipse cx="205" cy="148" rx="26" ry="22" fill="#111111" />
-        <ellipse cx="205" cy="148" rx="26" ry="22" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
-        <ellipse cx="205" cy="148" rx="20" ry="16" fill="#1A1A1A" />
-        <ellipse cx="205" cy="148" rx="14" ry="11" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
+        <circle cx="205" cy="148" r="24" fill="#111111" />
+        <circle cx="205" cy="148" r="24" stroke="#EEEEEE" strokeWidth="4" fill="none" opacity="0.7" />
+        <circle cx="205" cy="148" r="18" fill="#1A1A1A" />
+        <circle cx="205" cy="148" r="12" fill="#2A2A2A" stroke="#FFB347" strokeWidth="0.8" opacity="0.6" />
         {[0, 30, 60, 90, 120, 150].map((angle) => (
           <line
             key={angle}
             x1={205 + Math.cos((angle * Math.PI) / 180) * 3}
-            y1={148 + Math.sin((angle * Math.PI) / 180) * 2.5}
-            x2={205 + Math.cos((angle * Math.PI) / 180) * 13}
-            y2={148 + Math.sin((angle * Math.PI) / 180) * 10}
+            y1={148 + Math.sin((angle * Math.PI) / 180) * 3}
+            x2={205 + Math.cos((angle * Math.PI) / 180) * 11}
+            y2={148 + Math.sin((angle * Math.PI) / 180) * 11}
             stroke="#FFB347"
             strokeWidth="0.5"
             opacity="0.5"
           />
         ))}
-        <ellipse cx="205" cy="148" rx="5" ry="4" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
-        <ellipse cx="205" cy="148" rx="2" ry="1.5" fill="#FFB347" fillOpacity="0.5" />
+        <circle cx="205" cy="148" r="4.5" fill="#FFB347" fillOpacity="0.25" stroke="#FFB347" strokeWidth="1" opacity="0.7" />
+        <circle cx="205" cy="148" r="2" fill="#FFB347" fillOpacity="0.5" />
       </g>
 
       {/* ── "IMPALA" emblem (chrome text on trunk) ── */}
@@ -188,45 +188,6 @@ function LowriderRear() {
       {/* ── Chevy bowtie emblem (center trunk) ── */}
       <path d="M126 55 L130 53 L134 55 L130 57 Z" fill="#FFB347" fillOpacity="0.35" />
     </svg>
-  );
-}
-
-/* ─── Clinic building (in the distance) ─── */
-function ClinicBuilding() {
-  return (
-    <div className="relative flex flex-col items-center">
-      {/* Building */}
-      <div className="relative w-48 md:w-64 bg-cream/90 border-2 border-midnight/15 rounded-t-lg px-4 pt-3 pb-0">
-        {/* Roof / Sign */}
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-sunset px-6 py-1.5 rounded-t-lg">
-          <div className="text-midnight text-[8px] md:text-[10px] font-bold tracking-wider text-center">
-            車の美容外科
-          </div>
-        </div>
-        {/* Cross */}
-        <div className="flex justify-center mb-2">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <rect x="9" y="2" width="6" height="20" rx="1" fill="#FF6B1A" />
-            <rect x="2" y="9" width="20" height="6" rx="1" fill="#FF6B1A" />
-          </svg>
-        </div>
-        {/* Windows row */}
-        <div className="flex gap-2 justify-center mb-2">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="w-6 h-8 bg-sunset/10 border border-midnight/10 rounded-sm" />
-          ))}
-        </div>
-        {/* Door - this is where the car is heading */}
-        <div className="flex justify-center">
-          <div className="relative w-16 h-12 border-2 border-sunset/40 rounded-t-md bg-sunset/5 overflow-hidden">
-            {/* Door split line */}
-            <div className="absolute top-0 bottom-0 left-1/2 w-px bg-sunset/40" />
-            {/* Glow from inside */}
-            <div className="absolute inset-0 bg-gradient-to-t from-sunset/20 to-transparent" />
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -320,20 +281,69 @@ function ExhaustSmoke() {
   );
 }
 
+/* ─── Hospital Door Panel ─── */
+function DoorPanel({
+  side,
+}: {
+  side: "left" | "right";
+}) {
+  const isLeft = side === "left";
+  return (
+    <div className={`absolute inset-0 bg-cream ${isLeft ? "border-r-2" : "border-l-2"} border-sunset/20`}>
+      <div className="absolute inset-4 border border-midnight/10 rounded-lg" />
+      <div
+        className={`absolute top-1/4 bottom-1/3 bg-sunset/5 border border-midnight/10 rounded-md ${
+          isLeft ? "left-1/4 right-8" : "right-1/4 left-8"
+        }`}
+      />
+      <div
+        className={`absolute top-1/2 -translate-y-1/2 flex flex-col gap-4 ${
+          isLeft ? "right-8 items-end" : "left-8 items-start"
+        }`}
+      >
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <rect x="9" y="2" width="6" height="20" rx="1" fill="#FF6B1A" />
+          <rect x="2" y="9" width="20" height="6" rx="1" fill="#FF6B1A" />
+        </svg>
+        <div className="text-midnight/50 text-sm tracking-[0.3em] font-semibold [writing-mode:vertical-rl]">
+          {isLeft ? "車の美容外科" : "Car Wash Homies"}
+        </div>
+      </div>
+      <div
+        className={`absolute top-1/2 -translate-y-1/2 w-1.5 h-20 bg-sunset/40 rounded-full ${
+          isLeft ? "right-3" : "left-3"
+        }`}
+      />
+    </div>
+  );
+}
+
 /* ─── Main Opening Animation ─── */
 export default function OpeningAnimation({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [phase, setPhase] = useState<"driving" | "arriving" | "doors" | "done">("driving");
+  // driving → departing → doors-closed → doors-open → done
+  const [phase, setPhase] = useState<
+    "driving" | "departing" | "doors-closed" | "doors-open" | "done"
+  >("driving");
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase("arriving"), 3200);
-    const t2 = setTimeout(() => setPhase("doors"), 5000);
-    const t3 = setTimeout(() => setPhase("done"), 6400);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    // 0~3s:    Car hops on road
+    // 3~4.2s:  Car drives away toward clinic
+    // 4.2~4.7: Scene fades to doors (closed)
+    // 4.7~6.5: Doors sit closed (1.8s pause)
+    // 6.5~7.6: Doors slide open
+    // 7.6:     Done
+    const t1 = setTimeout(() => setPhase("departing"), 3000);
+    const t2 = setTimeout(() => setPhase("doors-closed"), 4200);
+    const t3 = setTimeout(() => setPhase("doors-open"), 6500);
+    const t4 = setTimeout(() => setPhase("done"), 7800);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
   }, []);
+
+  const isDriving = phase === "driving" || phase === "departing";
 
   return (
     <>
@@ -344,9 +354,9 @@ export default function OpeningAnimation({
       <AnimatePresence>
         {phase !== "done" && (
           <>
-            {/* ─── Driving / Arriving Scene ─── */}
+            {/* ─── Driving Scene ─── */}
             <AnimatePresence>
-              {(phase === "driving" || phase === "arriving") && (
+              {isDriving && (
                 <motion.div
                   key="scene"
                   exit={{ opacity: 0 }}
@@ -355,7 +365,7 @@ export default function OpeningAnimation({
                 >
                   <div className="absolute inset-0 grain pointer-events-none" />
 
-                  {/* Night sky gradient */}
+                  {/* Night sky */}
                   <div className="absolute inset-0 bg-gradient-to-b from-[#0a0604] via-midnight to-[#2a1f16]" />
 
                   {/* Stars */}
@@ -364,8 +374,8 @@ export default function OpeningAnimation({
                       key={i}
                       className="absolute w-0.5 h-0.5 bg-cream/40 rounded-full"
                       style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 40}%`,
+                        left: `${10 + (i * 4.3) % 80}%`,
+                        top: `${5 + (i * 7.1) % 35}%`,
                       }}
                     />
                   ))}
@@ -373,53 +383,59 @@ export default function OpeningAnimation({
                   {/* Moon */}
                   <div className="absolute top-[8%] right-[15%] w-8 h-8 rounded-full bg-cream/20 blur-[1px] shadow-[0_0_20px_rgba(255,248,240,0.1)]" />
 
-                  {/* Clinic building in the distance - gets closer */}
-                  <motion.div
-                    className="absolute left-1/2 -translate-x-1/2"
-                    initial={{ top: "30%", scale: 0.5, opacity: 0.4 }}
-                    animate={
-                      phase === "arriving"
-                        ? { top: "18%", scale: 1.1, opacity: 1 }
-                        : { top: "30%", scale: 0.5, opacity: 0.4 }
-                    }
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
-                  >
-                    <ClinicBuilding />
-                  </motion.div>
-
                   {/* Road */}
                   <Road />
 
                   {/* Exhaust smoke */}
-                  <ExhaustSmoke />
+                  {phase === "driving" && <ExhaustSmoke />}
 
-                  {/* Lowrider from behind - hopping down the road */}
+                  {/* Lowrider — hops during driving, shrinks + drives away during departing */}
                   <motion.div
                     className="absolute left-1/2 -translate-x-1/2 bottom-[22%]"
                     animate={
-                      phase === "arriving"
-                        ? { scale: [1, 0.6], y: [0, -60] }
+                      phase === "departing"
+                        ? {
+                            scale: [1, 0.08],
+                            y: [0, -200],
+                            opacity: [1, 0.8, 0.4, 0],
+                          }
                         : undefined
                     }
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
+                    transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                   >
                     <motion.div
-                      animate={{
-                        y: [0, -25, 0, -12, 0, -20, 0, -8, 0],
-                        rotateX: [0, 3, 0, -2, 0, 2, 0, -1, 0],
-                      }}
-                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                      animate={
+                        phase === "driving"
+                          ? {
+                              y: [0, -25, 0, -12, 0, -20, 0, -8, 0],
+                              rotateX: [0, 3, 0, -2, 0, 2, 0, -1, 0],
+                            }
+                          : { y: 0, rotateX: 0 }
+                      }
+                      transition={
+                        phase === "driving"
+                          ? { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
+                          : { duration: 0.3 }
+                      }
                     >
                       <LowriderRear />
                     </motion.div>
 
-                    {/* Ground shadow under car */}
+                    {/* Ground shadow */}
                     <motion.div
-                      animate={{
-                        scaleX: [1, 0.7, 1, 0.85, 1, 0.75, 1, 0.9, 1],
-                        opacity: [0.3, 0.15, 0.3, 0.2, 0.3, 0.15, 0.3, 0.2, 0.3],
-                      }}
-                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                      animate={
+                        phase === "driving"
+                          ? {
+                              scaleX: [1, 0.7, 1, 0.85, 1, 0.75, 1, 0.9, 1],
+                              opacity: [0.3, 0.15, 0.3, 0.2, 0.3, 0.15, 0.3, 0.2, 0.3],
+                            }
+                          : { opacity: 0 }
+                      }
+                      transition={
+                        phase === "driving"
+                          ? { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
+                          : { duration: 0.5 }
+                      }
                       className="mx-auto mt-1 w-40 h-3 bg-sunset/30 rounded-full blur-md"
                     />
                   </motion.div>
@@ -443,13 +459,13 @@ export default function OpeningAnimation({
                         className="h-full bg-sunset-gradient rounded-full"
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
-                        transition={{ duration: 4.8, ease: [0.4, 0, 0.2, 1] }}
+                        transition={{ duration: 2.8, ease: [0.4, 0, 0.2, 1] }}
                       />
                     </div>
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 1.5 }}
+                      transition={{ delay: 1 }}
                       className="text-center mt-2 text-chrome/40 text-[10px] tracking-[0.3em] uppercase"
                     >
                       Entering the Clinic...
@@ -459,65 +475,67 @@ export default function OpeningAnimation({
               )}
             </AnimatePresence>
 
-            {/* ─── Hospital Doors ─── */}
-            {phase === "doors" && (
+            {/* ─── Hospital Doors (closed → open) ─── */}
+            {(phase === "doors-closed" || phase === "doors-open") && (
               <>
                 {/* Left door */}
                 <motion.div
                   key="door-left"
-                  initial={{ x: "0%" }}
-                  animate={{ x: "-100%" }}
-                  transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
+                  initial={{ x: "0%", opacity: 0 }}
+                  animate={
+                    phase === "doors-open"
+                      ? { x: "-100%", opacity: 1 }
+                      : { x: "0%", opacity: 1 }
+                  }
+                  transition={
+                    phase === "doors-open"
+                      ? { duration: 1.1, ease: [0.65, 0, 0.35, 1] }
+                      : { duration: 0.4, ease: "easeOut" }
+                  }
                   className="fixed top-0 left-0 w-1/2 h-full z-[99] bg-cream"
                 >
-                  <div className="absolute inset-0 bg-cream border-r-2 border-sunset/20">
-                    <div className="absolute inset-4 border border-midnight/10 rounded-lg" />
-                    <div className="absolute top-1/4 left-1/4 right-8 bottom-1/3 bg-sunset/5 border border-midnight/10 rounded-md" />
-                    <div className="absolute top-1/2 right-8 -translate-y-1/2 flex flex-col items-end gap-4">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <rect x="9" y="2" width="6" height="20" rx="1" fill="#FF6B1A" />
-                        <rect x="2" y="9" width="20" height="6" rx="1" fill="#FF6B1A" />
-                      </svg>
-                      <div className="text-midnight/40 text-xs tracking-[0.3em] [writing-mode:vertical-rl]">
-                        車の美容外科
-                      </div>
-                    </div>
-                    <div className="absolute top-1/2 right-3 -translate-y-1/2 w-1 h-16 bg-sunset/40 rounded-full" />
-                  </div>
+                  <DoorPanel side="left" />
                 </motion.div>
 
                 {/* Right door */}
                 <motion.div
                   key="door-right"
-                  initial={{ x: "0%" }}
-                  animate={{ x: "100%" }}
-                  transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
+                  initial={{ x: "0%", opacity: 0 }}
+                  animate={
+                    phase === "doors-open"
+                      ? { x: "100%", opacity: 1 }
+                      : { x: "0%", opacity: 1 }
+                  }
+                  transition={
+                    phase === "doors-open"
+                      ? { duration: 1.1, ease: [0.65, 0, 0.35, 1] }
+                      : { duration: 0.4, ease: "easeOut" }
+                  }
                   className="fixed top-0 right-0 w-1/2 h-full z-[99] bg-cream"
                 >
-                  <div className="absolute inset-0 bg-cream border-l-2 border-sunset/20">
-                    <div className="absolute inset-4 border border-midnight/10 rounded-lg" />
-                    <div className="absolute top-1/4 right-1/4 left-8 bottom-1/3 bg-sunset/5 border border-midnight/10 rounded-md" />
-                    <div className="absolute top-1/2 left-8 -translate-y-1/2 flex flex-col items-start gap-4">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <rect x="9" y="2" width="6" height="20" rx="1" fill="#FF6B1A" />
-                        <rect x="2" y="9" width="20" height="6" rx="1" fill="#FF6B1A" />
-                      </svg>
-                      <div className="text-midnight/40 text-xs tracking-[0.3em] [writing-mode:vertical-rl]">
-                        Car Wash Homies
-                      </div>
-                    </div>
-                    <div className="absolute top-1/2 left-3 -translate-y-1/2 w-1 h-16 bg-sunset/40 rounded-full" />
-                  </div>
+                  <DoorPanel side="right" />
                 </motion.div>
 
-                {/* Light burst */}
-                <motion.div
-                  key="burst"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 0.5, 0] }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                  className="fixed inset-0 z-[98] bg-sunset/10 pointer-events-none"
-                />
+                {/* Center seam line (visible while closed) */}
+                {phase === "doors-closed" && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.3 }}
+                    className="fixed top-0 left-1/2 -translate-x-1/2 w-[2px] h-full z-[100] bg-sunset/30"
+                  />
+                )}
+
+                {/* Light burst when doors open */}
+                {phase === "doors-open" && (
+                  <motion.div
+                    key="burst"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 0.6, 0] }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="fixed inset-0 z-[98] bg-sunset/10 pointer-events-none"
+                  />
+                )}
               </>
             )}
           </>
