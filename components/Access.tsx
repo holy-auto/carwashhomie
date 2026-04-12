@@ -1,0 +1,248 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+const info = [
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+    label: "所在地",
+    value: "〒154-0000 東京都世田谷区 0-0-0 ホーミービル 1F",
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    label: "営業時間",
+    value: "10:00 — 19:00（最終受付 17:00）",
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    ),
+    label: "定休日",
+    value: "毎週火曜日・年末年始",
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+      </svg>
+    ),
+    label: "電話番号",
+    value: "03-0000-0000",
+  },
+];
+
+const access = [
+  {
+    method: "電車",
+    icon: "🚃",
+    routes: [
+      "東急田園都市線「三軒茶屋駅」南口より徒歩8分",
+      "東急世田谷線「西太子堂駅」より徒歩5分",
+    ],
+  },
+  {
+    method: "車",
+    icon: "🚗",
+    routes: [
+      "環七通り沿い、世田谷警察署交差点を南へ200m",
+      "店舗前に専用駐車場3台分あり（大型車OK）",
+    ],
+  },
+  {
+    method: "バス",
+    icon: "🚌",
+    routes: [
+      "東急バス「世田谷区民会館前」下車 徒歩3分",
+    ],
+  },
+];
+
+export default function Access() {
+  return (
+    <section
+      id="access"
+      className="relative py-24 md:py-32 bg-midnight overflow-hidden grain"
+    >
+      <div className="absolute top-0 left-0 w-96 h-96 bg-sunset/15 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-sunset/10 rounded-full blur-3xl" />
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+            <div className="w-8 h-[1px] bg-sunset" />
+            Access & Map
+            <div className="w-8 h-[1px] bg-sunset" />
+          </div>
+          <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
+            アクセス
+          </h2>
+          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
+            愛車を連れて、お気軽にご来院ください。大型車も駐車可能です。
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+          {/* Map embed */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-3"
+          >
+            <div className="relative rounded-2xl overflow-hidden border border-sunset/20 shadow-clinic">
+              {/* Google Maps embed */}
+              <div className="aspect-[4/3] lg:aspect-[16/10]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.0!2d139.6681!3d35.6436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z5LiJ6LuS6Iy25bGL!5e0!3m2!1sja!2sjp!4v1700000000000"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="CarWashHomie アクセスマップ"
+                  className="w-full h-full"
+                />
+              </div>
+
+              {/* Map overlay label */}
+              <div className="absolute top-4 left-4 px-4 py-2 rounded-full bg-midnight/80 border border-sunset/30 backdrop-blur-sm flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
+                <span className="text-sunset text-xs font-bold tracking-wider uppercase">
+                  CarWashHomie Clinic
+                </span>
+              </div>
+            </div>
+
+            {/* Parking note */}
+            <div className="mt-4 flex items-center gap-3 px-5 py-3 rounded-xl bg-sunset/10 border border-sunset/20">
+              <span className="text-2xl">🅿️</span>
+              <div>
+                <div className="text-cream text-sm font-semibold">
+                  専用駐車場 3台完備
+                </div>
+                <div className="text-chrome/60 text-xs">
+                  大型車・ローライダーOK。店舗正面にございます。
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Info column */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-2 space-y-6"
+          >
+            {/* Basic info cards */}
+            <div className="bg-midnight-50/30 border border-sunset/20 rounded-2xl p-6 space-y-5">
+              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold">
+                Clinic Info
+              </div>
+              {info.map((item) => (
+                <div key={item.label} className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-sunset/10 flex items-center justify-center text-sunset shrink-0">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <div className="text-[10px] tracking-wider text-chrome/50 uppercase mb-0.5">
+                      {item.label}
+                    </div>
+                    <div className="text-cream text-sm leading-relaxed">
+                      {item.value}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Access routes */}
+            <div className="bg-midnight-50/30 border border-sunset/20 rounded-2xl p-6 space-y-5">
+              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold">
+                交通手段
+              </div>
+              {access.map((a) => (
+                <div key={a.method}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg">{a.icon}</span>
+                    <span className="text-cream text-sm font-bold">
+                      {a.method}でお越しの場合
+                    </span>
+                  </div>
+                  <ul className="space-y-1.5 ml-8">
+                    {a.routes.map((r) => (
+                      <li
+                        key={r}
+                        className="text-chrome/70 text-sm leading-relaxed flex items-start gap-2"
+                      >
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-sunset shrink-0" />
+                        {r}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=35.6436,139.6681"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-full bg-sunset-gradient text-midnight font-bold shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                />
+              </svg>
+              Google Maps で経路を見る
+              <svg
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </a>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}

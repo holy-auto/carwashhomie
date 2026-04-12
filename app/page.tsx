@@ -5,6 +5,7 @@ import BeforeAfter from "@/components/BeforeAfter";
 import Doctor from "@/components/Doctor";
 import Testimonials from "@/components/Testimonials";
 import Reservation from "@/components/Reservation";
+import Access from "@/components/Access";
 import Footer from "@/components/Footer";
 import PinStripe from "@/components/PinStripe";
 
@@ -23,6 +24,8 @@ export default function Home() {
       <Testimonials />
       <PinStripe />
       <Reservation />
+      <PinStripe />
+      <Access />
       <Footer />
     </main>
   );

@@ -8,6 +8,7 @@ const nav = [
   { label: "Dr. ホーミー", href: "#doctor" },
   { label: "お客様の声", href: "#voice" },
   { label: "カウンセリング", href: "#reservation" },
+  { label: "アクセス", href: "#access" },
 ];
 
 export default function Navbar() {
