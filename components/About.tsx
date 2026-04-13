@@ -58,7 +58,7 @@ export default function About() {
               </div>
             </div>
             <div className="hidden md:block text-right text-[10px] text-chrome/60 tracking-wider uppercase">
-              Established 2025
+              Established 2026
             </div>
           </div>
 
