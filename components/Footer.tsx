@@ -142,12 +142,12 @@ export default function Footer() {
             登録番号 T8810011150208
           </div>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-sunset transition-colors">
+            <Link href="/privacy" className="hover:text-sunset transition-colors">
               プライバシーポリシー
-            </a>
-            <a href="#" className="hover:text-sunset transition-colors">
+            </Link>
+            <Link href="/legal" className="hover:text-sunset transition-colors">
               特定商取引法
-            </a>
+            </Link>
           </div>
         </div>
       </div>
