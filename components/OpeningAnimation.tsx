@@ -173,19 +173,12 @@ export default function OpeningAnimation({
                 />
               </motion.div>
 
-              {/* Chrome shine sweep — masked to the logo so the rectangle never lights up */}
-              <motion.div
-                initial={{ x: "-120%", opacity: 0 }}
-                animate={{ x: "120%", opacity: [0, 0.6, 0] }}
-                transition={{
-                  duration: 1.2,
-                  delay: 2.2,
-                  ease: "easeInOut",
-                }}
-                className="absolute inset-0 pointer-events-none"
+              {/* Chrome shine sweep — mask sits on a fixed outer container,
+                  the gradient slides INSIDE it so only the logo shape lights up
+                  in place (no flying logo-shaped wipe). */}
+              <div
+                className="absolute inset-0 pointer-events-none overflow-hidden"
                 style={{
-                  background:
-                    "linear-gradient(100deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
                   WebkitMaskImage: "url(/logo.png)",
                   maskImage: "url(/logo.png)",
                   WebkitMaskRepeat: "no-repeat",
@@ -194,9 +187,24 @@ export default function OpeningAnimation({
                   maskPosition: "center",
                   WebkitMaskSize: "contain",
                   maskSize: "contain",
-                  mixBlendMode: "screen",
                 }}
-              />
+              >
+                <motion.div
+                  initial={{ x: "-120%", opacity: 0 }}
+                  animate={{ x: "120%", opacity: [0, 0.6, 0] }}
+                  transition={{
+                    duration: 1.2,
+                    delay: 2.2,
+                    ease: "easeInOut",
+                  }}
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(100deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%)",
+                    mixBlendMode: "screen",
+                  }}
+                />
+              </div>
             </motion.div>
 
             {/* Completion flash */}
