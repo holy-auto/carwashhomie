@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const rows = [
@@ -129,15 +130,26 @@ export default function Tokusho() {
           </dl>
         </motion.div>
 
-        {/* Meta */}
+        {/* Meta + nav */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-12 pt-8 border-t border-dashed border-midnight/20 text-center text-[11px] tracking-[0.2em] uppercase font-pixel text-midnight/50"
+          className="mt-12 pt-8 border-t border-dashed border-midnight/20 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] tracking-[0.2em] uppercase font-pixel text-midnight/50"
         >
-          最終更新日：2026年4月15日
+          <span>最終更新日：2026年4月15日</span>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy" className="hover:text-sunset transition-colors">
+              プライバシーポリシー
+            </Link>
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-midnight/20 hover:border-sunset hover:text-sunset transition-all"
+            >
+              ← トップへ戻る
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

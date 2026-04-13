@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const sections = [
@@ -103,15 +104,26 @@ export default function PrivacyPolicy() {
           ))}
         </motion.div>
 
-        {/* Meta */}
+        {/* Meta + nav */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-12 pt-8 border-t border-dashed border-midnight/20 text-center text-[11px] tracking-[0.2em] uppercase font-pixel text-midnight/50"
+          className="mt-12 pt-8 border-t border-dashed border-midnight/20 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] tracking-[0.2em] uppercase font-pixel text-midnight/50"
         >
-          制定日：2026年4月15日
+          <span>制定日：2026年4月15日</span>
+          <div className="flex items-center gap-6">
+            <Link href="/legal" className="hover:text-sunset transition-colors">
+              特定商取引法
+            </Link>
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-midnight/20 hover:border-sunset hover:text-sunset transition-all"
+            >
+              ← トップへ戻る
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>
