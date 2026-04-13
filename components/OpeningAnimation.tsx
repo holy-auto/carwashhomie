@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 /* Converging sparks — deterministic positions around the logo */
 const SPARKS = [
@@ -20,6 +19,170 @@ const SPARKS = [
   { angle: 338, delay: 0.1, dist: 480 },
 ];
 
+/* Calligraphy stroke sequence — follows the natural 書き順 of each
+   character in the "Car / Wash / Homies" blackletter logo.
+   Rules honored:
+     • Capitals first: verticals before horizontals (H = |, |, —)
+     • Lowercase 'a' : bowl first, then down-stroke
+     • 'r' / 'h' / 'm': vertical stem first, then arch(es)
+     • 'i'          : stem then dot
+     • 'e'          : enclosing curve then middle bar
+     • 'W' / 'V'     : left-to-right zigzag diagonals
+   Each path paints white into the SVG mask, so the logo is
+   progressively revealed underneath the pen. */
+const STROKES: {
+  d: string;
+  w: number;
+  delay: number;
+  dur: number;
+  tip?: { cx: number; cy: number };
+}[] = [
+  // --- Top ornamental flourish (opening swash) ---
+  {
+    d: "M 38 62 C 130 30 270 30 362 62",
+    w: 30,
+    delay: 0.7,
+    dur: 0.35,
+    tip: { cx: 9.5, cy: 15.5 },
+  },
+
+  // ─── "Car" ───
+  // C — single ornamental arc
+  {
+    d: "M 168 105 C 95 108 75 155 85 185 C 100 205 145 205 170 195",
+    w: 54,
+    delay: 1.08,
+    dur: 0.3,
+    tip: { cx: 42, cy: 26.25 },
+  },
+  // a — bowl first
+  {
+    d: "M 220 150 C 195 148 182 165 192 182 C 210 195 228 182 228 168",
+    w: 34,
+    delay: 1.4,
+    dur: 0.12,
+  },
+  // a — down-stroke
+  { d: "M 230 150 L 230 195", w: 28, delay: 1.52, dur: 0.08 },
+  // r — vertical stem
+  { d: "M 258 195 L 258 155", w: 30, delay: 1.62, dur: 0.08 },
+  // r — top hook
+  {
+    d: "M 258 155 C 268 147 282 147 292 160",
+    w: 26,
+    delay: 1.7,
+    dur: 0.1,
+  },
+
+  // ─── "Wash" ───
+  // W — 4 zigzag diagonals, left → right
+  {
+    d: "M 105 215 L 122 285",
+    w: 30,
+    delay: 1.82,
+    dur: 0.09,
+    tip: { cx: 26.25, cy: 53.75 },
+  },
+  { d: "M 122 285 L 142 225", w: 30, delay: 1.91, dur: 0.08 },
+  { d: "M 142 225 L 162 285", w: 30, delay: 1.99, dur: 0.08 },
+  { d: "M 162 285 L 182 215", w: 30, delay: 2.07, dur: 0.09 },
+  // a — bowl
+  {
+    d: "M 215 262 C 193 260 182 275 193 285 C 212 295 228 280 226 268",
+    w: 28,
+    delay: 2.18,
+    dur: 0.1,
+  },
+  // a — down-stroke
+  { d: "M 228 260 L 228 288", w: 24, delay: 2.28, dur: 0.07 },
+  // s — single S curve
+  {
+    d: "M 268 258 C 252 258 245 268 258 276 C 275 279 278 290 260 290 C 248 290 243 283 243 283",
+    w: 26,
+    delay: 2.37,
+    dur: 0.16,
+  },
+  // h — vertical stem
+  { d: "M 285 212 L 285 290", w: 28, delay: 2.55, dur: 0.1 },
+  // h — arch
+  {
+    d: "M 285 258 C 300 248 315 260 315 278 L 315 290",
+    w: 25,
+    delay: 2.65,
+    dur: 0.1,
+  },
+
+  // ─── "Homies" ───
+  // H — left vertical
+  {
+    d: "M 82 305 L 82 388",
+    w: 30,
+    delay: 2.78,
+    dur: 0.1,
+    tip: { cx: 20.5, cy: 76.25 },
+  },
+  // H — right vertical
+  { d: "M 135 305 L 135 388", w: 30, delay: 2.88, dur: 0.1 },
+  // H — crossbar
+  { d: "M 82 348 L 135 348", w: 26, delay: 2.98, dur: 0.07 },
+  // o — closed loop
+  {
+    d: "M 160 345 C 140 345 136 370 152 383 C 172 385 182 368 176 352 C 172 345 162 345 160 345",
+    w: 26,
+    delay: 3.07,
+    dur: 0.14,
+  },
+  // m — vertical stem
+  { d: "M 192 388 L 192 348", w: 26, delay: 3.22, dur: 0.07 },
+  // m — arch 1
+  {
+    d: "M 192 348 C 205 342 215 352 215 368 L 215 388",
+    w: 24,
+    delay: 3.29,
+    dur: 0.09,
+  },
+  // m — arch 2
+  {
+    d: "M 215 368 C 215 352 228 342 240 348 L 240 388",
+    w: 24,
+    delay: 3.38,
+    dur: 0.09,
+  },
+  // i — stem
+  { d: "M 255 348 L 255 388", w: 24, delay: 3.48, dur: 0.07 },
+  // i — dot
+  { d: "M 253 326 L 259 330", w: 22, delay: 3.55, dur: 0.05 },
+  // e — enclosing curve
+  {
+    d: "M 300 368 C 300 348 278 348 275 365 C 275 385 298 388 303 378",
+    w: 24,
+    delay: 3.6,
+    dur: 0.12,
+  },
+  // e — middle bar
+  { d: "M 275 363 L 300 363", w: 20, delay: 3.72, dur: 0.06 },
+  // s — single S curve
+  {
+    d: "M 328 352 C 313 352 307 360 321 370 C 337 372 338 382 320 385 C 308 385 302 378 302 378",
+    w: 24,
+    delay: 3.78,
+    dur: 0.14,
+  },
+
+  // --- Bottom ornamental flourish ---
+  {
+    d: "M 52 395 C 150 380 250 380 348 395",
+    w: 28,
+    delay: 3.95,
+    dur: 0.32,
+    tip: { cx: 13, cy: 98.75 },
+  },
+];
+
+/* writing sequence wraps at ~4.3s; everything after that is
+   the completion flash, chrome shine and exit fade */
+const WRITE_END = 4.3;
+
 /* ─── Main Opening Animation ─── */
 export default function OpeningAnimation({
   children,
@@ -29,7 +192,7 @@ export default function OpeningAnimation({
   const [phase, setPhase] = useState<"building" | "done">("building");
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase("done"), 4800);
+    const t1 = setTimeout(() => setPhase("done"), 5600);
     return () => {
       clearTimeout(t1);
     };
@@ -137,9 +300,9 @@ export default function OpeningAnimation({
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: [0.92, 1.03, 1], opacity: [0, 1, 1] }}
               transition={{
-                duration: 3.4,
-                delay: 0.6,
-                times: [0, 0.85, 1],
+                duration: WRITE_END,
+                delay: 0.4,
+                times: [0, 0.9, 1],
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
               className="relative w-64 h-64 md:w-80 md:h-80"
@@ -163,69 +326,28 @@ export default function OpeningAnimation({
                     width="400"
                     height="400"
                   >
-                    {/* Mask starts fully hidden (black) and each stroke
-                        paints in white to progressively reveal. */}
+                    {/* Mask starts fully hidden (black); each stroke paints
+                        white in the natural 書き順 of the letters, progressively
+                        revealing the logo underneath. */}
                     <rect x="0" y="0" width="400" height="400" fill="black" />
-
-                    {/* Stroke 1 — top flourish swash (quick) */}
-                    <motion.path
-                      d="M 50 55 Q 200 30 350 55"
-                      stroke="white"
-                      strokeWidth="38"
-                      strokeLinecap="round"
-                      fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.45, delay: 0.9, ease: "easeOut" }}
-                    />
-
-                    {/* Stroke 2 — "CAR" row, deliberate calligraphic pass */}
-                    <motion.path
-                      d="M 28 125 C 120 95, 260 150, 372 120"
-                      stroke="white"
-                      strokeWidth="78"
-                      strokeLinecap="round"
-                      fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.75, delay: 1.3, ease: [0.5, 0, 0.3, 1] }}
-                    />
-
-                    {/* Stroke 3 — "WASH" row */}
-                    <motion.path
-                      d="M 22 210 C 140 182, 260 238, 378 206"
-                      stroke="white"
-                      strokeWidth="82"
-                      strokeLinecap="round"
-                      fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.8, delay: 2.0, ease: [0.5, 0, 0.3, 1] }}
-                    />
-
-                    {/* Stroke 4 — "HOMIES" row */}
-                    <motion.path
-                      d="M 25 298 C 130 270, 270 326, 375 294"
-                      stroke="white"
-                      strokeWidth="82"
-                      strokeLinecap="round"
-                      fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.8, delay: 2.75, ease: [0.5, 0, 0.3, 1] }}
-                    />
-
-                    {/* Stroke 5 — bottom flourish swash */}
-                    <motion.path
-                      d="M 60 365 Q 200 345 340 365"
-                      stroke="white"
-                      strokeWidth="40"
-                      strokeLinecap="round"
-                      fill="none"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 0.5, delay: 3.5, ease: "easeOut" }}
-                    />
+                    {STROKES.map((s, i) => (
+                      <motion.path
+                        key={i}
+                        d={s.d}
+                        stroke="white"
+                        strokeWidth={s.w}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        fill="none"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{
+                          duration: s.dur,
+                          delay: s.delay,
+                          ease: [0.4, 0, 0.2, 1],
+                        }}
+                      />
+                    ))}
                   </mask>
 
                   {/* Ink wet-look — boosts vividness behind the reveal */}
@@ -247,26 +369,20 @@ export default function OpeningAnimation({
                 />
               </svg>
 
-              {/* Pen-tip glow — a small bright dot that rides each stroke head,
-                  sold as the "tip of the calligraphy brush" cue. These are
-                  simple timed flashes positioned at each stroke's START point
-                  to reinforce the feeling of a pen stroke being laid down. */}
-              {[
-                { cx: 12.5, cy: 13.75, delay: 0.9, dur: 0.45 },
-                { cx: 7, cy: 31.25, delay: 1.3, dur: 0.75 },
-                { cx: 5.5, cy: 52.5, delay: 2.0, dur: 0.8 },
-                { cx: 6.25, cy: 74.5, delay: 2.75, dur: 0.8 },
-                { cx: 15, cy: 91.25, delay: 3.5, dur: 0.5 },
-              ].map((p, i) => (
+              {/* Pen-tip glow — a bright dot flashes at the start of each
+                  "section" stroke (the flourishes and each capital letter),
+                  selling the sense of a calligraphy brush landing before
+                  each new row of writing. */}
+              {STROKES.filter((s) => s.tip).map((s, i) => (
                 <motion.span
-                  key={i}
+                  key={`tip-${i}`}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: [0, 1, 0], scale: [0, 1, 0.2] }}
-                  transition={{ duration: p.dur, delay: p.delay }}
+                  transition={{ duration: s.dur + 0.15, delay: s.delay }}
                   className="absolute w-3 h-3 rounded-full bg-cream pointer-events-none"
                   style={{
-                    left: `${p.cx}%`,
-                    top: `${p.cy}%`,
+                    left: `${s.tip!.cx}%`,
+                    top: `${s.tip!.cy}%`,
                     transform: "translate(-50%, -50%)",
                     boxShadow:
                       "0 0 14px rgba(255,248,240,0.95), 0 0 28px rgba(255,107,26,0.8)",
@@ -292,8 +408,8 @@ export default function OpeningAnimation({
                   initial={{ x: "-120%", opacity: 0 }}
                   animate={{ x: "120%", opacity: [0, 0.6, 0] }}
                   transition={{
-                    duration: 1.2,
-                    delay: 4.2,
+                    duration: 1.1,
+                    delay: WRITE_END + 0.1,
                     ease: "easeInOut",
                   }}
                   className="absolute inset-0"
@@ -312,7 +428,7 @@ export default function OpeningAnimation({
               animate={{ opacity: [0, 0.5, 0] }}
               transition={{
                 duration: 0.9,
-                delay: 3.8,
+                delay: WRITE_END,
                 times: [0, 0.25, 1],
               }}
               className="absolute inset-0 bg-sunset/70 pointer-events-none"
@@ -341,7 +457,7 @@ export default function OpeningAnimation({
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{
-                      duration: 4.2,
+                      duration: WRITE_END + 0.4,
                       ease: [0.4, 0, 0.2, 1],
                     }}
                   />
