@@ -82,8 +82,14 @@ const menu = [
 export default function MenuOverview() {
   return (
     <section className="relative py-24 md:py-32 bg-cream overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-sunset/[0.05] rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-chrome/20 rounded-full blur-3xl" />
+      {/* 90s memphis polka backdrop */}
+      <div className="absolute inset-0 memphis-dots opacity-50 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-magenta/[0.06] rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan90/[0.08] rounded-full blur-3xl" />
+
+      {/* Top + bottom zigzag accents */}
+      <div className="absolute top-0 left-0 right-0 memphis-zig" />
+      <div className="absolute bottom-0 left-0 right-0 memphis-zig rotate-180" />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
@@ -94,13 +100,11 @@ export default function MenuOverview() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-midnight/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
-            <div className="w-8 h-[1px] bg-midnight/30" />
-            Site Menu
-            <div className="w-8 h-[1px] bg-midnight/30" />
+          <div className="sticker mb-4">
+            ★ Site Menu ★
           </div>
           <h2 className="font-display text-4xl md:text-6xl text-midnight mb-4">
-            診察科目<span className="text-sunset">・</span>各種ご案内
+            診察科目<span className="candy-90s-text retro-italic">・</span>各種ご案内
           </h2>
           <p className="text-midnight/60 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
             気になる項目をお選びください。詳細ページにてご案内いたします。
@@ -119,33 +123,33 @@ export default function MenuOverview() {
             >
               <Link
                 href={item.href}
-                className="group block h-full bg-white border border-midnight/10 rounded-2xl p-7 shadow-clinic hover:border-sunset/40 hover:shadow-sunset-glow transition-all"
+                className="group block h-full bg-white border-2 border-midnight rounded-2xl p-7 shadow-retro-pop hover:shadow-retro-pop-lg hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
               >
                 <div className="flex items-start justify-between mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-sunset/10 text-sunset flex items-center justify-center group-hover:bg-sunset group-hover:text-midnight transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-cream border-2 border-midnight text-midnight flex items-center justify-center shadow-[3px_3px_0_0_#FF6B1A] group-hover:bg-sunset group-hover:shadow-[3px_3px_0_0_#FF2E97] transition-all">
                     {item.icon}
                   </div>
                   <div className="text-right">
-                    <div className="text-[10px] tracking-[0.3em] text-midnight/40 uppercase font-mono">
-                      {item.num}
+                    <div className="text-[10px] tracking-[0.3em] text-midnight/60 uppercase font-mono bg-cream border border-midnight/30 rounded px-1.5 py-0.5 inline-block">
+                      No.{item.num}
                     </div>
-                    <div className="text-[10px] tracking-wider text-sunset uppercase font-semibold mt-0.5">
-                      {item.label}
+                    <div className="text-[10px] tracking-wider text-magenta uppercase font-extrabold mt-1">
+                      ★ {item.label}
                     </div>
                   </div>
                 </div>
                 <h3 className="font-display text-xl md:text-2xl text-midnight mb-2 group-hover:text-sunset transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-sm text-midnight/60 leading-relaxed mb-5">
+                <p className="text-sm text-midnight/70 leading-relaxed mb-5">
                   {item.desc}
                 </p>
-                <div className="border-t border-dashed border-midnight/15 pt-4 flex items-center justify-between text-sm">
-                  <span className="text-midnight/50 group-hover:text-midnight transition-colors">
+                <div className="border-t-2 border-dashed border-midnight/30 pt-4 flex items-center justify-between text-sm">
+                  <span className="text-midnight font-extrabold uppercase tracking-wider text-xs">
                     詳しく見る
                   </span>
-                  <span className="text-sunset group-hover:translate-x-1 transition-transform">
-                    →
+                  <span className="text-sunset font-extrabold text-lg group-hover:translate-x-1 transition-transform">
+                    ▶
                   </span>
                 </div>
               </Link>
@@ -163,21 +167,18 @@ export default function MenuOverview() {
         >
           <a
             href="tel:0486064977"
-            className="flex items-center justify-center gap-3 px-6 py-5 rounded-2xl bg-midnight text-cream hover:bg-midnight/90 transition-all"
+            className="flex items-center justify-center gap-3 px-6 py-5 rounded-2xl bg-midnight border-2 border-midnight text-cream shadow-retro-pop-sunset hover:shadow-retro-pop-magenta hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
           >
-            <svg className="w-5 h-5 text-sunset" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-cyan90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <span className="text-sm tracking-wider text-chrome/70">お電話</span>
+            <span className="text-xs tracking-[0.2em] text-cyan90 font-mono uppercase">Tel</span>
             <span className="font-display text-lg font-bold">048-606-4977</span>
           </a>
-          <Link
-            href="/reservation"
-            className="flex items-center justify-center gap-3 px-6 py-5 rounded-2xl bg-sunset-gradient text-midnight font-bold hover:scale-[1.02] transition-transform shadow-chrome"
-          >
+          <Link href="/reservation" className="btn-90s justify-center !w-full">
             <span className="w-2 h-2 rounded-full bg-midnight animate-pulse" />
             無料カウンセリングを予約
-            <span>→</span>
+            <span>▶</span>
           </Link>
         </motion.div>
       </div>

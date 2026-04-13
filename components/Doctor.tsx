@@ -80,7 +80,7 @@ export default function Doctor() {
                 />
 
                 {/* Inner card body */}
-                <div className="relative w-full h-full rounded-xl bg-gradient-to-br from-[#1a0f08] via-[#241409] to-[#1a0f08] overflow-hidden grain">
+                <div className="relative w-full h-full rounded-xl bg-gradient-to-br from-[#1a0f08] via-[#241409] to-[#1a0f08] overflow-hidden grain vhs-scan crt-roll">
                   {/* Engraved guilloché pattern */}
                   <div
                     className="absolute inset-0 opacity-[0.07] pointer-events-none"

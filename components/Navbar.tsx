@@ -35,10 +35,12 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled || pathname !== "/"
-          ? "bg-midnight/90 backdrop-blur-md border-b border-sunset/20 shadow-sunset-glow"
+          ? "bg-midnight/90 backdrop-blur-md border-b-2 border-midnight shadow-sunset-glow"
           : "bg-transparent"
       }`}
     >
+      {/* 90s foil bar atop nav when scrolled / on inner pages */}
+      {(scrolled || pathname !== "/") && <div className="h-1 foil" />}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
@@ -81,7 +83,7 @@ export default function Navbar() {
 
         <Link
           href="/reservation"
-          className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sunset-gradient text-midnight font-bold text-sm shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
+          className="btn-90s hidden lg:inline-flex !text-xs !py-2 !px-4"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-midnight animate-pulse" />
           無料カウンセリング

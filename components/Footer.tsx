@@ -3,13 +3,17 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-midnight text-cream overflow-hidden grain">
-      {/* Top pinstripe accent */}
+    <footer className="relative bg-midnight text-cream overflow-hidden grain vhs-scan">
+      {/* Top foil bar — 90s holographic */}
+      <div className="h-2 foil" />
+      {/* Pinstripe accents */}
       <div className="pinstripe" />
       <div className="pinstripe opacity-50 mt-1" />
 
-      {/* Sunset glow */}
+      {/* Sunset glow + neon accents */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-sunset/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-20 left-10 w-48 h-48 bg-cyan90/[0.08] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-10 right-10 w-56 h-56 bg-magenta/[0.08] rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12 pt-16 pb-8">
         {/* Top */}
@@ -35,15 +39,15 @@ export default function Footer() {
               塗装状態・使用環境・年式を診断し、車両ごとに最適な施術計画をご提案。
               車の寿命を延ばし、価値を守ります。
             </p>
-            <div className="font-display text-sunset text-lg">
+            <div className="font-display text-lg candy-90s-text retro-italic">
               「車の寿命を延ばし、価値を守る」
             </div>
           </div>
 
           {/* Links */}
           <div>
-            <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold mb-4">
-              Menu
+            <div className="sticker mb-4 !text-[9px]">
+              ★ Menu ★
             </div>
             <ul className="space-y-3 text-sm">
               {[
@@ -68,8 +72,8 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold mb-4">
-              Contact
+            <div className="sticker mb-4 !text-[9px]">
+              ★ Contact ★
             </div>
             <ul className="space-y-3 text-sm text-chrome/70">
               <li>
@@ -107,7 +111,7 @@ export default function Footer() {
                 href="https://www.instagram.com/japanese_detailer_girl/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-sunset/30 flex items-center justify-center text-sunset text-xs font-bold hover:bg-sunset hover:text-midnight transition-all"
+                className="w-10 h-10 rounded-lg border-2 border-cream bg-magenta flex items-center justify-center text-cream text-xs font-extrabold tracking-widest shadow-[3px_3px_0_0_#FFF8F0] hover:shadow-neon-magenta hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
                 aria-label="Instagram"
               >
                 IG

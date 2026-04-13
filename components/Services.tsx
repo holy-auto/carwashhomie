@@ -232,8 +232,9 @@ function SectionHeader({
 function BodyCoatingSection() {
   return (
     <section id="coating" className="relative py-24 md:py-32 bg-cream overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-sunset/[0.04] rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-0 w-64 h-64 bg-chrome/20 rounded-full blur-3xl" />
+      <div className="absolute inset-0 memphis-dots-sunset opacity-50 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-magenta/[0.05] rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-0 w-64 h-64 bg-cyan90/[0.08] rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <SectionHeader
@@ -256,14 +257,17 @@ function BodyCoatingSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className={`clinic-card relative rounded-2xl p-7 shadow-clinic overflow-hidden ${
+                className={`clinic-card relative rounded-2xl p-7 overflow-hidden border-2 border-midnight ${
                   isPremium
-                    ? "bg-midnight text-cream border border-sunset/40"
-                    : "bg-white border border-midnight/10"
+                    ? "bg-midnight text-cream shadow-retro-pop-sunset"
+                    : "bg-white shadow-retro-pop"
                 }`}
               >
                 {isPremium && (
-                  <div className="absolute -top-10 -right-10 w-40 h-40 bg-sunset/20 rounded-full blur-3xl" />
+                  <>
+                    <div className="absolute -top-10 -right-10 w-40 h-40 bg-sunset/20 rounded-full blur-3xl" />
+                    <div className="absolute top-0 left-0 right-0 h-1.5 foil" />
+                  </>
                 )}
                 <div className="relative">
                   {/* Header: class + tag */}

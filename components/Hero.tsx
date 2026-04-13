@@ -6,9 +6,12 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-midnight grain">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-midnight grain vhs-scan crt-roll flicker">
       {/* Subtle clinic ambient light */}
       <div className="absolute inset-0 bg-gradient-to-b from-midnight via-midnight-100 to-midnight" />
+
+      {/* 90s retro grid floor — vaporwave horizon */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 retro-grid opacity-60 [mask-image:linear-gradient(to_top,black,transparent)]" />
 
       {/* Elegant thin chrome rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -46,13 +49,11 @@ export default function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-midnight-50/40 border border-chrome/20 backdrop-blur-sm mb-10"
+          className="sticker mb-10 !bg-cyan90/20 !text-cream !border-cyan90 shadow-neon-cyan"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-sunset animate-pulse" />
-          <span className="text-chrome/80 text-xs tracking-[0.3em] uppercase font-semibold">
-            2025年 4月15日 OPEN
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-sunset animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan90 animate-pulse" />
+          <span className="font-mono">2025.04.15 ★ NOW OPEN</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-magenta animate-pulse" />
         </motion.div>
 
         {/* Logo image - hero center */}
@@ -81,7 +82,7 @@ export default function Hero() {
         >
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-cream leading-[1.1] tracking-tight">
             <span className="text-cream">車の</span>
-            <span className="candy-text">美容外科</span>
+            <span className="candy-90s-text retro-italic">美容外科</span>
           </h1>
           <div className="mt-3 flex items-center justify-center gap-4">
             <span className="h-[1px] w-12 bg-chrome/30" />
@@ -111,10 +112,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.9 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link
-            href="/reservation"
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-sunset-gradient text-midnight font-bold shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
-          >
+          <Link href="/reservation" className="btn-90s group">
             <span className="w-2 h-2 rounded-full bg-midnight" />
             無料カウンセリングを予約
             <svg
@@ -133,7 +131,7 @@ export default function Hero() {
           </Link>
           <Link
             href="/menu"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-cream/30 text-cream hover:border-sunset hover:text-sunset transition-all backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-cream font-extrabold uppercase tracking-[0.18em] text-xs text-cream bg-midnight/40 hover:bg-cream hover:text-midnight transition-all shadow-[4px_4px_0_0_#00E5FF] hover:shadow-[6px_6px_0_0_#FF2E97] backdrop-blur-sm"
           >
             施術メニューを見る
           </Link>

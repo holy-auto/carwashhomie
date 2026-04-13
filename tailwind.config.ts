@@ -31,6 +31,19 @@ const config: Config = {
         },
         chrome: "#E8E8EC",
         ivory: "#FFF8F0",
+        // 90s neon accents — used sparingly for retro pop
+        magenta: {
+          DEFAULT: "#FF2E97",
+          400: "#FF5BAE",
+          500: "#FF2E97",
+          600: "#D81F7E",
+        },
+        cyan90: {
+          DEFAULT: "#00E5FF",
+          400: "#5CF0FF",
+          500: "#00E5FF",
+          600: "#00B8CC",
+        },
       },
       fontFamily: {
         display: ["var(--font-playfair)", "Georgia", "serif"],
@@ -44,11 +57,27 @@ const config: Config = {
           "linear-gradient(180deg, #1A0F08 0%, #3D2819 50%, #FF6B1A 100%)",
         "candy-paint":
           "radial-gradient(ellipse at top, #FF8533 0%, #FF6B1A 40%, #8A3100 100%)",
+        // 90s — Y2K candy gradient: orange → magenta → cyan
+        "candy-90s":
+          "linear-gradient(135deg, #FF6B1A 0%, #FF2E97 50%, #00E5FF 100%)",
+        "vhs-bg":
+          "linear-gradient(180deg, #1A0F08 0%, #2E1D11 50%, #1A0F08 100%)",
       },
       boxShadow: {
         chrome: "0 0 20px rgba(255, 107, 26, 0.3), inset 0 1px 0 rgba(255,255,255,0.2)",
         "sunset-glow": "0 0 40px rgba(255, 107, 26, 0.5)",
         clinic: "0 4px 24px rgba(26, 15, 8, 0.08)",
+        // 90s chunky stacked drop-shadow (Memphis / poster style)
+        "retro-pop": "4px 4px 0 0 #1A0F08",
+        "retro-pop-lg": "6px 6px 0 0 #1A0F08",
+        "retro-pop-sunset": "4px 4px 0 0 #FF6B1A",
+        "retro-pop-magenta": "4px 4px 0 0 #FF2E97",
+        // 90s chrome bevel (light top, dark bottom)
+        "chrome-bevel":
+          "inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.25), 0 6px 12px rgba(0,0,0,0.18)",
+        // Neon glow (Y2K)
+        "neon-magenta": "0 0 12px rgba(255,46,151,0.8), 0 0 28px rgba(255,46,151,0.45)",
+        "neon-cyan": "0 0 12px rgba(0,229,255,0.8), 0 0 28px rgba(0,229,255,0.45)",
       },
       animation: {
         "hydraulic-bounce": "hydraulic 2.5s ease-in-out infinite",
