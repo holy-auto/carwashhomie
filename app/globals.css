@@ -38,12 +38,16 @@ h1, h2, h3, h4 {
   font-family: var(--font-chunky), var(--font-pixel-jp), var(--font-playfair),
     Georgia, serif;
   letter-spacing: 0.01em;
-  line-height: 1.15;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  /* strict line-break keeps small kana (ゃゅょっ) from starting a line */
+  line-break: strict;
 }
 
 /* Bungee is super chunky — soften kerning on huge hero titles */
 h1 {
   letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 /* Tabular numbers / mono inputs render in CRT-mono for that 90s readout look */

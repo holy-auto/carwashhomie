@@ -26,11 +26,13 @@ export default function About() {
             Our Concept
             <div className="w-8 h-[1px] bg-midnight/30" />
           </div>
-          <h2 className="font-display text-4xl md:text-6xl text-midnight mb-4">
+          <h2 className="font-display text-[2rem] md:text-5xl text-midnight mb-4 leading-tight">
             当院のコンセプト
           </h2>
-          <p className="text-midnight/50 text-sm tracking-wide">
-            ただのコーティング屋さんじゃない、車の美容外科です。
+          <p className="text-midnight/60 text-sm tracking-wide font-readable leading-relaxed">
+            ただのコーティング屋さんじゃない、
+            <br className="sm:hidden" />
+            車の美容外科です。
           </p>
         </motion.div>
 

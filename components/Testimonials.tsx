@@ -54,10 +54,10 @@ export default function Testimonials() {
             Customer Voice
             <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
-          <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
+          <h2 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
             お客様の声
           </h2>
-          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed font-readable">
             実際に施術を受けたお客様の声をご紹介します。
           </p>
         </motion.div>

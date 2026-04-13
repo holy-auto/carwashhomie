@@ -82,10 +82,10 @@ export default function Access() {
             Access & Map
             <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
-          <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
+          <h2 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
             アクセス
           </h2>
-          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed font-readable">
             愛車を連れて、お気軽にご来院ください。
           </p>
         </motion.div>

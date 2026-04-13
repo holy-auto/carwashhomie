@@ -62,11 +62,13 @@ export default function Reservation() {
             Reservation
             <div className="w-8 h-[1px] bg-midnight/30" />
           </div>
-          <h2 className="font-display text-4xl md:text-6xl text-midnight mb-4">
+          <h2 className="font-display text-[2rem] md:text-5xl text-midnight mb-4 leading-tight">
             ご予約<span className="text-sunset">・</span>ご相談
           </h2>
-          <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed">
-            お気軽にご相談ください。愛車の状態を診察し、最適な施術プランをご提案します。
+          <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed font-readable">
+            お気軽にご相談ください。
+            <br className="md:hidden" />
+            愛車の状態を診察し、最適な施術プランをご提案します。
             <br className="hidden md:block" />
             無料カウンセリング実施中（車両状態確認・施術提案）
           </p>
@@ -208,13 +210,17 @@ export default function Reservation() {
                     />
                   </svg>
                 </div>
-                <h3 className="font-display text-3xl text-midnight mb-3">
-                  お問い合わせありがとうございます
+                <h3 className="font-display text-xl md:text-3xl text-midnight mb-3 leading-tight">
+                  お問い合わせ
+                  <br className="md:hidden" />
+                  ありがとうございます
                 </h3>
-                <p className="text-midnight/60 leading-relaxed">
+                <p className="text-midnight/60 leading-relaxed font-readable">
                   内容を確認の上、折り返しご連絡いたします。
                   <br />
-                  お急ぎの方はお電話（048-606-4977）またはInstagram DMでもご連絡ください。
+                  お急ぎの方はお電話（048-606-4977）または
+                  <br className="md:hidden" />
+                  Instagram DMでもご連絡ください。
                 </p>
               </div>
             ) : (

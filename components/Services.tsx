@@ -211,13 +211,13 @@ function SectionHeader({
         <div className={`w-8 h-[1px] ${lineColor}`} />
       </div>
       <h2
-        className={`font-display text-4xl md:text-6xl ${titleColor} mb-5 leading-tight`}
+        className={`font-display text-[2rem] md:text-5xl ${titleColor} mb-5 leading-tight`}
       >
         {title}
       </h2>
       {description && (
         <p
-          className={`${descColor} max-w-2xl mx-auto leading-relaxed text-sm md:text-base`}
+          className={`${descColor} max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-readable`}
         >
           {description}
         </p>
@@ -241,7 +241,9 @@ function BodyCoatingSection() {
           label="Body Coating"
           title={
             <>
-              ボディコーティング<span className="text-sunset">料金表</span>
+              ボディコーティング
+              <br className="md:hidden" />
+              <span className="text-sunset">料金表</span>
             </>
           }
           description="塗装状態を診断し、車両ごとに最適な液剤を選定。施工前には必ず問診でご説明いたします。"
@@ -424,7 +426,9 @@ function InteriorCoatingSection() {
           label="Interior Coating"
           title={
             <>
-              シート・<span className="text-sunset">内装</span>コーティング
+              シート・<span className="text-sunset">内装</span>
+              <br className="md:hidden" />
+              コーティング
             </>
           }
           description="ファブリック・レザーどちらも対応。汚れ・素材に応じて問診で擦り合わせさせていただきます。"
@@ -553,7 +557,9 @@ function OtherCoatingSection() {
           label="Glass & Wheel Coating"
           title={
             <>
-              その他<span className="text-sunset">コーティング</span>
+              その他
+              <br className="md:hidden" />
+              <span className="text-sunset">コーティング</span>
             </>
           }
           description="窓ガラス・ホイールなど、細部まで守る専門メニューです。"
@@ -710,7 +716,9 @@ function WashSection() {
           label="Wash Services"
           title={
             <>
-              洗車<span className="text-sunset">サービス</span>紹介
+              洗車<span className="text-sunset">サービス</span>
+              <br className="md:hidden" />
+              紹介
             </>
           }
           description="プロの手洗いで愛車を傷つけず、汚れだけを的確に除去。定期的なメンテナンスでコーティングの持ちも変わります。"
@@ -857,7 +865,9 @@ function BrandsSection() {
           label="Brands We Trust"
           title={
             <>
-              取り扱い施工・<span className="text-sunset">販売ブランド</span>一覧
+              取り扱い施工・
+              <br className="md:hidden" />
+              <span className="text-sunset">販売ブランド</span>一覧
             </>
           }
           description="世界中のプロが認めるブランドを厳選し、施工・販売いたします。"
