@@ -112,6 +112,15 @@ export default function Footer() {
               >
                 IG
               </a>
+              <a
+                href="https://x.com/DetailerGirl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-sunset/30 flex items-center justify-center text-sunset text-xs font-bold hover:bg-sunset hover:text-midnight transition-all"
+                aria-label="X (Twitter)"
+              >
+                X
+              </a>
             </div>
           </div>
         </div>
@@ -122,7 +131,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-chrome/50">
           <div>
-            © 2025 車の美容外科 Car Wash Homies. All rights reserved.
+            © 2026 車の美容外科 Car Wash Homies. All rights reserved.
             <br className="md:hidden" />
             <span className="hidden md:inline"> · </span>
             登録番号 T8810011150208

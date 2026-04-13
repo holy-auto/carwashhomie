@@ -30,7 +30,7 @@ export default function Hero() {
         >
           <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
           <span className="text-sunset text-xs tracking-[0.3em] uppercase font-semibold">
-            2025年 4月15日 OPEN
+            2026年 4月15日 OPEN
           </span>
           <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
         </motion.div>
