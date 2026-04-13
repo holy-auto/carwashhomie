@@ -127,139 +127,154 @@ export default function OpeningAnimation({
               );
             })}
 
-            {/* Logo build-up — progressive reveal from top to bottom,
-                like the logo is being drawn / printed on the screen */}
+            {/* Logo build-up — handwritten brush strokes drawn one after another.
+                An SVG mask made of animated calligraphy-like strokes reveals
+                the logo in the natural writing order (top flourish → CAR →
+                WASH → HOMIES → bottom flourish). `mix-blend-mode: screen`
+                on the wrapper knocks out the PNG's black background so no
+                square artifact shows against the midnight backdrop. */}
             <motion.div
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{
-                scale: [0.85, 1.04, 1],
-                opacity: [0, 1, 1],
-              }}
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: [0.92, 1.03, 1], opacity: [0, 1, 1] }}
               transition={{
-                duration: 2.2,
-                delay: 0.9,
-                times: [0, 0.75, 1],
+                duration: 3.4,
+                delay: 0.6,
+                times: [0, 0.85, 1],
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
               className="relative w-64 h-64 md:w-80 md:h-80"
+              style={{
+                mixBlendMode: "screen",
+                filter:
+                  "drop-shadow(0 0 55px rgba(255,107,26,0.55)) drop-shadow(0 0 15px rgba(255,107,26,0.4))",
+              }}
             >
-              {/* Layer 1 — ghost/outline of the full logo (very faint, always
-                  visible, gives the "pre-drawn" guide look) */}
-              <div className="absolute inset-0">
-                <Image
-                  src="/logo.png"
-                  alt=""
-                  width={400}
-                  height={400}
-                  priority
-                  className="w-full h-full object-contain opacity-[0.08]"
+              <svg
+                viewBox="0 0 400 400"
+                className="w-full h-full"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs>
+                  <mask
+                    id="brushMask"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="400"
+                    height="400"
+                  >
+                    {/* Mask starts fully hidden (black) and each stroke
+                        paints in white to progressively reveal. */}
+                    <rect x="0" y="0" width="400" height="400" fill="black" />
+
+                    {/* Stroke 1 — top flourish swash (quick) */}
+                    <motion.path
+                      d="M 50 55 Q 200 30 350 55"
+                      stroke="white"
+                      strokeWidth="38"
+                      strokeLinecap="round"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.45, delay: 0.9, ease: "easeOut" }}
+                    />
+
+                    {/* Stroke 2 — "CAR" row, deliberate calligraphic pass */}
+                    <motion.path
+                      d="M 28 125 C 120 95, 260 150, 372 120"
+                      stroke="white"
+                      strokeWidth="78"
+                      strokeLinecap="round"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.75, delay: 1.3, ease: [0.5, 0, 0.3, 1] }}
+                    />
+
+                    {/* Stroke 3 — "WASH" row */}
+                    <motion.path
+                      d="M 22 210 C 140 182, 260 238, 378 206"
+                      stroke="white"
+                      strokeWidth="82"
+                      strokeLinecap="round"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.8, delay: 2.0, ease: [0.5, 0, 0.3, 1] }}
+                    />
+
+                    {/* Stroke 4 — "HOMIES" row */}
+                    <motion.path
+                      d="M 25 298 C 130 270, 270 326, 375 294"
+                      stroke="white"
+                      strokeWidth="82"
+                      strokeLinecap="round"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.8, delay: 2.75, ease: [0.5, 0, 0.3, 1] }}
+                    />
+
+                    {/* Stroke 5 — bottom flourish swash */}
+                    <motion.path
+                      d="M 60 365 Q 200 345 340 365"
+                      stroke="white"
+                      strokeWidth="40"
+                      strokeLinecap="round"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.5, delay: 3.5, ease: "easeOut" }}
+                    />
+                  </mask>
+
+                  {/* Ink wet-look — boosts vividness behind the reveal */}
+                  <filter id="inkBoost" x="-10%" y="-10%" width="120%" height="120%">
+                    <feGaussianBlur stdDeviation="0.3" />
+                  </filter>
+                </defs>
+
+                {/* The actual logo, revealed by the brush mask */}
+                <image
+                  href="/logo.png"
+                  x="0"
+                  y="0"
+                  width="400"
+                  height="400"
+                  preserveAspectRatio="xMidYMid meet"
+                  mask="url(#brushMask)"
+                  filter="url(#inkBoost)"
                 />
-              </div>
+              </svg>
 
-              {/* Layer 2 — the actual logo revealed top → bottom via clip-path.
-                  Paired with a drop-shadow glow that respects the PNG alpha. */}
-              <motion.div
-                initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
-                animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
-                transition={{
-                  duration: 1.8,
-                  delay: 1.0,
-                  ease: [0.4, 0, 0.2, 1],
-                }}
-                className="absolute inset-0"
-              >
-                <motion.div
-                  initial={{
-                    filter:
-                      "drop-shadow(0 0 0px rgba(255,107,26,0)) brightness(2.4)",
-                  }}
-                  animate={{
-                    filter: [
-                      "drop-shadow(0 0 80px rgba(255,107,26,0.95)) brightness(2.4)",
-                      "drop-shadow(0 0 70px rgba(255,107,26,0.8)) brightness(1.25)",
-                      "drop-shadow(0 0 60px rgba(255,107,26,0.55)) brightness(1)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 2.2,
-                    delay: 0.9,
-                    times: [0, 0.75, 1],
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                  }}
-                  className="w-full h-full"
-                >
-                  <Image
-                    src="/logo.png"
-                    alt="Car Wash Homies"
-                    width={400}
-                    height={400}
-                    priority
-                    className="w-full h-full object-contain"
-                  />
-                </motion.div>
-              </motion.div>
-
-              {/* Layer 3 — scanning beam that rides the reveal edge,
-                  shaped by the logo's alpha so it only glows on the silhouette */}
-              <div
-                className="absolute inset-0 pointer-events-none overflow-hidden"
-                style={{
-                  WebkitMaskImage: "url(/logo.png)",
-                  maskImage: "url(/logo.png)",
-                  WebkitMaskRepeat: "no-repeat",
-                  maskRepeat: "no-repeat",
-                  WebkitMaskPosition: "center",
-                  maskPosition: "center",
-                  WebkitMaskSize: "contain",
-                  maskSize: "contain",
-                }}
-              >
-                <motion.div
-                  initial={{ y: "-20%", opacity: 0 }}
-                  animate={{ y: "110%", opacity: [0, 1, 1, 0] }}
-                  transition={{
-                    duration: 1.8,
-                    delay: 1.0,
-                    ease: [0.4, 0, 0.2, 1],
-                    times: [0, 0.1, 0.9, 1],
-                  }}
-                  className="absolute left-0 right-0 h-10"
+              {/* Pen-tip glow — a small bright dot that rides each stroke head,
+                  sold as the "tip of the calligraphy brush" cue. These are
+                  simple timed flashes positioned at each stroke's START point
+                  to reinforce the feeling of a pen stroke being laid down. */}
+              {[
+                { cx: 12.5, cy: 13.75, delay: 0.9, dur: 0.45 },
+                { cx: 7, cy: 31.25, delay: 1.3, dur: 0.75 },
+                { cx: 5.5, cy: 52.5, delay: 2.0, dur: 0.8 },
+                { cx: 6.25, cy: 74.5, delay: 2.75, dur: 0.8 },
+                { cx: 15, cy: 91.25, delay: 3.5, dur: 0.5 },
+              ].map((p, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: [0, 1, 0], scale: [0, 1, 0.2] }}
+                  transition={{ duration: p.dur, delay: p.delay }}
+                  className="absolute w-3 h-3 rounded-full bg-cream pointer-events-none"
                   style={{
-                    background:
-                      "linear-gradient(to bottom, transparent 0%, rgba(0,229,255,0.35) 40%, rgba(255,255,255,0.95) 50%, rgba(255,46,151,0.35) 60%, transparent 100%)",
-                    mixBlendMode: "screen",
-                    filter: "blur(1px)",
+                    left: `${p.cx}%`,
+                    top: `${p.cy}%`,
+                    transform: "translate(-50%, -50%)",
+                    boxShadow:
+                      "0 0 14px rgba(255,248,240,0.95), 0 0 28px rgba(255,107,26,0.8)",
                   }}
                 />
-              </div>
+              ))}
 
-              {/* Layer 4 — CRT scanlines overlay on the logo during the build,
-                  fades out once the logo is fully formed */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 0.35, 0.35, 0] }}
-                transition={{
-                  duration: 2.6,
-                  delay: 1.0,
-                  times: [0, 0.15, 0.85, 1],
-                }}
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  WebkitMaskImage: "url(/logo.png)",
-                  maskImage: "url(/logo.png)",
-                  WebkitMaskRepeat: "no-repeat",
-                  maskRepeat: "no-repeat",
-                  WebkitMaskPosition: "center",
-                  maskPosition: "center",
-                  WebkitMaskSize: "contain",
-                  maskSize: "contain",
-                  backgroundImage:
-                    "repeating-linear-gradient(to bottom, rgba(0,0,0,0.6) 0px, rgba(0,0,0,0.6) 1px, transparent 1px, transparent 3px)",
-                  mixBlendMode: "multiply",
-                }}
-              />
-
-              {/* Layer 5 — final chrome shine sweep (after the logo is assembled) */}
+              {/* Final chrome shine sweep — only after the logo is fully written */}
               <div
                 className="absolute inset-0 pointer-events-none overflow-hidden"
                 style={{
@@ -278,7 +293,7 @@ export default function OpeningAnimation({
                   animate={{ x: "120%", opacity: [0, 0.6, 0] }}
                   transition={{
                     duration: 1.2,
-                    delay: 2.9,
+                    delay: 4.2,
                     ease: "easeInOut",
                   }}
                   className="absolute inset-0"
