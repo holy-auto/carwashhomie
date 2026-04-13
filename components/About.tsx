@@ -110,7 +110,7 @@ export default function About() {
                     { label: "電話番号", value: "048-606-4977" },
                     { label: "営業時間", value: "10:00 — 19:00" },
                     { label: "定休日", value: "不定休" },
-                    { label: "開業", value: "2025年4月15日" },
+                    { label: "開業", value: "2026年4月15日" },
                   ].map((row) => (
                     <tr
                       key={row.label}
