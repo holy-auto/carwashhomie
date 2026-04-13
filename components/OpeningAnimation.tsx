@@ -127,21 +127,12 @@ export default function OpeningAnimation({
               );
             })}
 
-            {/* Logo build-up */}
+            {/* Logo build-up — glow follows the logo's alpha shape, not its bounding box */}
             <motion.div
-              initial={{
-                scale: 0.3,
-                opacity: 0,
-                filter: "blur(30px) brightness(3)",
-              }}
+              initial={{ scale: 0.3, opacity: 0 }}
               animate={{
                 scale: [0.3, 1.08, 1],
                 opacity: [0, 1, 1],
-                filter: [
-                  "blur(30px) brightness(3)",
-                  "blur(0px) brightness(1.2)",
-                  "blur(0px) brightness(1)",
-                ],
               }}
               transition={{
                 duration: 2.2,
@@ -149,18 +140,40 @@ export default function OpeningAnimation({
                 times: [0, 0.75, 1],
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
-              className="relative"
+              className="relative w-64 h-64 md:w-80 md:h-80"
             >
-              <Image
-                src="/logo.png"
-                alt="Car Wash Homies"
-                width={400}
-                height={400}
-                priority
-                className="w-64 h-64 md:w-80 md:h-80 object-contain drop-shadow-[0_0_60px_rgba(255,107,26,0.55)]"
-              />
+              {/* drop-shadow respects PNG alpha, so the glow hugs the silhouette */}
+              <motion.div
+                initial={{
+                  filter:
+                    "drop-shadow(0 0 0px rgba(255,107,26,0)) brightness(2.4)",
+                }}
+                animate={{
+                  filter: [
+                    "drop-shadow(0 0 80px rgba(255,107,26,0.95)) brightness(2.4)",
+                    "drop-shadow(0 0 70px rgba(255,107,26,0.8)) brightness(1.25)",
+                    "drop-shadow(0 0 60px rgba(255,107,26,0.55)) brightness(1)",
+                  ],
+                }}
+                transition={{
+                  duration: 2.2,
+                  delay: 0.9,
+                  times: [0, 0.75, 1],
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                className="w-full h-full"
+              >
+                <Image
+                  src="/logo.png"
+                  alt="Car Wash Homies"
+                  width={400}
+                  height={400}
+                  priority
+                  className="w-full h-full object-contain"
+                />
+              </motion.div>
 
-              {/* Chrome shine sweep across logo */}
+              {/* Chrome shine sweep — masked to the logo so the rectangle never lights up */}
               <motion.div
                 initial={{ x: "-120%", opacity: 0 }}
                 animate={{ x: "120%", opacity: [0, 0.6, 0] }}
@@ -172,7 +185,15 @@ export default function OpeningAnimation({
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    "linear-gradient(100deg, transparent 40%, rgba(255,255,255,0.4) 50%, transparent 60%)",
+                    "linear-gradient(100deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
+                  WebkitMaskImage: "url(/logo.png)",
+                  maskImage: "url(/logo.png)",
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  maskPosition: "center",
+                  WebkitMaskSize: "contain",
+                  maskSize: "contain",
                   mixBlendMode: "screen",
                 }}
               />
