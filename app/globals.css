@@ -17,13 +17,44 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+section[id] {
+  scroll-margin-top: 96px;
 }
 
 body {
   background-color: var(--color-cream);
   color: var(--color-midnight);
   font-feature-settings: "palt";
+  /* DotGothic16 pixel-jp body — keep readable leading */
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+/* Headings everywhere → chunky Bungee + pixel-jp fallback for Japanese */
+h1, h2, h3, h4 {
+  font-family: var(--font-chunky), var(--font-pixel-jp), var(--font-playfair),
+    Georgia, serif;
   letter-spacing: 0.01em;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  /* strict line-break keeps small kana (ゃゅょっ) from starting a line */
+  line-break: strict;
+}
+
+/* Bungee is super chunky — soften kerning on huge hero titles */
+h1 {
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* Tabular numbers / mono inputs render in CRT-mono for that 90s readout look */
+input[type="tel"],
+input[type="number"],
+.font-readout {
+  font-family: var(--font-crt), monospace;
 }
 
 ::selection {
@@ -136,6 +167,239 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff6b1a, #ffb347);
+  background: linear-gradient(180deg, #ff6b1a, #ff2e97 50%, #00e5ff);
   border-radius: 5px;
 }
+
+/* ============================================================
+   90s / Y2K utilities
+   ============================================================ */
+
+/* CRT / VHS scanlines — fixed 2px horizontal stripes */
+.vhs-scan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+/* Memphis dot field — playful 90s polka */
+.memphis-dots {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(26, 15, 8, 0.18) 1px,
+    transparent 0
+  );
+  background-size: 14px 14px;
+}
+
+.memphis-dots-sunset {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 107, 26, 0.35) 1px,
+    transparent 0
+  );
+  background-size: 14px 14px;
+}
+
+/* Memphis zigzag border accent (single line) */
+.memphis-zig {
+  background-image: linear-gradient(
+      135deg,
+      var(--color-sunset) 25%,
+      transparent 25%
+    ),
+    linear-gradient(225deg, var(--color-sunset) 25%, transparent 25%);
+  background-size: 12px 6px;
+  background-position: 0 0, 0 0;
+  background-repeat: repeat-x;
+  height: 6px;
+}
+
+/* Vaporwave / 90s sunset grid */
+.retro-grid {
+  background-image:
+    linear-gradient(rgba(255, 107, 26, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 107, 26, 0.18) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Y2K candy text — orange → magenta → cyan */
+.candy-90s-text {
+  background: linear-gradient(135deg, #ff6b1a 0%, #ff2e97 50%, #00e5ff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 24px rgba(255, 46, 151, 0.25);
+}
+
+/* Retro slanted/italic display headline */
+.retro-italic {
+  font-style: italic;
+  font-stretch: condensed;
+  letter-spacing: -0.01em;
+  transform: skewX(-6deg);
+  display: inline-block;
+}
+
+/* Neon outline text — for accent words */
+.neon-outline-cyan {
+  color: #00e5ff;
+  text-shadow:
+    0 0 4px rgba(0, 229, 255, 0.9),
+    0 0 12px rgba(0, 229, 255, 0.6),
+    0 0 22px rgba(0, 229, 255, 0.4);
+}
+
+.neon-outline-magenta {
+  color: #ff2e97;
+  text-shadow:
+    0 0 4px rgba(255, 46, 151, 0.9),
+    0 0 12px rgba(255, 46, 151, 0.6),
+    0 0 22px rgba(255, 46, 151, 0.4);
+}
+
+/* Slow drifting CRT scanline — for hero/license card */
+@keyframes crtRoll {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.crt-roll::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+  height: 30%;
+  animation: crtRoll 6s linear infinite;
+  z-index: 2;
+}
+
+/* 90s chunky chrome bevel button base */
+.btn-90s {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-family: var(--font-chunky), Impact, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: #1a0f08;
+  background: linear-gradient(180deg, #ffd9a8 0%, #ff6b1a 50%, #8a3100 100%);
+  border: 2px solid #1a0f08;
+  border-radius: 0.5rem;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.35),
+    4px 4px 0 0 #1a0f08;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.btn-90s:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.35),
+    6px 6px 0 0 #1a0f08;
+}
+.btn-90s:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.35),
+    0 0 0 0 #1a0f08;
+}
+
+/* Sticker-style chunky badge */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border: 2px solid #1a0f08;
+  border-radius: 0.4rem;
+  font-family: var(--font-pixel), monospace;
+  font-weight: 400;
+  font-size: 0.55rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #fff8f0;
+  color: #1a0f08;
+  box-shadow: 3px 3px 0 0 #1a0f08;
+}
+
+/* Pixel/CRT helper utilities */
+.font-pixel { font-family: var(--font-pixel), monospace; }
+.font-crt { font-family: var(--font-crt), monospace; }
+.font-chunky { font-family: var(--font-chunky), Impact, sans-serif; }
+.font-pixel-jp { font-family: var(--font-pixel-jp), var(--font-pixel), monospace; }
+
+/* Pixel-perfect rendering for tiny pixel text */
+.pixelated {
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: geometricPrecision;
+}
+
+/* Generic helpers — pricing readouts and label minicaps */
+.price {
+  font-family: var(--font-crt), monospace;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.minicaps {
+  font-family: var(--font-pixel), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.55rem;
+  line-height: 1;
+}
+
+/* Holographic foil bar (90s trading card) */
+.foil {
+  background: linear-gradient(
+    100deg,
+    #ff6b1a 0%,
+    #ffd9a8 18%,
+    #c8b78a 32%,
+    #ff2e97 50%,
+    #c8b78a 68%,
+    #ffd9a8 82%,
+    #00e5ff 100%
+  );
+  background-size: 200% 100%;
+  animation: foilSlide 8s linear infinite;
+}
+@keyframes foilSlide {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Flicker (CRT power-on) */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  47% { opacity: 0.92; }
+  48% { opacity: 1; }
+  72% { opacity: 0.96; }
+  73% { opacity: 1; }
+}
+.flicker { animation: flicker 5s infinite; }

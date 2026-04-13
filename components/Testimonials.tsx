@@ -49,15 +49,15 @@ export default function Testimonials() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
-            <div className="w-8 h-[1px] bg-sunset" />
+          <div className="inline-flex items-center gap-3 text-chrome/60 text-[9px] tracking-[0.3em] uppercase font-pixel mb-4">
+            <div className="w-8 h-[1px] bg-chrome/20" />
             Customer Voice
-            <div className="w-8 h-[1px] bg-sunset" />
+            <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
-          <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
+          <h2 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
             お客様の声
           </h2>
-          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed font-readable">
             実際に施術を受けたお客様の声をご紹介します。
           </p>
         </motion.div>
@@ -112,10 +112,10 @@ export default function Testimonials() {
 
               {/* Treatment tag */}
               <div className="pt-4 border-t border-sunset/10 relative z-10">
-                <div className="text-[10px] tracking-wider text-chrome/40 uppercase mb-1">
+                <div className="text-[8px] tracking-[0.2em] text-cyan90/70 uppercase mb-1.5 font-pixel">
                   受けた施術
                 </div>
-                <div className="text-sunset text-sm font-semibold">
+                <div className="text-sunset text-sm font-pixel-jp">
                   {v.treatment}
                 </div>
               </div>

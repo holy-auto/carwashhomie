@@ -2,37 +2,58 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-midnight grain">
-      {/* Background candy paint glow */}
-      <div className="absolute inset-0 bg-candy-paint opacity-60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-midnight/80 via-transparent to-midnight" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-midnight grain vhs-scan crt-roll flicker">
+      {/* Subtle clinic ambient light */}
+      <div className="absolute inset-0 bg-gradient-to-b from-midnight via-midnight-100 to-midnight" />
 
-      {/* Animated chrome rings */}
+      {/* 90s retro grid floor — vaporwave horizon */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 retro-grid opacity-60 [mask-image:linear-gradient(to_top,black,transparent)]" />
+
+      {/* Elegant thin chrome rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        <div className="w-[800px] h-[800px] rounded-full border border-sunset/10 animate-pulse" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-sunset/20 animate-pulse [animation-delay:500ms]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-sunset/30 animate-pulse [animation-delay:1000ms]" />
+        <div className="w-[800px] h-[800px] rounded-full border border-chrome/5" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-chrome/10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-chrome/10" />
       </div>
 
-      {/* Sunset glow at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-sunset/40 via-sunset/10 to-transparent blur-3xl" />
+      {/* Single subtle sunset accent at bottom */}
+      <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-sunset/15 rounded-full blur-3xl" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-16 text-center">
+        {/* AAH license badge — worldview anchor */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 mb-3"
+        >
+          <span className="flex items-center gap-1 text-sunset">
+            <span className="text-[10px] leading-none">★</span>
+            <span className="text-[10px] leading-none">★</span>
+          </span>
+          <span className="text-chrome/60 text-[8px] tracking-[0.3em] uppercase font-pixel">
+            AAH Licensed Detailer · No.001
+          </span>
+          <span className="flex items-center gap-1 text-sunset">
+            <span className="text-[10px] leading-none">★</span>
+            <span className="text-[10px] leading-none">★</span>
+          </span>
+        </motion.div>
+
         {/* Opening badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-midnight/60 border border-sunset/30 backdrop-blur-sm mb-10"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="sticker mb-10 !bg-cyan90/20 !text-cream !border-cyan90 shadow-neon-cyan"
         >
-          <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
-          <span className="text-sunset text-xs tracking-[0.3em] uppercase font-semibold">
-            2026年 4月15日 OPEN
-          </span>
-          <span className="w-2 h-2 rounded-full bg-sunset animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan90 animate-pulse" />
+          <span className="font-pixel">2026.04.15 ★ NOW OPEN</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-magenta animate-pulse" />
         </motion.div>
 
         {/* Logo image - hero center */}
@@ -60,10 +81,16 @@ export default function Hero() {
           className="mb-6"
         >
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-cream leading-[1.1] tracking-tight">
-            <span className="candy-text">車</span>
-            <span className="text-cream">の</span>
-            <span className="candy-text">美容外科</span>
+            <span className="font-pixel-jp text-cream text-3xl md:text-5xl lg:text-6xl">車の</span>
+            <span className="candy-90s-text retro-italic">美容外科</span>
           </h1>
+          <div className="mt-4 flex items-center justify-center gap-4">
+            <span className="h-[1px] w-12 bg-chrome/30" />
+            <span className="font-pixel text-chrome/60 text-[8px] tracking-[0.3em] uppercase">
+              Automotive Aesthetic Clinic
+            </span>
+            <span className="h-[1px] w-12 bg-chrome/30" />
+          </div>
         </motion.div>
 
         {/* Sub tagline */}
@@ -74,7 +101,7 @@ export default function Hero() {
           className="text-chrome/80 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mb-12"
         >
           ただのコーティング屋さんじゃない。
-          <br className="hidden md:block" />
+          <br />
           <span className="text-sunset font-semibold">車の美容外科</span>です。
         </motion.p>
 
@@ -85,10 +112,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.9 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a
-            href="#reservation"
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-sunset-gradient text-midnight font-bold shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
-          >
+          <Link href="/reservation" className="btn-90s group">
             <span className="w-2 h-2 rounded-full bg-midnight" />
             無料カウンセリングを予約
             <svg
@@ -104,13 +128,13 @@ export default function Hero() {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </a>
-          <a
-            href="#coating"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-cream/30 text-cream hover:border-sunset hover:text-sunset transition-all backdrop-blur-sm"
+          </Link>
+          <Link
+            href="/menu"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-cream font-extrabold uppercase tracking-[0.18em] text-xs text-cream bg-midnight/40 hover:bg-cream hover:text-midnight transition-all shadow-[4px_4px_0_0_#00E5FF] hover:shadow-[6px_6px_0_0_#FF2E97] backdrop-blur-sm"
           >
             施術メニューを見る
-          </a>
+          </Link>
         </motion.div>
 
         {/* Policy */}
@@ -118,10 +142,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="mt-20 max-w-3xl mx-auto"
+          className="mt-16 max-w-3xl mx-auto"
         >
-          <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-semibold mb-4">
+          <div className="inline-flex items-center gap-3 text-[8px] tracking-[0.3em] text-cyan90/80 uppercase font-pixel mb-4">
+            <span className="h-[1px] w-6 bg-cyan90/40" />
             Our Policy
+            <span className="h-[1px] w-6 bg-cyan90/40" />
           </div>
           <p className="font-display text-2xl md:text-3xl text-cream leading-relaxed">
             「車の寿命を延ばし、
@@ -132,12 +158,19 @@ export default function Hero() {
             それが当院のポリシーです。
           </p>
         </motion.div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/60 animate-bounce">
-        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
-        <div className="w-[1px] h-8 bg-gradient-to-b from-sunset to-transparent" />
+        {/* Scroll indicator — inline so it always stays below the policy */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="mt-16 flex flex-col items-center gap-2 text-cream/50"
+        >
+          <span className="font-pixel text-[8px] tracking-[0.4em] uppercase animate-bounce text-magenta/80">
+            ▼ Scroll ▼
+          </span>
+          <div className="w-[1px] h-8 bg-gradient-to-b from-sunset to-transparent" />
+        </motion.div>
       </div>
     </section>
   );

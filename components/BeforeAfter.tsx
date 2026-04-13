@@ -123,7 +123,7 @@ function Slider({ caseData }: { caseData: Case }) {
       </div>
 
       {/* Code label */}
-      <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-midnight/80 text-sunset text-[10px] font-mono tracking-widest border border-sunset/30">
+      <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-midnight/80 text-sunset text-[10px] font-pixel tracking-widest border border-sunset/30">
         {caseData.id}
       </div>
     </div>
@@ -149,16 +149,18 @@ export default function BeforeAfter() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
-            <div className="w-8 h-[1px] bg-sunset" />
+          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-pixel mb-4">
+            <div className="w-8 h-[1px] bg-chrome/20" />
             Case Study
-            <div className="w-8 h-[1px] bg-sunset" />
+            <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
-          <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
-            施行<span className="candy-text">事例</span>
+          <h2 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
+            施術<span className="text-sunset">事例</span>
           </h2>
-          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
-            施術前後の変化をご確認ください。バーをドラッグすると施術前後の違いが一目でわかります。
+          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed font-readable">
+            施術前後の変化をご確認ください。
+            <br className="md:hidden" />
+            バーをドラッグすると違いが一目でわかります。
           </p>
         </motion.div>
 
@@ -179,7 +181,7 @@ export default function BeforeAfter() {
 
               {/* Clinical notes */}
               <div className="lg:p-8">
-                <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono mb-3">
+                <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel mb-3">
                   {c.id}
                 </div>
                 <h3 className="font-display text-3xl md:text-4xl text-cream mb-4 leading-tight">
