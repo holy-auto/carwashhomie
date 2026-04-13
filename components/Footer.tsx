@@ -112,6 +112,15 @@ export default function Footer() {
               >
                 IG
               </a>
+              <a
+                href="https://x.com/DetailerGirl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-sunset/30 flex items-center justify-center text-sunset text-xs font-bold hover:bg-sunset hover:text-midnight transition-all"
+                aria-label="X (Twitter)"
+              >
+                X
+              </a>
             </div>
           </div>
         </div>
