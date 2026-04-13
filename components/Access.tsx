@@ -77,7 +77,7 @@ export default function Access() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-pixel mb-4">
             <div className="w-8 h-[1px] bg-chrome/20" />
             Access & Map
             <div className="w-8 h-[1px] bg-chrome/20" />
@@ -147,29 +147,38 @@ export default function Access() {
           >
             {/* Basic info cards */}
             <div className="bg-midnight-50/30 border border-sunset/20 rounded-2xl p-6 space-y-5">
-              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold">
+              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel">
                 Clinic Info
               </div>
-              {info.map((item) => (
-                <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-sunset/10 flex items-center justify-center text-sunset shrink-0">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <div className="text-[10px] tracking-wider text-chrome/50 uppercase mb-0.5">
-                      {item.label}
+              {info.map((item) => {
+                const isPhone = item.label === "電話番号";
+                return (
+                  <div key={item.label} className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-sunset/10 flex items-center justify-center text-sunset shrink-0">
+                      {item.icon}
                     </div>
-                    <div className="text-cream text-sm leading-relaxed">
-                      {item.value}
+                    <div>
+                      <div className="text-[8px] tracking-[0.2em] text-cyan90/80 uppercase mb-1 font-pixel">
+                        {item.label}
+                      </div>
+                      <div
+                        className={
+                          isPhone
+                            ? "font-crt text-sunset text-2xl leading-none"
+                            : "text-cream text-sm leading-relaxed"
+                        }
+                      >
+                        {item.value}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Access routes */}
             <div className="bg-midnight-50/30 border border-sunset/20 rounded-2xl p-6 space-y-5">
-              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold">
+              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel">
                 交通手段
               </div>
               {access.map((a) => (
@@ -242,7 +251,7 @@ export default function Access() {
           className="mt-16 border-t border-chrome/10 pt-10"
         >
           <div className="text-center mb-8">
-            <div className="text-[10px] tracking-[0.3em] text-chrome/50 uppercase font-semibold">
+            <div className="text-[10px] tracking-[0.3em] text-chrome/50 uppercase font-pixel">
               Company Information
             </div>
             <h3 className="font-display text-2xl text-cream mt-2">会社概要</h3>
@@ -263,7 +272,7 @@ export default function Access() {
                   key={row.label}
                   className="contents"
                 >
-                  <dt className="py-3 text-chrome/50 text-[11px] tracking-[0.2em] uppercase font-semibold border-b border-chrome/10 md:border-b-0">
+                  <dt className="py-3 text-chrome/50 text-[11px] tracking-[0.2em] uppercase font-pixel border-b border-chrome/10 md:border-b-0">
                     {row.label}
                   </dt>
                   <dd className="pb-3 md:py-3 text-cream/90 border-b border-chrome/10">

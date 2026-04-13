@@ -66,14 +66,14 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`transition-colors text-sm tracking-wide relative group ${
-                  active ? "text-sunset" : "text-cream/80 hover:text-sunset"
+                className={`font-pixel-jp text-[12px] tracking-wider relative group transition-colors ${
+                  active ? "text-magenta" : "text-cream/85 hover:text-cyan90"
                 }`}
               >
                 {item.label}
                 <span
-                  className={`absolute -bottom-1 left-0 h-[1px] bg-sunset transition-all duration-300 ${
-                    active ? "w-full" : "w-0 group-hover:w-full"
+                  className={`absolute -bottom-1 left-0 h-[2px] bg-magenta transition-all duration-300 ${
+                    active ? "w-full" : "w-0 group-hover:w-full group-hover:bg-cyan90"
                   }`}
                 />
               </Link>
@@ -124,11 +124,12 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`transition-colors py-2 border-b border-sunset/10 ${
-                  active ? "text-sunset" : "text-cream/80 hover:text-sunset"
+                className={`font-pixel-jp text-[14px] tracking-wider transition-colors py-2 border-b-2 border-dashed border-sunset/20 flex items-center gap-2 ${
+                  active ? "text-magenta" : "text-cream/85 hover:text-cyan90"
                 }`}
                 onClick={() => setOpen(false)}
               >
+                <span className="text-sunset">▶</span>
                 {item.label}
               </Link>
             );

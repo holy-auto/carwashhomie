@@ -204,7 +204,7 @@ function SectionHeader({
       className="text-center mb-14"
     >
       <div
-        className={`inline-flex items-center gap-3 ${labelColor} text-xs tracking-[0.3em] uppercase font-semibold mb-4`}
+        className={`inline-flex items-center gap-3 ${labelColor} text-[9px] tracking-[0.3em] uppercase font-pixel mb-4`}
       >
         <div className={`w-8 h-[1px] ${lineColor}`} />
         {label}
@@ -346,15 +346,15 @@ function BodyCoatingSection() {
 
                   {/* Price */}
                   <div
-                    className={`font-display text-3xl md:text-[2rem] leading-none mb-1 font-bold ${
+                    className={`font-crt text-4xl md:text-5xl leading-none mb-1 ${
                       isPremium ? "text-sunset" : "text-midnight"
                     }`}
                   >
                     {tier.price}
                   </div>
                   <div
-                    className={`text-xs mb-6 ${
-                      isPremium ? "text-chrome/60" : "text-midnight/50"
+                    className={`text-[10px] font-pixel uppercase tracking-wider mb-6 ${
+                      isPremium ? "text-chrome/70" : "text-midnight/60"
                     }`}
                   >
                     日数 {tier.duration}
@@ -440,7 +440,7 @@ function InteriorCoatingSection() {
         >
           <div className="bg-midnight px-6 py-5 flex items-center justify-between">
             <div>
-              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono">
+              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel">
                 Price Table
               </div>
               <div className="font-display text-cream text-lg">料金表</div>
@@ -454,16 +454,16 @@ function InteriorCoatingSection() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-cream/50 border-b-2 border-sunset/20">
-                  <th className="text-left py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-semibold">
+                  <th className="text-left py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-pixel">
                     車種
                   </th>
-                  <th className="text-right py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-semibold">
+                  <th className="text-right py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-pixel">
                     運転席のみ
                   </th>
-                  <th className="text-right py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-semibold">
+                  <th className="text-right py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-pixel">
                     運転席＋助手席
                   </th>
-                  <th className="text-right py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-semibold">
+                  <th className="text-right py-4 px-4 md:px-6 text-[10px] tracking-wider text-midnight/50 uppercase font-pixel">
                     前後の場合
                   </th>
                 </tr>
@@ -480,7 +480,7 @@ function InteriorCoatingSection() {
                     {interiorPrices[i].map((p, j) => (
                       <td
                         key={j}
-                        className="py-4 px-4 md:px-6 text-right font-display text-midnight whitespace-nowrap"
+                        className="py-4 px-4 md:px-6 text-right font-crt text-midnight text-lg leading-none whitespace-nowrap"
                       >
                         {p}
                       </td>
@@ -501,7 +501,7 @@ function InteriorCoatingSection() {
           className="mt-8 bg-white border border-midnight/10 rounded-3xl shadow-clinic p-6 md:p-8"
         >
           <div className="flex items-center gap-3 mb-5">
-            <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-semibold">
+            <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel">
               Options
             </div>
             <div className="flex-1 h-[1px] bg-midnight/10" />
@@ -525,7 +525,7 @@ function InteriorCoatingSection() {
                     </div>
                   )}
                 </div>
-                <div className="font-display text-sunset font-bold text-sm whitespace-nowrap">
+                <div className="font-crt text-sunset text-base whitespace-nowrap leading-none">
                   {opt.price}
                 </div>
               </div>
@@ -569,7 +569,7 @@ function OtherCoatingSection() {
             className="bg-white border border-midnight/10 rounded-3xl shadow-clinic overflow-hidden"
           >
             <div className="bg-midnight px-6 py-5">
-              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono">
+              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel">
                 Glass Coating
               </div>
               <div className="flex items-center gap-3 mt-1">
@@ -597,7 +597,7 @@ function OtherCoatingSection() {
                         {g.note}
                       </div>
                     </div>
-                    <div className="font-display text-sunset font-bold whitespace-nowrap">
+                    <div className="font-crt text-sunset text-xl whitespace-nowrap leading-none">
                       {g.price}
                     </div>
                   </li>
@@ -622,7 +622,7 @@ function OtherCoatingSection() {
             className="bg-white border border-midnight/10 rounded-3xl shadow-clinic overflow-hidden"
           >
             <div className="bg-midnight px-6 py-5">
-              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono">
+              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel">
                 Wheel Coating
               </div>
               <div className="flex items-center gap-3 mt-1">
@@ -635,7 +635,7 @@ function OtherCoatingSection() {
             <div className="p-6 md:p-7 space-y-6">
               {wheelItems.map((w) => (
                 <div key={w.title}>
-                  <div className="text-[11px] tracking-wider text-sunset uppercase font-semibold mb-3">
+                  <div className="text-[11px] tracking-wider text-sunset uppercase font-pixel mb-3">
                     {w.title}
                   </div>
                   <ul className="divide-y divide-dashed divide-midnight/10">
@@ -654,7 +654,7 @@ function OtherCoatingSection() {
                             </div>
                           )}
                         </div>
-                        <div className="font-display text-sunset font-bold whitespace-nowrap text-sm">
+                        <div className="font-crt text-sunset text-lg whitespace-nowrap leading-none">
                           {r.price}
                         </div>
                       </li>
@@ -730,10 +730,10 @@ function WashSection() {
                 <div className="flex items-center gap-3">
                   <span className="text-3xl">{service.icon}</span>
                   <div>
-                    <div className="text-[10px] tracking-[0.2em] text-midnight/40 uppercase font-mono">
+                    <div className="text-[10px] tracking-[0.2em] text-midnight/40 uppercase font-pixel">
                       {service.code}
                     </div>
-                    <div className="text-[10px] tracking-wider text-sunset uppercase font-semibold">
+                    <div className="text-[10px] tracking-wider text-sunset uppercase font-pixel">
                       {service.subtitle}
                     </div>
                   </div>
@@ -756,10 +756,10 @@ function WashSection() {
                   {service.note}
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-[10px] tracking-wider text-midnight/40 uppercase">
+                  <div className="text-[9px] font-pixel tracking-wider text-midnight/60 uppercase">
                     料金
                   </div>
-                  <div className="font-display text-2xl text-sunset font-bold leading-none">
+                  <div className="font-crt text-3xl text-sunset leading-none mt-1">
                     {service.price}
                   </div>
                 </div>
@@ -801,10 +801,10 @@ function B2BSection() {
           className="bg-midnight-50/40 border border-sunset/20 rounded-3xl p-8 md:p-10 backdrop-blur-sm"
         >
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-            <span className="text-[10px] tracking-[0.3em] text-sunset uppercase font-semibold px-3 py-1.5 border border-sunset/40 rounded-full">
+            <span className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel px-3 py-1.5 border border-sunset/40 rounded-full">
               業務提携事例あり
             </span>
-            <span className="text-[10px] tracking-[0.3em] text-chrome/70 uppercase font-semibold px-3 py-1.5 border border-chrome/20 rounded-full">
+            <span className="text-[10px] tracking-[0.3em] text-chrome/70 uppercase font-pixel px-3 py-1.5 border border-chrome/20 rounded-full">
               中古車両仕上げ部門（車のスタイリスト）
             </span>
           </div>
@@ -819,7 +819,7 @@ function B2BSection() {
                 transition={{ duration: 0.5, delay: idx * 0.06 }}
                 className="bg-midnight/60 border border-chrome/10 rounded-xl p-5 hover:border-sunset/40 transition-colors"
               >
-                <div className="text-[9px] tracking-[0.25em] text-sunset/80 uppercase font-mono mb-2">
+                <div className="text-[9px] tracking-[0.25em] text-sunset/80 uppercase font-pixel mb-2">
                   {item.subtitle}
                 </div>
                 <div className="font-display text-cream text-base md:text-lg leading-tight">
@@ -870,7 +870,7 @@ function BrandsSection() {
           transition={{ duration: 0.7 }}
           className="bg-white border border-midnight/10 rounded-3xl shadow-clinic p-10 md:p-14 text-center"
         >
-          <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono mb-4">
+          <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel mb-4">
             Official Dealer
           </div>
           <div className="font-display text-3xl md:text-5xl text-midnight mb-3 tracking-tight">

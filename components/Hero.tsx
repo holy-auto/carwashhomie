@@ -52,7 +52,7 @@ export default function Hero() {
           className="sticker mb-10 !bg-cyan90/20 !text-cream !border-cyan90 shadow-neon-cyan"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-cyan90 animate-pulse" />
-          <span className="font-mono">2025.04.15 ★ NOW OPEN</span>
+          <span className="font-pixel">2025.04.15 ★ NOW OPEN</span>
           <span className="w-1.5 h-1.5 rounded-full bg-magenta animate-pulse" />
         </motion.div>
 

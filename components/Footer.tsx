@@ -29,7 +29,7 @@ export default function Footer() {
                 className="w-16 h-16 object-contain rounded-lg opacity-90"
               />
               <div className="flex flex-col leading-none">
-                <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-1">
+                <span className="font-pixel-jp text-[12px] text-cream tracking-wider mt-1">
                   車の美容外科
                 </span>
               </div>
@@ -61,8 +61,9 @@ export default function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="text-chrome/70 hover:text-sunset transition-colors"
+                    className="font-pixel-jp text-[12px] text-chrome/80 hover:text-cyan90 transition-colors flex items-center gap-2"
                   >
+                    <span className="text-magenta">&gt;</span>
                     {l.label}
                   </Link>
                 </li>

@@ -46,11 +46,29 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-playfair)", "Georgia", "serif"],
+        // display now pulls Bungee for Latin + DotGothic16 for Japanese
+        // → every existing `font-display` heading becomes 90s automatically
+        display: [
+          "var(--font-chunky)",
+          "var(--font-pixel-jp)",
+          "var(--font-playfair)",
+          "Georgia",
+          "serif",
+        ],
+        // Keep playfair available for any spot that needs the elegant serif
+        elegant: ["var(--font-playfair)", "Georgia", "serif"],
         script: ["var(--font-blackletter)", "UnifrakturMaguntia", "serif"],
-        body: ["var(--font-noto)", "system-ui", "sans-serif"],
-        // 90s / Y2K
-        pixel: ["var(--font-pixel)", "monospace"],
+        // body picks up pixel-jp for Japanese chars first, then Noto for
+        // long-form / Latin readability
+        body: [
+          "var(--font-pixel-jp)",
+          "var(--font-noto)",
+          "system-ui",
+          "sans-serif",
+        ],
+        readable: ["var(--font-noto)", "system-ui", "sans-serif"],
+        // 90s / Y2K explicit families
+        pixel: ["var(--font-pixel)", "var(--font-pixel-jp)", "monospace"],
         crt: ["var(--font-crt)", "monospace"],
         chunky: ["var(--font-chunky)", "Impact", "sans-serif"],
         pixelJp: [
@@ -58,6 +76,9 @@ const config: Config = {
           "var(--font-pixel)",
           "monospace",
         ],
+        // Override Tailwind's defaults so any leftover font-mono / font-sans
+        // / font-serif also get pixelated
+        mono: ["var(--font-pixel)", "var(--font-pixel-jp)", "monospace"],
       },
       backgroundImage: {
         "sunset-gradient":

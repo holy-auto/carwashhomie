@@ -57,7 +57,7 @@ export default function Reservation() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-midnight/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+          <div className="inline-flex items-center gap-3 text-midnight/50 text-xs tracking-[0.3em] uppercase font-pixel mb-4">
             <div className="w-8 h-[1px] bg-midnight/30" />
             Reservation
             <div className="w-8 h-[1px] bg-midnight/30" />
@@ -100,10 +100,10 @@ export default function Reservation() {
               </svg>
             </div>
             <div>
-              <div className="text-[10px] tracking-wider text-midnight/50 uppercase mb-0.5">
+              <div className="text-[8px] tracking-[0.2em] text-cyan90/80 uppercase mb-1 font-pixel">
                 お電話
               </div>
-              <div className="font-display text-xl text-sunset font-bold">
+              <div className="font-crt text-3xl text-sunset leading-none">
                 048-606-4977
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function Reservation() {
               </svg>
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-[10px] tracking-wider text-midnight/50 uppercase mb-0.5">
+              <div className="text-[8px] tracking-[0.2em] text-cyan90/80 uppercase mb-1 font-pixel">
                 Instagram DM
               </div>
               <div className="font-display text-midnight text-xs md:text-sm font-semibold break-all leading-snug">
@@ -151,7 +151,7 @@ export default function Reservation() {
               </svg>
             </div>
             <div>
-              <div className="text-[10px] tracking-wider text-midnight/50 uppercase mb-0.5">
+              <div className="text-[8px] tracking-[0.2em] text-cyan90/80 uppercase mb-1 font-pixel">
                 お問い合わせフォーム
               </div>
               <div className="text-midnight font-semibold text-sm">
@@ -173,7 +173,7 @@ export default function Reservation() {
           {/* Clinic header */}
           <div className="bg-midnight px-8 py-6 flex items-center justify-between">
             <div>
-              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono mb-1">
+              <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel mb-1">
                 Consultation Form
               </div>
               <div className="font-display text-cream text-xl">
@@ -257,7 +257,7 @@ export default function Reservation() {
 
                 {/* Car info */}
                 <div className="border-t border-dashed border-midnight/20 pt-8 mb-8">
-                  <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold mb-4">
+                  <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel mb-4">
                     Vehicle Info / 愛車情報
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -281,7 +281,7 @@ export default function Reservation() {
 
                 {/* Concerns */}
                 <div className="border-t border-dashed border-midnight/20 pt-8 mb-8">
-                  <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold mb-4">
+                  <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel mb-4">
                     Concerns / お悩み（複数選択可）
                   </div>
                   <div className="flex flex-wrap gap-3">
@@ -334,10 +334,7 @@ export default function Reservation() {
 
                 {/* Submit */}
                 <div className="flex flex-col items-center gap-4">
-                  <button
-                    type="submit"
-                    className="group inline-flex items-center gap-3 px-10 py-5 rounded-full bg-sunset-gradient text-midnight font-bold text-lg shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
-                  >
+                  <button type="submit" className="btn-90s group !text-base !px-8 !py-4">
                     <span className="w-2 h-2 rounded-full bg-midnight animate-pulse" />
                     送信する
                     <svg
@@ -367,22 +364,30 @@ export default function Reservation() {
       <style jsx>{`
         .input {
           width: 100%;
-          padding: 0.875rem 1rem;
-          border: 2px solid rgba(26, 15, 8, 0.15);
-          border-radius: 0.75rem;
+          padding: 0.75rem 1rem;
+          border: 2px solid #1a0f08;
+          border-radius: 0.5rem;
           background: #fff8f0;
           color: #1a0f08;
-          font-size: 0.95rem;
-          transition: all 0.2s;
+          font-family: var(--font-crt), monospace;
+          font-size: 1.1rem;
+          line-height: 1.2;
+          transition: all 0.15s;
           outline: none;
+          box-shadow: 3px 3px 0 0 #1a0f08;
         }
         .input:focus {
-          border-color: #ff6b1a;
+          border-color: #ff2e97;
           background: #ffffff;
-          box-shadow: 0 0 0 4px rgba(255, 107, 26, 0.1);
+          box-shadow: 4px 4px 0 0 #ff2e97;
+          transform: translate(-1px, -1px);
         }
         .input::placeholder {
           color: rgba(26, 15, 8, 0.35);
+          font-family: var(--font-pixel), monospace;
+          font-size: 0.65rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
         }
       `}</style>
     </section>
@@ -400,9 +405,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-xs font-semibold text-midnight/70 mb-2 tracking-wider uppercase">
+      <span className="block text-[9px] font-pixel text-midnight/70 mb-2 tracking-wider uppercase">
         {label}
-        {required && <span className="text-sunset ml-1">*</span>}
+        {required && <span className="text-magenta ml-1">*</span>}
       </span>
       {children}
     </label>

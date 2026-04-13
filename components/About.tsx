@@ -21,7 +21,7 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-midnight/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+          <div className="inline-flex items-center gap-3 text-midnight/50 text-xs tracking-[0.3em] uppercase font-pixel mb-4">
             <div className="w-8 h-[1px] bg-midnight/30" />
             Our Concept
             <div className="w-8 h-[1px] bg-midnight/30" />
@@ -56,7 +56,7 @@ export default function About() {
                 <div className="font-display text-cream text-lg">
                   車の美容外科
                 </div>
-                <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-mono">
+                <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel">
                   Car Wash Homies
                 </div>
               </div>
@@ -118,7 +118,7 @@ export default function About() {
                   key={p.num}
                   className="relative bg-white border border-midnight/10 rounded-2xl p-6 hover:border-sunset/40 transition-colors"
                 >
-                  <div className="text-[10px] tracking-[0.3em] text-sunset/80 font-mono mb-2">
+                  <div className="text-[10px] tracking-[0.3em] text-sunset/80 font-pixel mb-2">
                     {p.num}
                   </div>
                   <div className="font-display text-xl text-midnight mb-2">

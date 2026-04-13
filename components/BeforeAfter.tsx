@@ -123,7 +123,7 @@ function Slider({ caseData }: { caseData: Case }) {
       </div>
 
       {/* Code label */}
-      <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-midnight/80 text-sunset text-[10px] font-mono tracking-widest border border-sunset/30">
+      <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-midnight/80 text-sunset text-[10px] font-pixel tracking-widest border border-sunset/30">
         {caseData.id}
       </div>
     </div>
@@ -149,7 +149,7 @@ export default function BeforeAfter() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-pixel mb-4">
             <div className="w-8 h-[1px] bg-chrome/20" />
             Case Study
             <div className="w-8 h-[1px] bg-chrome/20" />
@@ -179,7 +179,7 @@ export default function BeforeAfter() {
 
               {/* Clinical notes */}
               <div className="lg:p-8">
-                <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-mono mb-3">
+                <div className="text-[10px] tracking-[0.3em] text-sunset uppercase font-pixel mb-3">
                   {c.id}
                 </div>
                 <h3 className="font-display text-3xl md:text-4xl text-cream mb-4 leading-tight">

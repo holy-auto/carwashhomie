@@ -28,7 +28,29 @@ body {
   background-color: var(--color-cream);
   color: var(--color-midnight);
   font-feature-settings: "palt";
+  /* DotGothic16 pixel-jp body — keep readable leading */
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+/* Headings everywhere → chunky Bungee + pixel-jp fallback for Japanese */
+h1, h2, h3, h4 {
+  font-family: var(--font-chunky), var(--font-pixel-jp), var(--font-playfair),
+    Georgia, serif;
   letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+/* Bungee is super chunky — soften kerning on huge hero titles */
+h1 {
+  letter-spacing: -0.02em;
+}
+
+/* Tabular numbers / mono inputs render in CRT-mono for that 90s readout look */
+input[type="tel"],
+input[type="number"],
+.font-readout {
+  font-family: var(--font-crt), monospace;
 }
 
 ::selection {
@@ -332,6 +354,20 @@ body {
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: unset;
   text-rendering: geometricPrecision;
+}
+
+/* Generic helpers — pricing readouts and label minicaps */
+.price {
+  font-family: var(--font-crt), monospace;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.minicaps {
+  font-family: var(--font-pixel), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.55rem;
+  line-height: 1;
 }
 
 /* Holographic foil bar (90s trading card) */

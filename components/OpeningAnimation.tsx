@@ -226,10 +226,10 @@ export default function OpeningAnimation({
               transition={{ delay: 1.2, duration: 0.8 }}
               className="absolute top-[12%] left-0 right-0 text-center px-6"
             >
-              <div className="inline-flex items-center gap-3 text-chrome/50 text-[10px] tracking-[0.4em] uppercase">
-                <span className="h-[1px] w-8 bg-chrome/25" />
+              <div className="inline-flex items-center gap-3 text-cyan90/80 text-[8px] tracking-[0.3em] uppercase font-pixel">
+                <span className="h-[1px] w-8 bg-cyan90/40" />
                 Automotive Aesthetic Clinic
-                <span className="h-[1px] w-8 bg-chrome/25" />
+                <span className="h-[1px] w-8 bg-cyan90/40" />
               </div>
             </motion.div>
 
@@ -251,9 +251,9 @@ export default function OpeningAnimation({
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
-                  className="text-center mt-3 text-chrome/40 text-[10px] tracking-[0.3em] uppercase"
+                  className="text-center mt-3 text-magenta/80 text-[8px] tracking-[0.3em] uppercase font-pixel"
                 >
-                  Preparing Your Clinic...
+                  &gt; Loading Clinic...
                 </motion.div>
               </div>
             </div>

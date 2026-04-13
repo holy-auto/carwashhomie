@@ -33,7 +33,7 @@ export default function Doctor() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-midnight/50 text-xs tracking-[0.3em] uppercase font-semibold mb-4">
+          <div className="inline-flex items-center gap-3 text-midnight/50 text-xs tracking-[0.3em] uppercase font-pixel mb-4">
             <div className="w-8 h-[1px] bg-midnight/30" />
             Meet the Director
             <div className="w-8 h-[1px] bg-midnight/30" />
@@ -254,7 +254,7 @@ export default function Doctor() {
 
             {/* Achievements */}
             <div>
-              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold mb-3">
+              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel mb-3">
                 Profile
               </div>
               <ul className="space-y-2">
