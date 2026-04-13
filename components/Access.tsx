@@ -66,8 +66,7 @@ export default function Access() {
       id="access"
       className="relative py-24 md:py-32 bg-midnight overflow-hidden grain"
     >
-      <div className="absolute top-0 left-0 w-96 h-96 bg-sunset/15 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-sunset/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-sunset/[0.06] rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
@@ -78,15 +77,15 @@ export default function Access() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 text-sunset text-xs tracking-[0.3em] uppercase font-semibold mb-4">
-            <div className="w-8 h-[1px] bg-sunset" />
+          <div className="inline-flex items-center gap-3 text-chrome/50 text-xs tracking-[0.3em] uppercase font-pixel mb-4">
+            <div className="w-8 h-[1px] bg-chrome/20" />
             Access & Map
-            <div className="w-8 h-[1px] bg-sunset" />
+            <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
-          <h2 className="font-display text-4xl md:text-6xl text-cream mb-6">
+          <h2 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
             アクセス
           </h2>
-          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed font-readable">
             愛車を連れて、お気軽にご来院ください。
           </p>
         </motion.div>
@@ -148,29 +147,38 @@ export default function Access() {
           >
             {/* Basic info cards */}
             <div className="bg-midnight-50/30 border border-sunset/20 rounded-2xl p-6 space-y-5">
-              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold">
+              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel">
                 Clinic Info
               </div>
-              {info.map((item) => (
-                <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-sunset/10 flex items-center justify-center text-sunset shrink-0">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <div className="text-[10px] tracking-wider text-chrome/50 uppercase mb-0.5">
-                      {item.label}
+              {info.map((item) => {
+                const isPhone = item.label === "電話番号";
+                return (
+                  <div key={item.label} className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-sunset/10 flex items-center justify-center text-sunset shrink-0">
+                      {item.icon}
                     </div>
-                    <div className="text-cream text-sm leading-relaxed">
-                      {item.value}
+                    <div>
+                      <div className="text-[8px] tracking-[0.2em] text-cyan90/80 uppercase mb-1 font-pixel">
+                        {item.label}
+                      </div>
+                      <div
+                        className={
+                          isPhone
+                            ? "font-crt text-sunset text-2xl leading-none"
+                            : "text-cream text-sm leading-relaxed"
+                        }
+                      >
+                        {item.value}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Access routes */}
             <div className="bg-midnight-50/30 border border-sunset/20 rounded-2xl p-6 space-y-5">
-              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-semibold">
+              <div className="text-[10px] tracking-[0.2em] text-sunset uppercase font-pixel">
                 交通手段
               </div>
               {access.map((a) => (
@@ -233,6 +241,48 @@ export default function Access() {
             </a>
           </motion.div>
         </div>
+
+        {/* Company details (at the very end) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-16 border-t border-chrome/10 pt-10"
+        >
+          <div className="text-center mb-8">
+            <div className="text-[10px] tracking-[0.3em] text-chrome/50 uppercase font-pixel">
+              Company Information
+            </div>
+            <h3 className="font-display text-2xl text-cream mt-2">会社概要</h3>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <dl className="grid grid-cols-1 md:grid-cols-[11rem_1fr] gap-x-6 gap-y-0 text-sm">
+              {[
+                { label: "院名", value: "車の美容外科 Car Wash Homies" },
+                { label: "院長（代表者）", value: "中山 春香（二級自動車整備士）" },
+                { label: "所在地", value: "〒339-0021 埼玉県さいたま市岩槻区末田2421-2" },
+                { label: "登録番号", value: "T8810011150208" },
+                { label: "電話番号", value: "048-606-4977" },
+                { label: "営業時間", value: "10:00 — 19:00" },
+                { label: "定休日", value: "不定休" },
+                { label: "開業", value: "2026年4月15日" },
+              ].map((row) => (
+                <div
+                  key={row.label}
+                  className="contents"
+                >
+                  <dt className="py-3 text-chrome/50 text-[11px] tracking-[0.2em] uppercase font-pixel border-b border-chrome/10 md:border-b-0">
+                    {row.label}
+                  </dt>
+                  <dd className="pb-3 md:py-3 text-cream/90 border-b border-chrome/10">
+                    {row.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
