@@ -179,9 +179,13 @@ const STROKES: {
   },
 ];
 
-/* writing sequence wraps at ~4.3s; everything after that is
-   the completion flash, chrome shine and exit fade */
+/* writing sequence wraps at ~4.3s; after that we hold the
+   finished logo for a beat, then flash / shine, then exit */
 const WRITE_END = 4.3;
+const HOLD_AFTER_WRITE = 0.7; // time finished logo stays fully visible
+const FLASH_START = WRITE_END + HOLD_AFTER_WRITE; // 5.0s
+const SHINE_START = FLASH_START + 0.1;
+const PHASE_DONE_MS = (SHINE_START + 1.1 + 0.1) * 1000; // shine end + tiny pad
 
 /* ─── Main Opening Animation ─── */
 export default function OpeningAnimation({
@@ -192,7 +196,7 @@ export default function OpeningAnimation({
   const [phase, setPhase] = useState<"building" | "done">("building");
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase("done"), 5600);
+    const t1 = setTimeout(() => setPhase("done"), PHASE_DONE_MS);
     return () => {
       clearTimeout(t1);
     };
@@ -348,6 +352,24 @@ export default function OpeningAnimation({
                         }}
                       />
                     ))}
+                    {/* Insurance fill — a soft white rect fades in right as
+                        the last stroke lands, guaranteeing the logo is 100%
+                        visible (fills any micro-gaps between strokes) without
+                        breaking the hand-written feel. */}
+                    <motion.rect
+                      x="0"
+                      y="0"
+                      width="400"
+                      height="400"
+                      fill="white"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        duration: 0.45,
+                        delay: WRITE_END - 0.1,
+                        ease: "easeOut",
+                      }}
+                    />
                   </mask>
 
                   {/* Ink wet-look — boosts vividness behind the reveal */}
@@ -409,7 +431,7 @@ export default function OpeningAnimation({
                   animate={{ x: "120%", opacity: [0, 0.6, 0] }}
                   transition={{
                     duration: 1.1,
-                    delay: WRITE_END + 0.1,
+                    delay: SHINE_START,
                     ease: "easeInOut",
                   }}
                   className="absolute inset-0"
@@ -422,16 +444,19 @@ export default function OpeningAnimation({
               </div>
             </motion.div>
 
-            {/* Completion flash — fires right after the logo finishes assembling */}
+            {/* Completion flash — fires after the finished-logo hold,
+                blended with screen so it brightens the logo instead
+                of covering it. */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.5, 0] }}
+              animate={{ opacity: [0, 0.35, 0] }}
               transition={{
-                duration: 0.9,
-                delay: WRITE_END,
+                duration: 0.8,
+                delay: FLASH_START,
                 times: [0, 0.25, 1],
               }}
-              className="absolute inset-0 bg-sunset/70 pointer-events-none"
+              className="absolute inset-0 bg-sunset pointer-events-none"
+              style={{ mixBlendMode: "screen" }}
             />
 
             {/* Top clinic label */}
@@ -457,7 +482,7 @@ export default function OpeningAnimation({
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{
-                      duration: WRITE_END + 0.4,
+                      duration: FLASH_START,
                       ease: [0.4, 0, 0.2, 1],
                     }}
                   />
