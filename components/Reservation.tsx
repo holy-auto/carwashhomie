@@ -128,7 +128,7 @@ export default function Reservation() {
               <div className="text-[10px] tracking-wider text-midnight/50 uppercase mb-0.5">
                 Instagram DM
               </div>
-              <div className="font-display text-midnight text-sm md:text-base font-semibold break-all leading-snug">
+              <div className="font-display text-midnight text-xs md:text-sm font-semibold break-all leading-snug">
                 @japanese_detailer_girl
               </div>
             </div>

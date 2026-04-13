@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 /* ============================================================
    BODY COATING — 3-tier clinic menu
@@ -641,13 +642,13 @@ function OtherCoatingSection() {
           <p className="text-sm text-midnight/55 mb-4">
             その他のご希望も、お気軽にご相談ください。
           </p>
-          <a
-            href="#reservation"
+          <Link
+            href="/reservation"
             className="inline-flex items-center gap-2 text-sunset font-bold hover:gap-4 transition-all"
           >
             ご予約・ご相談はこちら
             <span>→</span>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

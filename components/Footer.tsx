@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -46,21 +47,20 @@ export default function Footer() {
             </div>
             <ul className="space-y-3 text-sm">
               {[
-                { label: "会社概要", href: "#about" },
-                { label: "施行事例", href: "#gallery" },
-                { label: "コーティングサービス", href: "#coating" },
-                { label: "洗車サービス", href: "#wash" },
-                { label: "院長紹介", href: "#doctor" },
-                { label: "ご予約・ご相談", href: "#reservation" },
-                { label: "アクセス", href: "#access" },
+                { label: "当院のコンセプト", href: "/concept" },
+                { label: "施術メニュー", href: "/menu" },
+                { label: "施術事例", href: "/gallery" },
+                { label: "院長紹介", href: "/doctor" },
+                { label: "ご予約・ご相談", href: "/reservation" },
+                { label: "アクセス", href: "/access" },
               ].map((l) => (
                 <li key={l.href}>
-                  <a
+                  <Link
                     href={l.href}
                     className="text-chrome/70 hover:text-sunset transition-colors"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

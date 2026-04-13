@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Playfair_Display, UnifrakturMaguntia, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -54,7 +56,9 @@ export default function RootLayout({
       className={`${playfair.variable} ${blackletter.variable} ${notoSansJp.variable}`}
     >
       <body className="font-body bg-cream text-midnight antialiased">
-        {children}
+        <Navbar />
+        <main className="relative overflow-x-hidden">{children}</main>
+        <Footer />
       </body>
     </html>
   );

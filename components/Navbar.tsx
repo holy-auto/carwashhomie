@@ -2,19 +2,22 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const nav = [
-  { label: "当院のコンセプト", href: "#about" },
-  { label: "施術メニュー", href: "#coating" },
-  { label: "施術事例", href: "#gallery" },
-  { label: "院長紹介", href: "#doctor" },
-  { label: "ご予約", href: "#reservation" },
-  { label: "アクセス", href: "#access" },
+  { label: "当院のコンセプト", href: "/concept" },
+  { label: "施術メニュー", href: "/menu" },
+  { label: "施術事例", href: "/gallery" },
+  { label: "院長紹介", href: "/doctor" },
+  { label: "ご予約", href: "/reservation" },
+  { label: "アクセス", href: "/access" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -23,17 +26,22 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  // close mobile nav on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+        scrolled || pathname !== "/"
           ? "bg-midnight/90 backdrop-blur-md border-b border-sunset/20 shadow-sunset-glow"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-3 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3 group">
           <Image
             src="/logo.png"
             alt="Car Wash Homies"
@@ -46,29 +54,38 @@ export default function Navbar() {
               車の美容外科
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-6">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-cream/80 hover:text-sunset transition-colors text-sm tracking-wide relative group"
-            >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-sunset group-hover:w-full transition-all duration-300" />
-            </a>
-          ))}
+          {nav.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`transition-colors text-sm tracking-wide relative group ${
+                  active ? "text-sunset" : "text-cream/80 hover:text-sunset"
+                }`}
+              >
+                {item.label}
+                <span
+                  className={`absolute -bottom-1 left-0 h-[1px] bg-sunset transition-all duration-300 ${
+                    active ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
-        <a
-          href="#reservation"
+        <Link
+          href="/reservation"
           className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sunset-gradient text-midnight font-bold text-sm shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-midnight animate-pulse" />
           無料カウンセリング
-        </a>
+        </Link>
 
         {/* Mobile menu button */}
         <button
@@ -99,23 +116,28 @@ export default function Navbar() {
       {/* Mobile nav */}
       {open && (
         <nav className="lg:hidden bg-midnight/95 backdrop-blur-md border-t border-sunset/20 px-6 py-6 flex flex-col gap-4">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-cream/80 hover:text-sunset transition-colors py-2 border-b border-sunset/10"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </a>
-          ))}
-          <a
-            href="#reservation"
+          {nav.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`transition-colors py-2 border-b border-sunset/10 ${
+                  active ? "text-sunset" : "text-cream/80 hover:text-sunset"
+                }`}
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+          <Link
+            href="/reservation"
             className="mt-2 text-center py-3 rounded-full bg-sunset-gradient text-midnight font-bold"
             onClick={() => setOpen(false)}
           >
             ご予約・ご相談
-          </a>
+          </Link>
         </nav>
       )}
     </header>
