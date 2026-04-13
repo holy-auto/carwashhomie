@@ -21,11 +21,31 @@ export default function Hero() {
       <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-sunset/15 rounded-full blur-3xl" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-16 text-center">
+        {/* AAH license badge — worldview anchor */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 mb-3"
+        >
+          <span className="flex items-center gap-1 text-sunset">
+            <span className="text-[10px] leading-none">★</span>
+            <span className="text-[10px] leading-none">★</span>
+          </span>
+          <span className="text-chrome/60 text-[9px] tracking-[0.4em] uppercase font-mono">
+            AAH Licensed Detailer · No.001
+          </span>
+          <span className="flex items-center gap-1 text-sunset">
+            <span className="text-[10px] leading-none">★</span>
+            <span className="text-[10px] leading-none">★</span>
+          </span>
+        </motion.div>
+
         {/* Opening badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-midnight-50/40 border border-chrome/20 backdrop-blur-sm mb-10"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-sunset animate-pulse" />

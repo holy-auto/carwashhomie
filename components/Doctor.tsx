@@ -47,7 +47,7 @@ export default function Doctor() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
-          {/* Portrait card */}
+          {/* License Card — Auto Aesthetic Hunter License */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -56,49 +56,144 @@ export default function Doctor() {
             className="lg:col-span-2"
           >
             <div className="relative">
-              {/* Frame */}
-              <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-midnight via-midnight to-sunset/60 p-1 shadow-clinic">
-                <div className="w-full h-full rounded-xl bg-gradient-to-b from-midnight/90 via-midnight/70 to-sunset/40 relative overflow-hidden grain">
-                  {/* Silhouette */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative">
-                      <div className="w-48 h-48 rounded-full bg-gradient-to-b from-sunset/40 to-sunset/10 blur-2xl" />
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl">
-                        👩‍⚕️
+              {/* Outer foil bezel */}
+              <div
+                className="aspect-[3/4] rounded-2xl p-[2px] shadow-clinic relative overflow-hidden"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #ff6b1a 0%, #f5d8a0 35%, #c8b78a 50%, #f5d8a0 65%, #ff6b1a 100%)",
+                }}
+              >
+                {/* Holographic shimmer band */}
+                <motion.div
+                  aria-hidden
+                  initial={{ x: "-120%" }}
+                  whileInView={{ x: "120%" }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 2.4, ease: "easeInOut", repeat: Infinity, repeatDelay: 4 }}
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(100deg, transparent 40%, rgba(255,255,255,0.45) 50%, transparent 60%)",
+                    mixBlendMode: "screen",
+                  }}
+                />
+
+                {/* Inner card body */}
+                <div className="relative w-full h-full rounded-xl bg-gradient-to-br from-[#1a0f08] via-[#241409] to-[#1a0f08] overflow-hidden grain">
+                  {/* Engraved guilloché pattern */}
+                  <div
+                    className="absolute inset-0 opacity-[0.07] pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        "repeating-radial-gradient(circle at 50% 50%, rgba(255,107,26,0.5) 0px, rgba(255,107,26,0.5) 1px, transparent 1px, transparent 14px)",
+                    }}
+                  />
+
+                  {/* Top bar — issuer + serial */}
+                  <div className="absolute top-0 left-0 right-0 px-5 pt-5 flex items-start justify-between">
+                    <div>
+                      <div className="text-[8px] tracking-[0.3em] text-sunset/90 font-mono">
+                        AUTO AESTHETIC ASSOCIATION
+                      </div>
+                      <div className="text-cream font-display text-base leading-tight mt-0.5">
+                        Detailer License
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-[8px] tracking-[0.25em] text-chrome/60 uppercase font-mono">
+                        Serial No.
+                      </div>
+                      <div className="text-sunset font-mono text-xs tracking-wider">
+                        AAH-001-JDG
                       </div>
                     </div>
                   </div>
-                  {/* Pinstripe accents */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sunset to-transparent" />
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sunset to-transparent" />
-                  {/* Name badge */}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="font-display text-cream text-2xl mb-1">
-                      中山 春香
-                    </div>
-                    <div className="text-chrome/80 text-xs tracking-widest uppercase">
-                      Director / Japanese Detailer Girl
+
+                  {/* Center — portrait */}
+                  <div className="absolute inset-0 flex items-center justify-center pt-6">
+                    <div className="relative">
+                      <div className="w-44 h-44 rounded-full bg-gradient-to-b from-sunset/40 to-sunset/10 blur-2xl" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-8xl">
+                        👩‍⚕️
+                      </div>
+                      {/* Star rank ring */}
+                      <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1 rounded-full bg-midnight/80 border border-sunset/40 backdrop-blur-sm">
+                        <span className="text-sunset text-xs">★</span>
+                        <span className="text-sunset text-xs">★</span>
+                        <span className="text-chrome/40 text-xs">★</span>
+                      </div>
                     </div>
                   </div>
+
+                  {/* Bottom bar — name + qualification + issued */}
+                  <div className="absolute bottom-0 left-0 right-0 px-5 pb-5">
+                    <div className="border-t border-dashed border-sunset/30 pt-3">
+                      <div className="flex items-end justify-between gap-3">
+                        <div className="min-w-0">
+                          <div className="text-[8px] tracking-[0.25em] text-chrome/50 uppercase font-mono">
+                            Holder
+                          </div>
+                          <div className="font-display text-cream text-xl leading-tight">
+                            中山 春香
+                          </div>
+                          <div className="text-sunset/90 text-[10px] tracking-widest uppercase mt-0.5 font-mono">
+                            Japanese Detailer Girl
+                          </div>
+                        </div>
+                        {/* Hologram chip */}
+                        <div
+                          className="w-10 h-10 rounded-md shrink-0 relative overflow-hidden border border-cream/20"
+                          style={{
+                            background:
+                              "linear-gradient(135deg, #ff6b1a, #f5d8a0, #c8b78a, #ff6b1a)",
+                          }}
+                        >
+                          <div className="absolute inset-0 grid place-items-center text-[7px] font-mono text-midnight font-bold tracking-tighter">
+                            AAH
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between text-[9px] font-mono text-chrome/60 tracking-wider">
+                        <span>QUAL: Lv.2 Auto Mechanic</span>
+                        <span>ISSUED 2025.04.15</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Corner notches */}
+                  <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-sunset/40" />
+                  <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-sunset/40" />
+                  <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-sunset/40" />
+                  <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-sunset/40" />
                 </div>
               </div>
 
-              {/* Instagram badge */}
+              {/* Wax-seal style Instagram badge */}
               <a
                 href="https://www.instagram.com/japanese_detailer_girl/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome rotate-6 hover:rotate-0 transition-transform group"
+                className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome rotate-6 hover:rotate-0 transition-transform group ring-2 ring-cream"
               >
                 <div className="text-center">
-                  <div className="text-midnight text-lg font-bold group-hover:scale-110 transition-transform">
+                  <div className="text-midnight text-lg font-bold group-hover:scale-110 transition-transform leading-none">
                     IG
                   </div>
-                  <div className="text-[8px] text-midnight/80 font-bold tracking-wider">
+                  <div className="text-[8px] text-midnight/80 font-bold tracking-wider mt-0.5">
                     FOLLOW
                   </div>
                 </div>
               </a>
+            </div>
+
+            {/* Tiny worldview footnote under card */}
+            <div className="mt-6 text-center">
+              <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] text-midnight/40 uppercase font-mono">
+                <span className="h-[1px] w-6 bg-midnight/20" />
+                AAH Licensed Detailer
+                <span className="h-[1px] w-6 bg-midnight/20" />
+              </div>
             </div>
           </motion.div>
 

@@ -9,6 +9,7 @@ import Link from "next/link";
 type BodyTier = {
   code: string;
   classLabel: string;
+  rank: 1 | 2 | 3;
   name: string;
   price: string;
   duration: string;
@@ -21,6 +22,7 @@ const bodyCoatings: BodyTier[] = [
   {
     code: "RECON100",
     classLabel: "1st Class",
+    rank: 3,
     name: "ボディコーティング",
     price: "198,000円〜",
     duration: "4日〜",
@@ -31,6 +33,7 @@ const bodyCoatings: BodyTier[] = [
   {
     code: "RECON80",
     classLabel: "2nd Class",
+    rank: 2,
     name: "ボディコーティング",
     price: "77,000円〜",
     duration: "1〜2日",
@@ -41,6 +44,7 @@ const bodyCoatings: BodyTier[] = [
   {
     code: "RECON50",
     classLabel: "3rd Class",
+    rank: 1,
     name: "ボディコーティング",
     price: "33,000円〜77,000円",
     duration: "1〜2日",
@@ -291,6 +295,40 @@ function BodyCoatingSection() {
                         {tier.tag}
                       </span>
                     )}
+                  </div>
+
+                  {/* Star rank — license-style class indicator */}
+                  <div
+                    className={`flex items-center gap-1.5 mb-4 px-3 py-1.5 rounded-md w-fit ${
+                      isPremium
+                        ? "bg-sunset/10 border border-sunset/30"
+                        : "bg-cream border border-midnight/10"
+                    }`}
+                  >
+                    {[1, 2, 3].map((i) => {
+                      const filled = i <= tier.rank;
+                      return (
+                        <span
+                          key={i}
+                          className={`text-base leading-none ${
+                            filled
+                              ? "text-sunset"
+                              : isPremium
+                                ? "text-chrome/25"
+                                : "text-midnight/15"
+                          }`}
+                        >
+                          ★
+                        </span>
+                      );
+                    })}
+                    <span
+                      className={`ml-2 text-[9px] tracking-[0.25em] uppercase font-mono ${
+                        isPremium ? "text-chrome/70" : "text-midnight/50"
+                      }`}
+                    >
+                      {tier.rank === 3 ? "Triple Star" : tier.rank === 2 ? "Double Star" : "Single Star"}
+                    </span>
                   </div>
 
                   {/* Name */}
