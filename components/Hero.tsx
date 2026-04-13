@@ -79,7 +79,7 @@ export default function Hero() {
           className="text-chrome/80 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mb-12"
         >
           ただのコーティング屋さんじゃない。
-          <br className="hidden md:block" />
+          <br />
           <span className="text-sunset font-semibold">車の美容外科</span>です。
         </motion.p>
 
