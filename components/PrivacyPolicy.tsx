@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { BUSINESS } from "@/lib/constants";
 
 const sections = [
   {
@@ -37,7 +38,7 @@ const sections = [
   {
     num: "07",
     title: "お問い合わせ",
-    body: "個人情報の取り扱いに関するお問い合わせは、下記の窓口までご連絡ください。\n車の美容外科 Car Wash Homies\n〒339-0021 埼玉県さいたま市岩槻区末田2421-2\nTEL：048-606-4977\nInstagram：@japanese_detailer_girl",
+    body: `個人情報の取り扱いに関するお問い合わせは、下記の窓口までご連絡ください。\n${BUSINESS.nameJa}\n〒${BUSINESS.postalCode} ${BUSINESS.addressLine}\nTEL：${BUSINESS.phone}\nInstagram：@${BUSINESS.instagramHandle}`,
   },
   {
     num: "08",

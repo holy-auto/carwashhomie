@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BUSINESS } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -98,10 +99,10 @@ export default function Footer() {
                   Phone
                 </div>
                 <a
-                  href="tel:0486064977"
+                  href={`tel:${BUSINESS.phoneTel}`}
                   className="text-sunset font-crt text-xl tracking-wider hover:text-sunset-300 transition-colors leading-none"
                 >
-                  048-606-4977
+                  {BUSINESS.phone}
                 </a>
               </li>
             </ul>
@@ -109,20 +110,20 @@ export default function Footer() {
             {/* Social */}
             <div className="flex gap-3 mt-6">
               <a
-                href="https://www.instagram.com/japanese_detailer_girl/"
+                href={BUSINESS.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg border-2 border-cream bg-magenta flex items-center justify-center text-cream text-xs font-extrabold tracking-widest shadow-[3px_3px_0_0_#FFF8F0] hover:shadow-neon-magenta hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
-                aria-label="Instagram"
+                aria-label={`Instagram @${BUSINESS.instagramHandle}`}
               >
                 IG
               </a>
               <a
-                href="https://x.com/DetailerGirl"
+                href={BUSINESS.xUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg border-2 border-cream bg-cyan90 flex items-center justify-center text-midnight text-xs font-extrabold tracking-widest shadow-[3px_3px_0_0_#FFF8F0] hover:shadow-neon-cyan hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
-                aria-label="X (Twitter)"
+                aria-label={`X (Twitter) @${BUSINESS.xHandle}`}
               >
                 X
               </a>
@@ -135,11 +136,17 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] text-chrome/60 font-pixel tracking-wider">
-          <div>
-            © 2026 車の美容外科 Car Wash Homies. All rights reserved.
-            <br className="md:hidden" />
-            <span className="hidden md:inline"> · </span>
-            登録番号 T8810011150208
+          <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-3">
+            <span>© 2026 {BUSINESS.nameJa}. All rights reserved.</span>
+            <span
+              className="inline-flex items-center gap-2 self-start md:self-auto px-2 py-1 rounded-md border border-chrome/25 bg-chrome/[0.04] text-chrome/80"
+              title="適格請求書発行事業者登録番号"
+            >
+              <span className="text-[8px] text-sunset/80 tracking-widest">
+                インボイス
+              </span>
+              <span>{BUSINESS.registrationNumber}</span>
+            </span>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-sunset transition-colors">

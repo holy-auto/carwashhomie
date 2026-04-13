@@ -11,6 +11,8 @@ import {
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
+import { SITE, BUSINESS } from "@/lib/constants";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -25,10 +27,17 @@ const blackletter = UnifrakturMaguntia({
   display: "swap",
 });
 
+/* Noto Sans JP — body / readable Japanese. `preload: false`
+   prevents Next.js from trying to preload a massive subset file;
+   `display: swap` keeps text visible while the Japanese glyphs
+   stream in. Limit to the weights actually used on the site to
+   cut CLS from late-loading Japanese characters. */
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
   variable: "--font-noto",
   display: "swap",
+  preload: false,
 });
 
 // 90s / Y2K display fonts
@@ -62,9 +71,12 @@ const dotGothic = DotGothic16({
 });
 
 export const metadata: Metadata = {
-  title: "車の美容外科 | Car Wash Homies — ただのコーティング屋さんじゃない",
-  description:
-    "埼玉県さいたま市岩槻区の車の美容外科 Car Wash Homies。塗装状態・使用環境・年式を診断し、車両ごとに最適な施術計画をご提案。コーティング・洗車・磨きなど、車の寿命を延ばし価値を守る施術をご提供します。",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: "車の美容外科 | Car Wash Homies — ただのコーティング屋さんじゃない",
+    template: "%s | 車の美容外科 Car Wash Homies",
+  },
+  description: SITE.description,
   keywords: [
     "車の美容外科",
     "カーウォッシュホーミーズ",
@@ -75,11 +87,59 @@ export const metadata: Metadata = {
     "岩槻",
     "ガラスコーティング",
   ],
+  authors: [{ name: BUSINESS.operator }],
+  creator: BUSINESS.nameJa,
+  publisher: BUSINESS.nameJa,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
+    type: "website",
+    locale: SITE.locale,
+    url: SITE.url,
+    siteName: BUSINESS.nameJa,
     title: "車の美容外科 | Car Wash Homies",
     description:
       "ただのコーティング屋さんじゃない、車の美容外科です。車の寿命を延ばし、価値を守る。",
-    type: "website",
+    images: [
+      {
+        url: SITE.ogImage,
+        width: 1200,
+        height: 630,
+        alt: BUSINESS.nameJa,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "車の美容外科 | Car Wash Homies",
+    description:
+      "ただのコーティング屋さんじゃない、車の美容外科です。車の寿命を延ばし、価値を守る。",
+    images: [SITE.ogImage],
+    creator: `@${BUSINESS.xHandle}`,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: { url: "/apple-icon.png", sizes: "180x180" },
+  },
+  formatDetection: {
+    telephone: true,
+    address: true,
+    email: true,
   },
 };
 
@@ -94,6 +154,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${blackletter.variable} ${notoSansJp.variable} ${pressStart.variable} ${vt323.variable} ${bungee.variable} ${dotGothic.variable}`}
     >
       <body className="font-body bg-cream text-midnight antialiased">
+        <JsonLd />
         <Navbar />
         <main className="relative overflow-x-hidden">{children}</main>
         <Footer />

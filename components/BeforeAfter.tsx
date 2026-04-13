@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
+import { BUSINESS } from "@/lib/constants";
 
 type Case = {
   id: string;
@@ -107,6 +108,7 @@ function Slider({ caseData }: { caseData: Case }) {
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-sunset shadow-sunset-glow flex items-center justify-center">
           <svg
+            aria-hidden="true"
             className="w-5 h-5 text-midnight"
             fill="none"
             stroke="currentColor"
@@ -227,9 +229,10 @@ export default function BeforeAfter() {
           className="mt-16 text-center"
         >
           <a
-            href="https://www.instagram.com/japanese_detailer_girl/"
+            href={BUSINESS.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Instagram @${BUSINESS.instagramHandle}`}
             className="inline-flex items-center gap-3 text-sunset font-bold hover:gap-5 transition-all"
           >
             Instagramでもっと施行事例を見る

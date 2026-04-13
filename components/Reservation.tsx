@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { cloneElement, isValidElement, useState } from "react";
+import type { ReactElement } from "react";
+import { BUSINESS } from "@/lib/constants";
 
 const concerns = [
   "塗装のくすみ",
@@ -83,11 +85,13 @@ export default function Reservation() {
           className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12"
         >
           <a
-            href="tel:0486064977"
+            href={`tel:${BUSINESS.phoneTel}`}
+            aria-label={`電話 ${BUSINESS.phone}`}
             className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic group"
           >
             <div className="w-14 h-14 rounded-full bg-midnight flex items-center justify-center shadow-clinic shrink-0 group-hover:animate-hydraulic-bounce">
               <svg
+                aria-hidden="true"
                 className="w-6 h-6 text-sunset"
                 fill="none"
                 stroke="currentColor"
@@ -106,19 +110,21 @@ export default function Reservation() {
                 お電話
               </div>
               <div className="font-crt text-3xl text-sunset leading-none">
-                048-606-4977
+                {BUSINESS.phone}
               </div>
             </div>
           </a>
 
           <a
-            href="https://www.instagram.com/japanese_detailer_girl/"
+            href={BUSINESS.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Instagram @${BUSINESS.instagramHandle} で DM`}
             className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic group min-w-0"
           >
             <div className="w-14 h-14 rounded-full bg-midnight flex items-center justify-center shadow-clinic shrink-0 group-hover:animate-hydraulic-bounce">
               <svg
+                aria-hidden="true"
                 className="w-6 h-6 text-sunset"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -131,7 +137,7 @@ export default function Reservation() {
                 Instagram DM
               </div>
               <div className="font-display text-midnight text-xs md:text-sm font-semibold break-all leading-snug">
-                @japanese_detailer_girl
+                @{BUSINESS.instagramHandle}
               </div>
             </div>
           </a>
@@ -139,6 +145,7 @@ export default function Reservation() {
           <div className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic">
             <div className="w-14 h-14 rounded-full bg-midnight flex items-center justify-center shadow-clinic shrink-0">
               <svg
+                aria-hidden="true"
                 className="w-6 h-6 text-sunset"
                 fill="none"
                 stroke="currentColor"
@@ -197,6 +204,7 @@ export default function Reservation() {
               <div className="text-center py-12">
                 <div className="w-20 h-20 rounded-full bg-sunset-gradient flex items-center justify-center mx-auto mb-6 shadow-chrome">
                   <svg
+                    aria-hidden="true"
                     className="w-10 h-10 text-midnight"
                     fill="none"
                     stroke="currentColor"
@@ -218,7 +226,7 @@ export default function Reservation() {
                 <p className="text-midnight/60 leading-relaxed font-readable">
                   内容を確認の上、折り返しご連絡いたします。
                   <br />
-                  お急ぎの方はお電話（048-606-4977）または
+                  お急ぎの方はお電話（{BUSINESS.phone}）または
                   <br className="md:hidden" />
                   Instagram DMでもご連絡ください。
                 </p>
@@ -227,23 +235,18 @@ export default function Reservation() {
               <>
                 {/* Basic info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <Field label="お名前" required>
-                    <input
-                      type="text"
-                      required
-                      placeholder="山田 太郎"
-                      className="input"
-                    />
+                  <Field name="name" label="お名前" required autoComplete="name">
+                    <input type="text" required placeholder="山田 太郎" className="input" />
                   </Field>
-                  <Field label="フリガナ" required>
-                    <input
-                      type="text"
-                      required
-                      placeholder="ヤマダ タロウ"
-                      className="input"
-                    />
+                  <Field
+                    name="name-kana"
+                    label="フリガナ"
+                    required
+                    autoComplete="off"
+                  >
+                    <input type="text" required placeholder="ヤマダ タロウ" className="input" />
                   </Field>
-                  <Field label="電話番号" required>
+                  <Field name="tel" label="電話番号" required autoComplete="tel">
                     <input
                       type="tel"
                       required
@@ -251,7 +254,7 @@ export default function Reservation() {
                       className="input"
                     />
                   </Field>
-                  <Field label="メールアドレス" required>
+                  <Field name="email" label="メールアドレス" required autoComplete="email">
                     <input
                       type="email"
                       required
@@ -267,7 +270,7 @@ export default function Reservation() {
                     Vehicle Info / 愛車情報
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Field label="車種・年式" required>
+                    <Field name="vehicle" label="車種・年式" required>
                       <input
                         type="text"
                         required
@@ -275,7 +278,7 @@ export default function Reservation() {
                         className="input"
                       />
                     </Field>
-                    <Field label="ボディカラー">
+                    <Field name="body-color" label="ボディカラー">
                       <input
                         type="text"
                         placeholder="例: ブラック"
@@ -313,7 +316,7 @@ export default function Reservation() {
 
                 {/* Desired treatment */}
                 <div className="border-t border-dashed border-midnight/20 pt-8 mb-8">
-                  <Field label="ご希望の施術">
+                  <Field name="treatment" label="ご希望の施術">
                     <select className="input" defaultValue="">
                       <option value="" disabled>
                         施術を選択してください
@@ -329,7 +332,7 @@ export default function Reservation() {
 
                 {/* Note */}
                 <div className="mb-8">
-                  <Field label="ご相談内容・ご希望日時">
+                  <Field name="note" label="ご相談内容・ご希望日時">
                     <textarea
                       rows={4}
                       placeholder="ご希望日時や、詳しいお悩みなどご自由にお書きください。業者様向けのご依頼もこちらからどうぞ。"
@@ -344,6 +347,7 @@ export default function Reservation() {
                     <span className="w-2 h-2 rounded-full bg-midnight animate-pulse" />
                     送信する
                     <svg
+                      aria-hidden="true"
                       className="w-6 h-6 group-hover:translate-x-1 transition-transform"
                       fill="none"
                       stroke="currentColor"
@@ -358,7 +362,7 @@ export default function Reservation() {
                     </svg>
                   </button>
                   <p className="text-xs text-midnight/50 italic">
-                    ※ お急ぎの方はお電話（048-606-4977）またはInstagram DMでもお気軽にどうぞ。
+                    ※ お急ぎの方はお電話（{BUSINESS.phone}）またはInstagram DMでもお気軽にどうぞ。
                   </p>
                 </div>
               </>
@@ -400,22 +404,54 @@ export default function Reservation() {
   );
 }
 
+/* Form field wrapper — renders an explicit `<label htmlFor>` and
+   injects `id` / `name` / `autoComplete` onto its single child
+   input/select/textarea so assistive tech + browser autofill both
+   work without consumers having to wire those attrs each time. */
 function Field({
+  name,
   label,
   required,
+  autoComplete,
   children,
 }: {
+  name: string;
   label: string;
   required?: boolean;
-  children: React.ReactNode;
+  autoComplete?: string;
+  children: ReactElement<{
+    id?: string;
+    name?: string;
+    required?: boolean;
+    autoComplete?: string;
+    "aria-required"?: boolean;
+  }>;
 }) {
+  const id = `rsv-${name}`;
+  const enhanced = isValidElement(children)
+    ? cloneElement(children, {
+        id,
+        name,
+        required,
+        autoComplete,
+        "aria-required": required,
+      })
+    : children;
+
   return (
-    <label className="block">
-      <span className="block text-[9px] font-pixel text-midnight/70 mb-2 tracking-wider uppercase">
+    <div className="block">
+      <label
+        htmlFor={id}
+        className="block text-[9px] font-pixel text-midnight/70 mb-2 tracking-wider uppercase"
+      >
         {label}
-        {required && <span className="text-magenta ml-1">*</span>}
-      </span>
-      {children}
-    </label>
+        {required && (
+          <span className="text-magenta ml-1" aria-hidden="true">
+            *
+          </span>
+        )}
+      </label>
+      {enhanced}
+    </div>
   );
 }

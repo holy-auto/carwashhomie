@@ -2,40 +2,40 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { BUSINESS } from "@/lib/constants";
 
 const rows = [
   {
     label: "販売事業者名",
-    value: "車の美容外科 Car Wash Homies",
+    value: BUSINESS.nameJa,
   },
   {
     label: "運営責任者",
-    value: "中山 春香（二級自動車整備士）",
+    value: `${BUSINESS.operator}（${BUSINESS.operatorTitle}）`,
   },
   {
     label: "所在地",
-    value: "〒339-0021 埼玉県さいたま市岩槻区末田2421-2",
+    value: `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}`,
   },
   {
     label: "電話番号",
-    value: "048-606-4977",
+    value: BUSINESS.phone,
   },
   {
     label: "お問い合わせ",
-    value:
-      "お電話（048-606-4977）／ Instagram DM（@japanese_detailer_girl）／ X DM（@DetailerGirl）",
+    value: `お電話（${BUSINESS.phone}）／ Instagram DM（@${BUSINESS.instagramHandle}）／ X DM（@${BUSINESS.xHandle}）`,
   },
   {
     label: "営業時間",
-    value: "10:00 — 19:00",
+    value: BUSINESS.hours,
   },
   {
     label: "定休日",
-    value: "不定休",
+    value: BUSINESS.hoursNote,
   },
   {
     label: "登録番号",
-    value: "T8810011150208",
+    value: BUSINESS.registrationNumber,
   },
   {
     label: "販売価格",
