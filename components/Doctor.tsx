@@ -93,18 +93,18 @@ export default function Doctor() {
                   {/* Top bar — issuer + serial */}
                   <div className="absolute top-0 left-0 right-0 px-5 pt-5 flex items-start justify-between">
                     <div>
-                      <div className="text-[8px] tracking-[0.3em] text-sunset/90 font-mono">
+                      <div className="text-[7px] tracking-[0.25em] text-sunset/90 font-pixel">
                         AUTO AESTHETIC ASSOCIATION
                       </div>
-                      <div className="text-cream font-display text-base leading-tight mt-0.5">
+                      <div className="text-cream font-chunky text-sm tracking-wider uppercase mt-1">
                         Detailer License
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[8px] tracking-[0.25em] text-chrome/60 uppercase font-mono">
+                      <div className="text-[7px] tracking-[0.2em] text-chrome/60 uppercase font-pixel">
                         Serial No.
                       </div>
-                      <div className="text-sunset font-mono text-xs tracking-wider">
+                      <div className="text-sunset font-crt text-base tracking-wider leading-none">
                         AAH-001-JDG
                       </div>
                     </div>
@@ -131,13 +131,13 @@ export default function Doctor() {
                     <div className="border-t border-dashed border-sunset/30 pt-3">
                       <div className="flex items-end justify-between gap-3">
                         <div className="min-w-0">
-                          <div className="text-[8px] tracking-[0.25em] text-chrome/50 uppercase font-mono">
+                          <div className="text-[7px] tracking-[0.2em] text-chrome/50 uppercase font-pixel">
                             Holder
                           </div>
-                          <div className="font-display text-cream text-xl leading-tight">
+                          <div className="font-pixel-jp text-cream text-xl leading-tight mt-1">
                             中山 春香
                           </div>
-                          <div className="text-sunset/90 text-[10px] tracking-widest uppercase mt-0.5 font-mono">
+                          <div className="text-sunset/90 text-[8px] tracking-widest uppercase mt-1 font-pixel">
                             Japanese Detailer Girl
                           </div>
                         </div>
@@ -149,12 +149,12 @@ export default function Doctor() {
                               "linear-gradient(135deg, #ff6b1a, #f5d8a0, #c8b78a, #ff6b1a)",
                           }}
                         >
-                          <div className="absolute inset-0 grid place-items-center text-[7px] font-mono text-midnight font-bold tracking-tighter">
+                          <div className="absolute inset-0 grid place-items-center text-[7px] font-pixel text-midnight tracking-tighter">
                             AAH
                           </div>
                         </div>
                       </div>
-                      <div className="mt-3 flex items-center justify-between text-[9px] font-mono text-chrome/60 tracking-wider">
+                      <div className="mt-3 flex items-center justify-between text-[10px] font-crt text-chrome/70 tracking-wider leading-none">
                         <span>QUAL: Lv.2 Auto Mechanic</span>
                         <span>ISSUED 2025.04.15</span>
                       </div>
@@ -189,7 +189,7 @@ export default function Doctor() {
 
             {/* Tiny worldview footnote under card */}
             <div className="mt-6 text-center">
-              <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.3em] text-midnight/40 uppercase font-mono">
+              <div className="inline-flex items-center gap-2 text-[8px] tracking-[0.25em] text-midnight/60 uppercase font-pixel">
                 <span className="h-[1px] w-6 bg-midnight/20" />
                 AAH Licensed Detailer
                 <span className="h-[1px] w-6 bg-midnight/20" />

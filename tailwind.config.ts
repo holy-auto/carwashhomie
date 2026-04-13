@@ -49,6 +49,15 @@ const config: Config = {
         display: ["var(--font-playfair)", "Georgia", "serif"],
         script: ["var(--font-blackletter)", "UnifrakturMaguntia", "serif"],
         body: ["var(--font-noto)", "system-ui", "sans-serif"],
+        // 90s / Y2K
+        pixel: ["var(--font-pixel)", "monospace"],
+        crt: ["var(--font-crt)", "monospace"],
+        chunky: ["var(--font-chunky)", "Impact", "sans-serif"],
+        pixelJp: [
+          "var(--font-pixel-jp)",
+          "var(--font-pixel)",
+          "monospace",
+        ],
       },
       backgroundImage: {
         "sunset-gradient":

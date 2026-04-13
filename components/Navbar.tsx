@@ -52,7 +52,7 @@ export default function Navbar() {
             className="w-12 h-12 object-contain rounded-md opacity-90 group-hover:opacity-100 transition-opacity"
           />
           <div className="flex flex-col leading-none">
-            <span className="text-[10px] text-chrome/60 tracking-[0.2em] mt-0.5">
+            <span className="font-pixel-jp text-[11px] text-chrome/80 tracking-[0.1em] mt-0.5">
               車の美容外科
             </span>
           </div>

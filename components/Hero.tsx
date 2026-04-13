@@ -35,7 +35,7 @@ export default function Hero() {
             <span className="text-[10px] leading-none">★</span>
             <span className="text-[10px] leading-none">★</span>
           </span>
-          <span className="text-chrome/60 text-[9px] tracking-[0.4em] uppercase font-mono">
+          <span className="text-chrome/60 text-[8px] tracking-[0.3em] uppercase font-pixel">
             AAH Licensed Detailer · No.001
           </span>
           <span className="flex items-center gap-1 text-sunset">
@@ -81,12 +81,12 @@ export default function Hero() {
           className="mb-6"
         >
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-cream leading-[1.1] tracking-tight">
-            <span className="text-cream">車の</span>
+            <span className="font-pixel-jp text-cream text-3xl md:text-5xl lg:text-6xl">車の</span>
             <span className="candy-90s-text retro-italic">美容外科</span>
           </h1>
-          <div className="mt-3 flex items-center justify-center gap-4">
+          <div className="mt-4 flex items-center justify-center gap-4">
             <span className="h-[1px] w-12 bg-chrome/30" />
-            <span className="text-chrome/50 text-[10px] tracking-[0.4em] uppercase">
+            <span className="font-pixel text-chrome/60 text-[8px] tracking-[0.3em] uppercase">
               Automotive Aesthetic Clinic
             </span>
             <span className="h-[1px] w-12 bg-chrome/30" />
@@ -144,10 +144,10 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1.1 }}
           className="mt-16 max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-3 text-[10px] tracking-[0.3em] text-chrome/50 uppercase font-semibold mb-4">
-            <span className="h-[1px] w-6 bg-chrome/20" />
+          <div className="inline-flex items-center gap-3 text-[8px] tracking-[0.3em] text-cyan90/80 uppercase font-pixel mb-4">
+            <span className="h-[1px] w-6 bg-cyan90/40" />
             Our Policy
-            <span className="h-[1px] w-6 bg-chrome/20" />
+            <span className="h-[1px] w-6 bg-cyan90/40" />
           </div>
           <p className="font-display text-2xl md:text-3xl text-cream leading-relaxed">
             「車の寿命を延ばし、
@@ -166,8 +166,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1.5 }}
           className="mt-16 flex flex-col items-center gap-2 text-cream/50"
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase animate-bounce">
-            Scroll
+          <span className="font-pixel text-[8px] tracking-[0.4em] uppercase animate-bounce text-magenta/80">
+            ▼ Scroll ▼
           </span>
           <div className="w-[1px] h-8 bg-gradient-to-b from-sunset to-transparent" />
         </motion.div>

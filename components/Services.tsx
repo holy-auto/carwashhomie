@@ -274,15 +274,15 @@ function BodyCoatingSection() {
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <div
-                        className={`text-[10px] tracking-[0.3em] uppercase font-mono ${
-                          isPremium ? "text-sunset" : "text-midnight/40"
+                        className={`text-[8px] tracking-[0.25em] uppercase font-pixel ${
+                          isPremium ? "text-sunset" : "text-midnight/60"
                         }`}
                       >
                         {tier.classLabel}
                       </div>
                       <div
-                        className={`text-[10px] tracking-wider uppercase font-semibold mt-1 ${
-                          isPremium ? "text-chrome/70" : "text-sunset"
+                        className={`text-[10px] tracking-wider uppercase font-crt mt-1.5 leading-none ${
+                          isPremium ? "text-chrome/80" : "text-sunset"
                         }`}
                       >
                         {tier.code}
@@ -327,8 +327,8 @@ function BodyCoatingSection() {
                       );
                     })}
                     <span
-                      className={`ml-2 text-[9px] tracking-[0.25em] uppercase font-mono ${
-                        isPremium ? "text-chrome/70" : "text-midnight/50"
+                      className={`ml-2 text-[7px] tracking-[0.2em] uppercase font-pixel ${
+                        isPremium ? "text-chrome/80" : "text-midnight/60"
                       }`}
                     >
                       {tier.rank === 3 ? "Triple Star" : tier.rank === 2 ? "Double Star" : "Single Star"}

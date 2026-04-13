@@ -77,7 +77,7 @@ export default function Footer() {
             </div>
             <ul className="space-y-3 text-sm text-chrome/70">
               <li>
-                <div className="text-[10px] text-chrome/40 uppercase tracking-wider">
+                <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">
                   Address
                 </div>
                 <div>
@@ -87,18 +87,18 @@ export default function Footer() {
                 </div>
               </li>
               <li>
-                <div className="text-[10px] text-chrome/40 uppercase tracking-wider">
+                <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">
                   Hours
                 </div>
                 <div>10:00 — 19:00（不定休）</div>
               </li>
               <li>
-                <div className="text-[10px] text-chrome/40 uppercase tracking-wider">
+                <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">
                   Phone
                 </div>
                 <a
                   href="tel:0486064977"
-                  className="text-sunset font-semibold hover:text-sunset-300 transition-colors"
+                  className="text-sunset font-crt text-xl tracking-wider hover:text-sunset-300 transition-colors leading-none"
                 >
                   048-606-4977
                 </a>
@@ -124,7 +124,7 @@ export default function Footer() {
         <div className="pinstripe opacity-60 mb-6" />
 
         {/* Bottom */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-chrome/50">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] text-chrome/60 font-pixel tracking-wider">
           <div>
             © 2025 車の美容外科 Car Wash Homies. All rights reserved.
             <br className="md:hidden" />

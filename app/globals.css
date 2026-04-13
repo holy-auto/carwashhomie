@@ -271,9 +271,11 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.875rem 1.5rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-family: var(--font-chunky), Impact, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  font-size: 0.85rem;
   color: #1a0f08;
   background: linear-gradient(180deg, #ffd9a8 0%, #ff6b1a 50%, #8a3100 100%);
   border: 2px solid #1a0f08;
@@ -304,16 +306,32 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.3rem 0.7rem;
+  padding: 0.4rem 0.75rem;
   border: 2px solid #1a0f08;
   border-radius: 0.4rem;
-  font-weight: 800;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  font-family: var(--font-pixel), monospace;
+  font-weight: 400;
+  font-size: 0.55rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   background: #fff8f0;
   color: #1a0f08;
   box-shadow: 3px 3px 0 0 #1a0f08;
+}
+
+/* Pixel/CRT helper utilities */
+.font-pixel { font-family: var(--font-pixel), monospace; }
+.font-crt { font-family: var(--font-crt), monospace; }
+.font-chunky { font-family: var(--font-chunky), Impact, sans-serif; }
+.font-pixel-jp { font-family: var(--font-pixel-jp), var(--font-pixel), monospace; }
+
+/* Pixel-perfect rendering for tiny pixel text */
+.pixelated {
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: geometricPrecision;
 }
 
 /* Holographic foil bar (90s trading card) */

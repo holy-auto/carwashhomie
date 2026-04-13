@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { Playfair_Display, UnifrakturMaguntia, Noto_Sans_JP } from "next/font/google";
+import {
+  Playfair_Display,
+  UnifrakturMaguntia,
+  Noto_Sans_JP,
+  Press_Start_2P,
+  VT323,
+  Bungee,
+  DotGothic16,
+} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,6 +28,36 @@ const blackletter = UnifrakturMaguntia({
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
   variable: "--font-noto",
+  display: "swap",
+});
+
+// 90s / Y2K display fonts
+const pressStart = Press_Start_2P({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-pixel",
+  display: "swap",
+});
+
+const vt323 = VT323({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-crt",
+  display: "swap",
+});
+
+const bungee = Bungee({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-chunky",
+  display: "swap",
+});
+
+// Pixel-style Japanese (16px DotGothic) for kana/kanji 90s vibe
+const dotGothic = DotGothic16({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-pixel-jp",
   display: "swap",
 });
 
@@ -53,7 +91,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${playfair.variable} ${blackletter.variable} ${notoSansJp.variable}`}
+      className={`${playfair.variable} ${blackletter.variable} ${notoSansJp.variable} ${pressStart.variable} ${vt323.variable} ${bungee.variable} ${dotGothic.variable}`}
     >
       <body className="font-body bg-cream text-midnight antialiased">
         <Navbar />

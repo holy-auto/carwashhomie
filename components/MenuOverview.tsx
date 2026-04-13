@@ -130,10 +130,10 @@ export default function MenuOverview() {
                     {item.icon}
                   </div>
                   <div className="text-right">
-                    <div className="text-[10px] tracking-[0.3em] text-midnight/60 uppercase font-mono bg-cream border border-midnight/30 rounded px-1.5 py-0.5 inline-block">
+                    <div className="text-[8px] tracking-[0.2em] text-midnight uppercase font-pixel bg-cream border border-midnight rounded px-1.5 py-1 inline-block">
                       No.{item.num}
                     </div>
-                    <div className="text-[10px] tracking-wider text-magenta uppercase font-extrabold mt-1">
+                    <div className="text-[8px] tracking-wider text-magenta uppercase font-pixel mt-1.5">
                       ★ {item.label}
                     </div>
                   </div>
@@ -144,9 +144,9 @@ export default function MenuOverview() {
                 <p className="text-sm text-midnight/70 leading-relaxed mb-5">
                   {item.desc}
                 </p>
-                <div className="border-t-2 border-dashed border-midnight/30 pt-4 flex items-center justify-between text-sm">
-                  <span className="text-midnight font-extrabold uppercase tracking-wider text-xs">
-                    詳しく見る
+                <div className="border-t-2 border-dashed border-midnight/30 pt-4 flex items-center justify-between">
+                  <span className="text-midnight font-pixel uppercase tracking-wider text-[9px]">
+                    &gt; 詳しく見る
                   </span>
                   <span className="text-sunset font-extrabold text-lg group-hover:translate-x-1 transition-transform">
                     ▶
@@ -172,8 +172,8 @@ export default function MenuOverview() {
             <svg className="w-5 h-5 text-cyan90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <span className="text-xs tracking-[0.2em] text-cyan90 font-mono uppercase">Tel</span>
-            <span className="font-display text-lg font-bold">048-606-4977</span>
+            <span className="text-[9px] tracking-[0.2em] text-cyan90 font-pixel uppercase">Tel</span>
+            <span className="font-crt text-2xl tracking-wider leading-none">048-606-4977</span>
           </a>
           <Link href="/reservation" className="btn-90s justify-center !w-full">
             <span className="w-2 h-2 rounded-full bg-midnight animate-pulse" />
