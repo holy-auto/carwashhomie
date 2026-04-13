@@ -103,11 +103,8 @@ export default function MenuOverview() {
           <div className="sticker mb-4">
             ★ Site Menu ★
           </div>
-          <h2 className="font-display text-[2rem] md:text-5xl text-midnight mb-4 leading-tight">
-            診察科目
-            <span className="candy-90s-text retro-italic">・</span>
-            <br className="md:hidden" />
-            各種ご案内
+          <h2 className="font-display text-[clamp(1.4rem,6.5vw,3rem)] md:text-5xl text-midnight mb-4 leading-tight whitespace-nowrap">
+            診察科目<span className="candy-90s-text retro-italic">・</span>各種ご案内
           </h2>
           <p className="text-midnight/60 text-sm md:text-base max-w-xl mx-auto leading-relaxed font-readable">
             気になる項目をお選びください。

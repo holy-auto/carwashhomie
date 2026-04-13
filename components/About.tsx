@@ -72,7 +72,7 @@ export default function About() {
             {/* Concept */}
             <div className="text-center mb-10">
               <h3 className="font-display text-2xl md:text-3xl text-midnight mb-6">
-                当院の方針（コンセプト）
+                当院の方針
               </h3>
               <p className="text-midnight/70 leading-relaxed max-w-2xl mx-auto">
                 塗装状態・使用環境・年式を診断し、

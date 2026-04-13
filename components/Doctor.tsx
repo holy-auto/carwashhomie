@@ -55,10 +55,16 @@ export default function Doctor() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-2"
           >
-            <div className="relative">
+            <a
+              href="https://www.instagram.com/japanese_detailer_girl/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram @japanese_detailer_girl"
+              className="block relative group"
+            >
               {/* Outer foil bezel */}
               <div
-                className="aspect-[3/4] rounded-2xl p-[2px] shadow-clinic relative overflow-hidden"
+                className="aspect-[3/4] rounded-2xl p-[2px] shadow-clinic relative overflow-hidden transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-sunset-glow"
                 style={{
                   background:
                     "linear-gradient(135deg, #ff6b1a 0%, #f5d8a0 35%, #c8b78a 50%, #f5d8a0 65%, #ff6b1a 100%)",
@@ -169,23 +175,7 @@ export default function Doctor() {
                 </div>
               </div>
 
-              {/* Wax-seal style Instagram badge */}
-              <a
-                href="https://www.instagram.com/japanese_detailer_girl/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-sunset-gradient flex items-center justify-center shadow-chrome rotate-6 hover:rotate-0 transition-transform group ring-2 ring-cream"
-              >
-                <div className="text-center">
-                  <div className="text-midnight text-lg font-bold group-hover:scale-110 transition-transform leading-none">
-                    IG
-                  </div>
-                  <div className="text-[8px] text-midnight/80 font-bold tracking-wider mt-0.5">
-                    FOLLOW
-                  </div>
-                </div>
-              </a>
-            </div>
+            </a>
 
             {/* Tiny worldview footnote under card */}
             <div className="mt-6 text-center">

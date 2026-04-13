@@ -426,7 +426,7 @@ function InteriorCoatingSection() {
           label="Interior Coating"
           title={
             <>
-              シート・<span className="text-sunset">内装</span>
+              シート&<span className="text-sunset">内装</span>
               <br className="md:hidden" />
               コーティング
             </>
