@@ -85,7 +85,6 @@ export const metadata: Metadata = {
     "ディテーリング",
     "さいたま市",
     "岩槻",
-    "ガラスコーティング",
   ],
   authors: [{ name: BUSINESS.operator }],
   creator: BUSINESS.nameJa,

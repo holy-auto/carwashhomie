@@ -103,7 +103,14 @@ export default function Access() {
             <div className="relative rounded-2xl overflow-hidden border border-sunset/20 shadow-clinic">
               <div className="aspect-[4/3] lg:aspect-[16/10]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3230.5!2d139.7150!3d35.9430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z5bKp5qe95Yy65pyr55SwMjQyMS0y!5e0!3m2!1sja!2sjp!4v1700000000000"
+                  /* Use the full postal address as the query so Google
+                     geocodes the exact storefront every time.
+                     Hardcoded lat/lng previously pointed slightly off
+                     the actual location. `output=embed` gives us a
+                     no-API-key iframe; `hl=ja` keeps Japanese UI. */
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                    `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}`,
+                  )}&hl=ja&z=17&output=embed`}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -207,7 +214,9 @@ export default function Access() {
 
             {/* CTA */}
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=35.9430,139.7150"
+              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}`,
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-full bg-sunset-gradient text-midnight font-bold shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
