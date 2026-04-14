@@ -8,34 +8,38 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        /* Accent colors are driven by CSS custom properties so the
+           whole site can swap palettes (90s default ↔ Stranger Things
+           "Upside Down" red/black) by toggling a .theme-st class on
+           <html>. Shades use literals because they're rarely used. */
         sunset: {
-          DEFAULT: "#FF6B1A",
+          DEFAULT: "rgb(var(--c-sunset) / <alpha-value>)",
           50: "#FFF1E6",
           100: "#FFE0C2",
           200: "#FFC285",
           300: "#FFA347",
           400: "#FF8533",
-          500: "#FF6B1A",
+          500: "rgb(var(--c-sunset) / <alpha-value>)",
           600: "#E55300",
           700: "#B84200",
           800: "#8A3100",
           900: "#5C2100",
         },
-        cream: "#FFF8F0",
+        cream: "rgb(var(--c-cream) / <alpha-value>)",
         midnight: {
-          DEFAULT: "#1A0F08",
+          DEFAULT: "rgb(var(--c-midnight) / <alpha-value>)",
           50: "#3D2819",
           100: "#2E1D11",
-          200: "#1A0F08",
+          200: "rgb(var(--c-midnight) / <alpha-value>)",
           300: "#120A05",
         },
         chrome: "#E8E8EC",
         ivory: "#FFF8F0",
         // 90s neon accents — used sparingly for retro pop
         magenta: {
-          DEFAULT: "#FF2E97",
+          DEFAULT: "rgb(var(--c-magenta) / <alpha-value>)",
           400: "#FF5BAE",
-          500: "#FF2E97",
+          500: "rgb(var(--c-magenta) / <alpha-value>)",
           600: "#D81F7E",
         },
         cyan90: {
