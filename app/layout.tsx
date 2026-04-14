@@ -7,14 +7,11 @@ import {
   VT323,
   Bungee,
   DotGothic16,
-  Metamorphous,
 } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
-import ThemeToggle from "@/components/ThemeToggle";
-import UpsideDownCreatures from "@/components/UpsideDownCreatures";
 import { SITE, BUSINESS } from "@/lib/constants";
 
 const playfair = Playfair_Display({
@@ -70,16 +67,6 @@ const dotGothic = DotGothic16({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-pixel-jp",
-  display: "swap",
-});
-
-/* Metamorphous — the closest free Google Font to the ITC Benguiat
-   face used on the Stranger Things title card. Only activates when
-   the user flips the site into `.theme-st` mode. */
-const metamorphous = Metamorphous({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-metamorphous",
   display: "swap",
 });
 
@@ -164,26 +151,13 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${playfair.variable} ${blackletter.variable} ${notoSansJp.variable} ${pressStart.variable} ${vt323.variable} ${bungee.variable} ${dotGothic.variable} ${metamorphous.variable}`}
+      className={`${playfair.variable} ${blackletter.variable} ${notoSansJp.variable} ${pressStart.variable} ${vt323.variable} ${bungee.variable} ${dotGothic.variable}`}
     >
-      <head>
-        {/* Pre-hydration theme init: reads ?theme= from URL or
-            localStorage and applies .theme-st BEFORE first paint to
-            avoid a flash of the wrong theme. */}
-        <script
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=new URLSearchParams(location.search);var t=p.get('theme');if(t==='st'||t==='90s'){localStorage.setItem('cwh:theme',t);}var s=localStorage.getItem('cwh:theme');if(s==='st'){document.documentElement.classList.add('theme-st');}}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body className="font-body bg-cream text-midnight antialiased">
         <JsonLd />
         <Navbar />
         <main className="relative overflow-x-hidden">{children}</main>
         <Footer />
-        <ThemeToggle />
-        <UpsideDownCreatures />
       </body>
     </html>
   );

@@ -39,20 +39,8 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      {/* 90s foil bar atop nav when scrolled / on inner pages.
-          In ST theme a Christmas-light string hangs below the foil —
-          the .christmas-lights div collapses to zero height in 90s
-          mode via display:none, so no layout shift occurs. */}
-      {(scrolled || pathname !== "/") && (
-        <>
-          <div className="h-1 foil" />
-          <div aria-hidden="true" className="christmas-lights">
-            {Array.from({ length: 24 }).map((_, i) => (
-              <span key={i} />
-            ))}
-          </div>
-        </>
-      )}
+      {/* 90s foil bar atop nav when scrolled / on inner pages */}
+      {(scrolled || pathname !== "/") && <div className="h-1 foil" />}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">

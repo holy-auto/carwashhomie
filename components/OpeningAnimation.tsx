@@ -83,13 +83,12 @@ export default function OpeningAnimation({
             {/* Grain overlay */}
             <div className="absolute inset-0 grain pointer-events-none" />
 
-            {/* Subtle radial ambient — reads CSS vars so ST mode
-                automatically pulses blood-red instead of orange. */}
+            {/* Subtle radial ambient */}
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  "radial-gradient(ellipse at center, rgb(var(--c-sunset) / 0.12) 0%, rgb(var(--c-midnight) / 0) 60%)",
+                  "radial-gradient(ellipse at center, rgba(255,107,26,0.12) 0%, rgba(26,15,8,0) 60%)",
               }}
             />
 
@@ -153,7 +152,7 @@ export default function OpeningAnimation({
                   className="absolute w-1.5 h-1.5 rounded-full bg-sunset"
                   style={{
                     boxShadow:
-                      "0 0 12px rgb(var(--c-sunset) / 0.9), 0 0 24px rgb(var(--c-sunset) / 0.5)",
+                      "0 0 12px rgba(255,107,26,0.9), 0 0 24px rgba(255,107,26,0.5)",
                   }}
                 />
               );
@@ -174,19 +173,17 @@ export default function OpeningAnimation({
               }}
               className="relative w-64 h-64 md:w-80 md:h-80"
             >
-              {/* drop-shadow respects PNG alpha, so the glow hugs the silhouette.
-                  Colors reference the --c-sunset CSS var so ST mode
-                  turns the halo blood-red automatically. */}
+              {/* drop-shadow respects PNG alpha, so the glow hugs the silhouette */}
               <motion.div
                 initial={{
                   filter:
-                    "drop-shadow(0 0 0px rgb(var(--c-sunset) / 0)) brightness(2.4)",
+                    "drop-shadow(0 0 0px rgba(255,107,26,0)) brightness(2.4)",
                 }}
                 animate={{
                   filter: [
-                    "drop-shadow(0 0 80px rgb(var(--c-sunset) / 0.95)) brightness(2.4)",
-                    "drop-shadow(0 0 70px rgb(var(--c-sunset) / 0.8)) brightness(1.25)",
-                    "drop-shadow(0 0 60px rgb(var(--c-sunset) / 0.55)) brightness(1)",
+                    "drop-shadow(0 0 80px rgba(255,107,26,0.95)) brightness(2.4)",
+                    "drop-shadow(0 0 70px rgba(255,107,26,0.8)) brightness(1.25)",
+                    "drop-shadow(0 0 60px rgba(255,107,26,0.55)) brightness(1)",
                   ],
                 }}
                 transition={{
