@@ -32,6 +32,11 @@ const treatmentOptions = [
 export default function Reservation() {
   const [selectedConcerns, setSelectedConcerns] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  /* Remember the last constructed mailto link so the error UI can
+     offer it as a fallback if the Web3Forms POST failed. */
+  const [fallbackMailto, setFallbackMailto] = useState<string | null>(null);
 
   const toggleConcern = (c: string) => {
     setSelectedConcerns((prev) =>
@@ -39,27 +44,30 @@ export default function Reservation() {
     );
   };
 
-  /* Submit handler — serialize every form field + selected concern
-     chips into a plain-text body, then launch the user's mail
-     client via a `mailto:` URL pointed at BUSINESS.email. No
-     server, no API key, no account to register: the visitor just
-     taps "送信" in their Gmail / default mail app to complete.
-     If a backend is ever wired up later, replace this body with a
-     fetch() to that endpoint — form field `name` attrs already
-     match typical Formspree / Web3Forms conventions. */
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  /* Submit handler — POSTs to Web3Forms (https://web3forms.com),
+     a free/no-registration-on-our-side relay that delivers form
+     submissions straight to BUSINESS.email without opening a mail
+     client. The access key is a public identifier obtained from
+     web3forms.com; it is stored as NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+     and is safe to expose client-side (rate-limit + domain-allow
+     is configured on the Web3Forms dashboard).
 
-    // Honeypot — silently drop submissions that tripped it (bots).
+     If the submit fails (no key set, network error, Web3Forms
+     returns !success), we surface the error and offer a mailto:
+     fallback so the visitor can always complete the inquiry. */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+
     const fd = new FormData(e.currentTarget);
-    if ((fd.get("company") as string | null)?.trim()) {
-      setSubmitted(true); // pretend success so bots don't retry
+
+    // Honeypot — silently "succeed" for bots that fill it.
+    if ((fd.get("botcheck") as string | null)?.trim()) {
+      setSubmitted(true);
       return;
     }
 
-    const get = (k: string) =>
-      ((fd.get(k) as string | null) ?? "").trim();
-
+    const get = (k: string) => ((fd.get(k) as string | null) ?? "").trim();
     const name = get("name");
     const nameKana = get("name-kana");
     const tel = get("tel");
@@ -99,20 +107,70 @@ export default function Reservation() {
       "─────────────────────",
       "※ このメールはウェブサイトのお問い合わせフォームから送信されました。",
     ];
-    const body = lines.join("\n");
+    const message = lines.join("\n");
 
-    // Build mailto URL. encodeURIComponent handles Japanese +
-    // newlines so Gmail / Apple Mail / Outlook all populate the
-    // compose window correctly.
+    // Precompute the fallback mailto up front so the error UI can
+    // offer a one-tap alternative path.
     const mailto = `mailto:${BUSINESS.email}?subject=${encodeURIComponent(
       subject,
-    )}&body=${encodeURIComponent(body)}`;
+    )}&body=${encodeURIComponent(message)}`;
+    setFallbackMailto(mailto);
 
-    // Open in the same tab — most mail clients handle this better
-    // than window.open (which pop-up blockers may intercept).
-    window.location.href = mailto;
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      setError(
+        "お問い合わせの送信先がまだ設定されていません。お手数ですが下記のリンクからメールにてご連絡ください。",
+      );
+      return;
+    }
 
-    setSubmitted(true);
+    setSending(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject,
+          from_name: name,
+          // Web3Forms reads `replyto` and sets it as the Reply-To
+          // header, so hitting reply in Gmail goes to the visitor.
+          replyto: email,
+          message,
+          // Include raw structured fields too so they surface in
+          // the Web3Forms dashboard log view.
+          name,
+          name_kana: nameKana,
+          tel,
+          email,
+          vehicle,
+          body_color: bodyColor,
+          treatment,
+          concerns: selectedConcerns.join(", "),
+          note,
+          botcheck: "",
+        }),
+      });
+      const result: { success: boolean; message?: string } = await res.json();
+      if (!res.ok || !result.success) {
+        throw new Error(
+          result.message ||
+            "送信サービスがエラーを返しました。時間をおいて再度お試しください。",
+        );
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "通信に失敗しました。ネットワーク状態をご確認ください。",
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -294,37 +352,24 @@ export default function Reservation() {
                   </svg>
                 </div>
                 <h3 className="font-display text-xl md:text-3xl text-midnight mb-3 leading-tight">
-                  メール作成画面を
+                  お問い合わせを
                   <br className="md:hidden" />
-                  開きました
+                  送信しました
                 </h3>
                 <p className="text-midnight/60 leading-relaxed font-readable">
-                  お使いのメールアプリで「送信」を押して完了してください。
-                  <br />
                   内容を確認の上、折り返しご連絡いたします。
-                </p>
-                <p className="text-midnight/50 text-sm mt-6 font-readable">
-                  メーラーが開かない場合は、お手数ですが直接
-                  <br className="md:hidden" />
-                  <a
-                    href={`mailto:${BUSINESS.email}`}
-                    className="text-sunset underline break-all"
-                  >
-                    {BUSINESS.email}
-                  </a>
-                  <br className="md:hidden" />
-                  までご連絡ください。
-                </p>
-                <p className="text-midnight/50 text-xs mt-4">
+                  <br />
                   お急ぎの方はお電話（{BUSINESS.phone}）または
-                  Instagram DMでもどうぞ。
+                  <br className="md:hidden" />
+                  Instagram DMでもご連絡ください。
                 </p>
               </div>
             ) : (
               <>
                 {/* Honeypot — hidden from real users but visible to
                     naive spam bots. Handler silently discards any
-                    submission where this is filled. */}
+                    submission where this is filled. Web3Forms uses
+                    `botcheck` as its conventional honeypot name. */}
                 <div
                   aria-hidden="true"
                   style={{
@@ -336,10 +381,10 @@ export default function Reservation() {
                   }}
                 >
                   <label>
-                    Company (leave blank)
+                    Please leave this field empty
                     <input
                       type="text"
-                      name="company"
+                      name="botcheck"
                       tabIndex={-1}
                       autoComplete="off"
                     />
@@ -454,25 +499,78 @@ export default function Reservation() {
                   </Field>
                 </div>
 
+                {/* Inline error banner with mailto fallback */}
+                {error && (
+                  <div
+                    role="alert"
+                    className="mb-6 rounded-xl border-2 border-magenta bg-magenta/10 p-4 text-sm text-midnight"
+                  >
+                    <div className="font-bold text-magenta mb-2">
+                      送信に失敗しました
+                    </div>
+                    <p className="text-midnight/80 leading-relaxed mb-3">
+                      {error}
+                    </p>
+                    {fallbackMailto && (
+                      <a
+                        href={fallbackMailto}
+                        className="inline-flex items-center gap-2 text-sunset font-semibold underline"
+                      >
+                        メーラーを起動して送信する
+                        <svg
+                          aria-hidden="true"
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                          />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
+                )}
+
                 {/* Submit */}
                 <div className="flex flex-col items-center gap-4">
-                  <button type="submit" className="btn-90s group !text-base !px-8 !py-4">
-                    <span className="w-2 h-2 rounded-full bg-midnight animate-pulse" />
-                    送信する
-                    <svg
-                      aria-hidden="true"
-                      className="w-6 h-6 group-hover:translate-x-1 transition-transform"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="btn-90s group !text-base !px-8 !py-4 disabled:opacity-60 disabled:cursor-wait"
+                  >
+                    {sending ? (
+                      <>
+                        <span
+                          aria-hidden="true"
+                          className="w-4 h-4 rounded-full border-2 border-midnight border-t-transparent animate-spin"
+                        />
+                        送信中...
+                      </>
+                    ) : (
+                      <>
+                        <span className="w-2 h-2 rounded-full bg-midnight animate-pulse" />
+                        送信する
+                        <svg
+                          aria-hidden="true"
+                          className="w-6 h-6 group-hover:translate-x-1 transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                          />
+                        </svg>
+                      </>
+                    )}
                   </button>
                   <p className="text-xs text-midnight/50 italic">
                     ※ お急ぎの方はお電話（{BUSINESS.phone}）またはInstagram DMでもお気軽にどうぞ。
