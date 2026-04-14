@@ -26,9 +26,9 @@ export default function About() {
             Our Concept
             <div className="w-8 h-[1px] bg-midnight/30" />
           </div>
-          <h2 className="font-display text-[2rem] md:text-5xl text-midnight mb-4 leading-tight">
+          <h1 className="font-display text-[2rem] md:text-5xl text-midnight mb-4 leading-tight">
             当院のコンセプト
-          </h2>
+          </h1>
           <p className="text-midnight/60 text-sm tracking-wide font-readable leading-relaxed">
             ただのコーティング屋さんじゃない、
             <br className="sm:hidden" />

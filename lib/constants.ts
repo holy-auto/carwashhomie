@@ -42,3 +42,52 @@ export const SITE = {
   ogImage: "/og-image.png",
   locale: "ja_JP",
 } as const;
+
+/* Build a standard Next.js `Metadata` object for a sub-page.
+   Centralizes canonical URL, Open Graph, Twitter Card, and
+   keyword tags so every page gets the same SEO treatment
+   without duplicating boilerplate. */
+export function pageMetadata({
+  title,
+  description,
+  path,
+  keywords,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  keywords?: readonly string[];
+}) {
+  const fullTitle = `${title} | ${BUSINESS.nameJa}`;
+  return {
+    title, // root-layout template adds the "| 車の美容外科..." suffix
+    description,
+    keywords: keywords ? [...keywords] : undefined,
+    alternates: {
+      canonical: path,
+    },
+    openGraph: {
+      type: "website" as const,
+      locale: SITE.locale,
+      url: `${SITE.url}${path}`,
+      siteName: BUSINESS.nameJa,
+      title: fullTitle,
+      description,
+      images: [
+        {
+          url: SITE.ogImage,
+          width: 1200,
+          height: 630,
+          alt: BUSINESS.nameJa,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title: fullTitle,
+      description,
+      images: [SITE.ogImage],
+      creator: `@${BUSINESS.xHandle}`,
+    },
+  };
+}

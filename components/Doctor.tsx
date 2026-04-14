@@ -40,9 +40,9 @@ export default function Doctor() {
             Meet the Director
             <div className="w-8 h-[1px] bg-midnight/30" />
           </div>
-          <h2 className="font-display text-[2rem] md:text-5xl text-midnight mb-6 leading-tight">
+          <h1 className="font-display text-[2rem] md:text-5xl text-midnight mb-6 leading-tight">
             院長紹介
-          </h2>
+          </h1>
           <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed font-readable">
             車の美容外科女医が、あなたの愛車を診察します。
           </p>

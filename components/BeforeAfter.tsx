@@ -156,9 +156,9 @@ export default function BeforeAfter() {
             Case Study
             <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
-          <h2 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
+          <h1 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
             施術<span className="text-sunset">事例</span>
-          </h2>
+          </h1>
           <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed font-readable">
             施術前後の変化をご確認ください。
             <br className="md:hidden" />

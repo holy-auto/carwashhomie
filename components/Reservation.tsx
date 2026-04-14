@@ -64,9 +64,9 @@ export default function Reservation() {
             Reservation
             <div className="w-8 h-[1px] bg-midnight/30" />
           </div>
-          <h2 className="font-display text-[2rem] md:text-5xl text-midnight mb-4 leading-tight">
+          <h1 className="font-display text-[2rem] md:text-5xl text-midnight mb-4 leading-tight">
             ご予約<span className="text-sunset">・</span>ご相談
-          </h2>
+          </h1>
           <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed font-readable">
             お気軽にご相談ください。
             <br className="md:hidden" />
