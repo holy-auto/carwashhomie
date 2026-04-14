@@ -116,6 +116,7 @@ export default function Hero() {
             <span className="w-2 h-2 rounded-full bg-midnight" />
             無料カウンセリングを予約
             <svg
+              aria-hidden="true"
               className="w-5 h-5 group-hover:translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"

@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { BUSINESS } from "@/lib/constants";
 
 const info = [
   {
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
@@ -15,7 +16,7 @@ const info = [
   },
   {
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
@@ -24,7 +25,7 @@ const info = [
   },
   {
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
       </svg>
     ),
@@ -33,12 +34,12 @@ const info = [
   },
   {
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
       </svg>
     ),
     label: "電話番号",
-    value: "048-606-4977",
+    value: BUSINESS.phone,
   },
 ];
 
@@ -82,9 +83,9 @@ export default function Access() {
             Access & Map
             <div className="w-8 h-[1px] bg-chrome/20" />
           </div>
-          <h2 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
+          <h1 className="font-display text-[2rem] md:text-5xl text-cream mb-6 leading-tight">
             アクセス
-          </h2>
+          </h1>
           <p className="text-chrome/70 max-w-2xl mx-auto leading-relaxed font-readable">
             愛車を連れて、お気軽にご来院ください。
           </p>
@@ -212,6 +213,7 @@ export default function Access() {
               className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-full bg-sunset-gradient text-midnight font-bold shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
             >
               <svg
+                aria-hidden="true"
                 className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
@@ -226,6 +228,7 @@ export default function Access() {
               </svg>
               Google Maps で経路を見る
               <svg
+                aria-hidden="true"
                 className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                 fill="none"
                 stroke="currentColor"
@@ -259,13 +262,13 @@ export default function Access() {
           <div className="max-w-3xl mx-auto">
             <dl className="grid grid-cols-1 md:grid-cols-[11rem_1fr] gap-x-6 gap-y-0 text-sm">
               {[
-                { label: "院名", value: "車の美容外科 Car Wash Homies" },
-                { label: "院長（代表者）", value: "中山 春香（二級自動車整備士）" },
-                { label: "所在地", value: "〒339-0021 埼玉県さいたま市岩槻区末田2421-2" },
-                { label: "登録番号", value: "T8810011150208" },
-                { label: "電話番号", value: "048-606-4977" },
-                { label: "営業時間", value: "10:00 — 19:00" },
-                { label: "定休日", value: "不定休" },
+                { label: "院名", value: BUSINESS.nameJa },
+                { label: "院長（代表者）", value: `${BUSINESS.operator}（${BUSINESS.operatorTitle}）` },
+                { label: "所在地", value: `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}` },
+                { label: "登録番号", value: BUSINESS.registrationNumber },
+                { label: "電話番号", value: BUSINESS.phone },
+                { label: "営業時間", value: BUSINESS.hours },
+                { label: "定休日", value: BUSINESS.hoursNote },
                 { label: "開業", value: "2026年4月15日" },
               ].map((row) => (
                 <div

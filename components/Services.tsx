@@ -184,16 +184,21 @@ function SectionHeader({
   title,
   description,
   dark = false,
+  level = 2,
 }: {
   label: string;
   title: React.ReactNode;
   description?: string;
   dark?: boolean;
+  /* Render as h1 for the page's primary section, h2 everywhere
+     else. Keeps a single <h1> per page for a clean outline. */
+  level?: 1 | 2;
 }) {
   const labelColor = dark ? "text-chrome/50" : "text-midnight/50";
   const lineColor = dark ? "bg-chrome/20" : "bg-midnight/30";
   const titleColor = dark ? "text-cream" : "text-midnight";
   const descColor = dark ? "text-chrome/70" : "text-midnight/60";
+  const Heading = (level === 1 ? "h1" : "h2") as "h1" | "h2";
 
   return (
     <motion.div
@@ -210,11 +215,11 @@ function SectionHeader({
         {label}
         <div className={`w-8 h-[1px] ${lineColor}`} />
       </div>
-      <h2
+      <Heading
         className={`font-display text-[2rem] md:text-5xl ${titleColor} mb-5 leading-tight`}
       >
         {title}
-      </h2>
+      </Heading>
       {description && (
         <p
           className={`${descColor} max-w-2xl mx-auto leading-relaxed text-sm md:text-base font-readable`}
@@ -238,6 +243,7 @@ function BodyCoatingSection() {
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         <SectionHeader
+          level={1}
           label="Body Coating"
           title={
             <>

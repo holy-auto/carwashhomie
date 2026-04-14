@@ -20,16 +20,47 @@ const SPARKS = [
   { angle: 338, delay: 0.1, dist: 480 },
 ];
 
+/* Session flag — once the opening plays in a tab, subsequent
+   in-session navigations back to "/" skip straight through. */
+const SESSION_KEY = "cwh:opening-played";
+
 /* ─── Main Opening Animation ─── */
 export default function OpeningAnimation({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  /* Default to "done" on the very first client tick when either
+     (a) the user prefers reduced motion, or (b) they've already
+     seen the opening in this session. This avoids a flash of the
+     building state before the useEffect skip runs. */
   const [phase, setPhase] = useState<"building" | "done">("building");
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase("done"), 4000);
+    // Skip the animation for repeat in-session views or users who
+    // prefer reduced motion — both indicate the user does not want
+    // an elaborate intro blocking the content.
+    const alreadyPlayed =
+      typeof window !== "undefined" &&
+      window.sessionStorage?.getItem(SESSION_KEY) === "1";
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    if (alreadyPlayed || prefersReduced) {
+      setPhase("done");
+      return;
+    }
+
+    const t1 = setTimeout(() => {
+      setPhase("done");
+      try {
+        window.sessionStorage.setItem(SESSION_KEY, "1");
+      } catch {
+        /* sessionStorage may be unavailable (private mode, etc.) —
+           animation just replays on the next visit, no-op. */
+      }
+    }, 4000);
     return () => {
       clearTimeout(t1);
     };
@@ -179,8 +210,8 @@ export default function OpeningAnimation({
               <div
                 className="absolute inset-0 pointer-events-none overflow-hidden"
                 style={{
-                  WebkitMaskImage: "url(/logo.png)",
-                  maskImage: "url(/logo.png)",
+                  WebkitMaskImage: "url(/logo.webp)",
+                  maskImage: "url(/logo.webp)",
                   WebkitMaskRepeat: "no-repeat",
                   maskRepeat: "no-repeat",
                   WebkitMaskPosition: "center",
