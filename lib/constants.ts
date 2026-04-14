@@ -11,6 +11,7 @@ export const BUSINESS = {
   /* Contact */
   phone: "048-606-4977",
   phoneTel: "0486064977", // for tel: links
+  email: "japanesedetailergirl@gmail.com",
   instagramHandle: "japanese_detailer_girl",
   instagramUrl: "https://www.instagram.com/japanese_detailer_girl/",
   xHandle: "DetailerGirl",

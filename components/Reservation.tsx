@@ -39,8 +39,79 @@ export default function Reservation() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /* Submit handler — serialize every form field + selected concern
+     chips into a plain-text body, then launch the user's mail
+     client via a `mailto:` URL pointed at BUSINESS.email. No
+     server, no API key, no account to register: the visitor just
+     taps "送信" in their Gmail / default mail app to complete.
+     If a backend is ever wired up later, replace this body with a
+     fetch() to that endpoint — form field `name` attrs already
+     match typical Formspree / Web3Forms conventions. */
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Honeypot — silently drop submissions that tripped it (bots).
+    const fd = new FormData(e.currentTarget);
+    if ((fd.get("company") as string | null)?.trim()) {
+      setSubmitted(true); // pretend success so bots don't retry
+      return;
+    }
+
+    const get = (k: string) =>
+      ((fd.get(k) as string | null) ?? "").trim();
+
+    const name = get("name");
+    const nameKana = get("name-kana");
+    const tel = get("tel");
+    const email = get("email");
+    const vehicle = get("vehicle");
+    const bodyColor = get("body-color");
+    const treatment = get("treatment");
+    const note = get("note");
+
+    const subject = `【お問い合わせ】${name || "名前未入力"} 様 / ${
+      vehicle || "車種未入力"
+    }`;
+
+    const lines = [
+      "車の美容外科 Car Wash Homies お問い合わせフォーム",
+      "─────────────────────",
+      `お名前     : ${name}`,
+      `フリガナ   : ${nameKana}`,
+      `電話番号   : ${tel}`,
+      `メール     : ${email}`,
+      "",
+      "── 愛車情報 ──",
+      `車種・年式 : ${vehicle}`,
+      `カラー     : ${bodyColor || "（未入力）"}`,
+      "",
+      "── お悩み ──",
+      selectedConcerns.length
+        ? selectedConcerns.map((c) => `・${c}`).join("\n")
+        : "（未選択）",
+      "",
+      "── ご希望の施術 ──",
+      treatment || "（未選択）",
+      "",
+      "── ご相談内容・ご希望日時 ──",
+      note || "（未入力）",
+      "",
+      "─────────────────────",
+      "※ このメールはウェブサイトのお問い合わせフォームから送信されました。",
+    ];
+    const body = lines.join("\n");
+
+    // Build mailto URL. encodeURIComponent handles Japanese +
+    // newlines so Gmail / Apple Mail / Outlook all populate the
+    // compose window correctly.
+    const mailto = `mailto:${BUSINESS.email}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+
+    // Open in the same tab — most mail clients handle this better
+    // than window.open (which pop-up blockers may intercept).
+    window.location.href = mailto;
+
     setSubmitted(true);
   };
 
@@ -142,8 +213,12 @@ export default function Reservation() {
             </div>
           </a>
 
-          <div className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic">
-            <div className="w-14 h-14 rounded-full bg-midnight flex items-center justify-center shadow-clinic shrink-0">
+          <a
+            href={`mailto:${BUSINESS.email}`}
+            aria-label={`メール ${BUSINESS.email}`}
+            className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic group min-w-0"
+          >
+            <div className="w-14 h-14 rounded-full bg-midnight flex items-center justify-center shadow-clinic shrink-0 group-hover:animate-hydraulic-bounce">
               <svg
                 aria-hidden="true"
                 className="w-6 h-6 text-sunset"
@@ -159,15 +234,15 @@ export default function Reservation() {
                 />
               </svg>
             </div>
-            <div>
+            <div className="min-w-0 flex-1">
               <div className="text-[8px] tracking-[0.2em] text-cyan90/80 uppercase mb-1 font-pixel">
-                お問い合わせフォーム
+                Email
               </div>
-              <div className="text-midnight font-semibold text-sm">
-                下記フォームからどうぞ
+              <div className="font-display text-midnight text-xs md:text-sm font-semibold break-all leading-snug">
+                {BUSINESS.email}
               </div>
             </div>
-          </div>
+          </a>
         </motion.div>
 
         {/* Form */}
@@ -219,20 +294,58 @@ export default function Reservation() {
                   </svg>
                 </div>
                 <h3 className="font-display text-xl md:text-3xl text-midnight mb-3 leading-tight">
-                  お問い合わせ
+                  メール作成画面を
                   <br className="md:hidden" />
-                  ありがとうございます
+                  開きました
                 </h3>
                 <p className="text-midnight/60 leading-relaxed font-readable">
-                  内容を確認の上、折り返しご連絡いたします。
+                  お使いのメールアプリで「送信」を押して完了してください。
                   <br />
-                  お急ぎの方はお電話（{BUSINESS.phone}）または
+                  内容を確認の上、折り返しご連絡いたします。
+                </p>
+                <p className="text-midnight/50 text-sm mt-6 font-readable">
+                  メーラーが開かない場合は、お手数ですが直接
                   <br className="md:hidden" />
-                  Instagram DMでもご連絡ください。
+                  <a
+                    href={`mailto:${BUSINESS.email}`}
+                    className="text-sunset underline break-all"
+                  >
+                    {BUSINESS.email}
+                  </a>
+                  <br className="md:hidden" />
+                  までご連絡ください。
+                </p>
+                <p className="text-midnight/50 text-xs mt-4">
+                  お急ぎの方はお電話（{BUSINESS.phone}）または
+                  Instagram DMでもどうぞ。
                 </p>
               </div>
             ) : (
               <>
+                {/* Honeypot — hidden from real users but visible to
+                    naive spam bots. Handler silently discards any
+                    submission where this is filled. */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    left: "-9999px",
+                    width: "1px",
+                    height: "1px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <label>
+                    Company (leave blank)
+                    <input
+                      type="text"
+                      name="company"
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </label>
+                </div>
+
                 {/* Basic info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <Field name="name" label="お名前" required autoComplete="name">
