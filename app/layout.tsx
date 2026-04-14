@@ -14,6 +14,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import ThemeToggle from "@/components/ThemeToggle";
+import UpsideDownCreatures from "@/components/UpsideDownCreatures";
 import { SITE, BUSINESS } from "@/lib/constants";
 
 const playfair = Playfair_Display({
@@ -182,6 +183,7 @@ export default function RootLayout({
         <main className="relative overflow-x-hidden">{children}</main>
         <Footer />
         <ThemeToggle />
+        <UpsideDownCreatures />
       </body>
     </html>
   );
