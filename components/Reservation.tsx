@@ -44,17 +44,14 @@ export default function Reservation() {
     );
   };
 
-  /* Submit handler — POSTs to Web3Forms (https://web3forms.com),
-     a free/no-registration-on-our-side relay that delivers form
-     submissions straight to BUSINESS.email without opening a mail
-     client. The access key is a public identifier obtained from
-     web3forms.com; it is stored as NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
-     and is safe to expose client-side (rate-limit + domain-allow
-     is configured on the Web3Forms dashboard).
+  /* Submit handler — POSTs JSON to our own /api/contact route,
+     which then relays the inquiry to BUSINESS.email via the
+     Resend API. No third-party script runs in the browser, no
+     mailer pops up; success or error is surfaced inline.
 
-     If the submit fails (no key set, network error, Web3Forms
-     returns !success), we surface the error and offer a mailto:
-     fallback so the visitor can always complete the inquiry. */
+     If the POST fails (missing RESEND_API_KEY, network error,
+     Resend returns non-2xx), we surface the error and offer a
+     mailto: fallback so the inquiry can always get through. */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -77,11 +74,12 @@ export default function Reservation() {
     const treatment = get("treatment");
     const note = get("note");
 
+    // Precompute a mailto: fallback so the error UI can offer a
+    // one-tap alternative path if the API call fails.
     const subject = `【お問い合わせ】${name || "名前未入力"} 様 / ${
       vehicle || "車種未入力"
     }`;
-
-    const lines = [
+    const mailtoBody = [
       "車の美容外科 Car Wash Homies お問い合わせフォーム",
       "─────────────────────",
       `お名前     : ${name}`,
@@ -103,62 +101,37 @@ export default function Reservation() {
       "",
       "── ご相談内容・ご希望日時 ──",
       note || "（未入力）",
-      "",
-      "─────────────────────",
-      "※ このメールはウェブサイトのお問い合わせフォームから送信されました。",
-    ];
-    const message = lines.join("\n");
-
-    // Precompute the fallback mailto up front so the error UI can
-    // offer a one-tap alternative path.
-    const mailto = `mailto:${BUSINESS.email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(message)}`;
-    setFallbackMailto(mailto);
-
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-    if (!accessKey) {
-      setError(
-        "お問い合わせの送信先がまだ設定されていません。お手数ですが下記のリンクからメールにてご連絡ください。",
-      );
-      return;
-    }
+    ].join("\n");
+    setFallbackMailto(
+      `mailto:${BUSINESS.email}?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(mailtoBody)}`,
+    );
 
     setSending(true);
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: accessKey,
-          subject,
-          from_name: name,
-          // Web3Forms reads `replyto` and sets it as the Reply-To
-          // header, so hitting reply in Gmail goes to the visitor.
-          replyto: email,
-          message,
-          // Include raw structured fields too so they surface in
-          // the Web3Forms dashboard log view.
           name,
-          name_kana: nameKana,
+          nameKana,
           tel,
           email,
           vehicle,
-          body_color: bodyColor,
+          bodyColor,
           treatment,
-          concerns: selectedConcerns.join(", "),
+          concerns: selectedConcerns,
           note,
           botcheck: "",
         }),
       });
-      const result: { success: boolean; message?: string } = await res.json();
-      if (!res.ok || !result.success) {
+      const result: { ok?: boolean; error?: string } = await res
+        .json()
+        .catch(() => ({}));
+      if (!res.ok || !result.ok) {
         throw new Error(
-          result.message ||
-            "送信サービスがエラーを返しました。時間をおいて再度お試しください。",
+          result.error || "送信に失敗しました。時間をおいて再度お試しください。",
         );
       }
       setSubmitted(true);
