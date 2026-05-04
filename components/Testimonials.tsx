@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { Voice } from "@/lib/microcms";
 
-const voices = [
+const defaultVoices: Voice[] = [
   {
     initial: "K",
     name: "K.T 様",
@@ -32,7 +33,8 @@ const voices = [
   },
 ];
 
-export default function Testimonials() {
+export default function Testimonials({ voices }: { voices?: Voice[] }) {
+  const data = voices ?? defaultVoices;
   return (
     <section
       id="voice"
@@ -64,7 +66,7 @@ export default function Testimonials() {
 
         {/* Testimonial cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {voices.map((v, idx) => (
+          {data.map((v, idx) => (
             <motion.article
               key={v.name}
               initial={{ opacity: 0, y: 40 }}

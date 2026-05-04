@@ -3,6 +3,7 @@ import Testimonials from "@/components/Testimonials";
 import PinStripe from "@/components/PinStripe";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { pageMetadata } from "@/lib/constants";
+import { getCases, getVoices } from "@/lib/microcms";
 
 export const metadata = pageMetadata({
   title: "施術事例",
@@ -21,7 +22,9 @@ export const metadata = pageMetadata({
   ],
 });
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const [cases, voices] = await Promise.all([getCases(), getVoices()]);
+
   return (
     <div className="pt-20">
       <Breadcrumbs
@@ -30,9 +33,9 @@ export default function GalleryPage() {
           { name: "施術事例", path: "/gallery" },
         ]}
       />
-      <BeforeAfter />
+      <BeforeAfter cases={cases ?? undefined} />
       <PinStripe />
-      <Testimonials />
+      <Testimonials voices={voices ?? undefined} />
     </div>
   );
 }

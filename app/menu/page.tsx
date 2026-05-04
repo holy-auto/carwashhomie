@@ -1,6 +1,7 @@
 import Services from "@/components/Services";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { pageMetadata } from "@/lib/constants";
+import { getBodyCoatings, getWashServices } from "@/lib/microcms";
 
 export const metadata = pageMetadata({
   title: "施術メニュー",
@@ -20,7 +21,12 @@ export const metadata = pageMetadata({
   ],
 });
 
-export default function MenuPage() {
+export default async function MenuPage() {
+  const [bodyCoatings, washServices] = await Promise.all([
+    getBodyCoatings(),
+    getWashServices(),
+  ]);
+
   return (
     <div className="pt-20">
       <Breadcrumbs
@@ -29,7 +35,10 @@ export default function MenuPage() {
           { name: "施術メニュー", path: "/menu" },
         ]}
       />
-      <Services />
+      <Services
+        bodyCoatings={bodyCoatings ?? undefined}
+        washServices={washServices ?? undefined}
+      />
     </div>
   );
 }

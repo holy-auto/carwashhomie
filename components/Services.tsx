@@ -2,23 +2,17 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import type {
+  BodyTier as CmsBodyTier,
+  WashService as CmsWashService,
+} from "@/lib/microcms";
 
 /* ============================================================
    BODY COATING — 3-tier clinic menu
    ============================================================ */
-type BodyTier = {
-  code: string;
-  classLabel: string;
-  rank: 1 | 2 | 3;
-  name: string;
-  price: string;
-  duration: string;
-  features: string[];
-  tone: "premium" | "standard" | "basic";
-  tag?: string;
-};
+type BodyTier = CmsBodyTier & { rank: number };
 
-const bodyCoatings: BodyTier[] = [
+const defaultBodyCoatings: BodyTier[] = [
   {
     code: "RECON100",
     classLabel: "1st Class",
@@ -118,18 +112,9 @@ const wheelItems = [
 /* ============================================================
    WASH & MAINTENANCE (real CANVA menu)
    ============================================================ */
-type WashService = {
-  code: string;
-  name: string;
-  subtitle: string;
-  description: string;
-  price: string;
-  note?: string;
-  icon: string;
-  tag?: string;
-};
+type WashService = CmsWashService;
 
-const washServices: WashService[] = [
+const defaultWashServices: WashService[] = [
   {
     code: "WS-001",
     name: "私の手洗い洗車",
@@ -234,7 +219,7 @@ function SectionHeader({
 /* ============================================================
    BODY COATING SECTION
    ============================================================ */
-function BodyCoatingSection() {
+function BodyCoatingSection({ items }: { items: BodyTier[] }) {
   return (
     <section id="coating" className="relative py-24 md:py-32 bg-cream overflow-hidden">
       <div className="absolute inset-0 memphis-dots-sunset opacity-50 pointer-events-none" />
@@ -256,7 +241,7 @@ function BodyCoatingSection() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {bodyCoatings.map((tier, idx) => {
+          {items.map((tier, idx) => {
             const isPremium = tier.tone === "premium";
             return (
               <motion.article
@@ -712,7 +697,7 @@ function OtherCoatingSection() {
 /* ============================================================
    WASH & MAINTENANCE SECTION
    ============================================================ */
-function WashSection() {
+function WashSection({ items }: { items: WashService[] }) {
   return (
     <section id="wash" className="relative py-24 md:py-32 bg-ivory overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-sunset/[0.04] rounded-full blur-3xl" />
@@ -731,7 +716,7 @@ function WashSection() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {washServices.map((service, idx) => (
+          {items.map((service, idx) => (
             <motion.article
               key={service.code}
               initial={{ opacity: 0, y: 40 }}
@@ -909,13 +894,24 @@ function BrandsSection() {
 /* ============================================================
    EXPORTS
    ============================================================ */
-export default function Services() {
+export default function Services({
+  bodyCoatings,
+  washServices,
+}: {
+  bodyCoatings?: CmsBodyTier[];
+  washServices?: CmsWashService[];
+}) {
+  const coatings: BodyTier[] = bodyCoatings
+    ? bodyCoatings.map((c, i) => ({ ...c, rank: bodyCoatings.length - i }))
+    : defaultBodyCoatings;
+  const washes = washServices ?? defaultWashServices;
+
   return (
     <>
-      <BodyCoatingSection />
+      <BodyCoatingSection items={coatings} />
       <InteriorCoatingSection />
       <OtherCoatingSection />
-      <WashSection />
+      <WashSection items={washes} />
       <B2BSection />
       <BrandsSection />
     </>

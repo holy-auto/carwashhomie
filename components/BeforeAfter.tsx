@@ -3,19 +3,11 @@
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { BUSINESS } from "@/lib/constants";
+import type { Case } from "@/lib/microcms";
 
-type Case = {
-  id: string;
-  title: string;
-  model: string;
-  service: string;
-  beforeColor: string;
-  afterColor: string;
-  beforeNote: string;
-  afterNote: string;
-};
+type CaseWithId = Case & { id: string };
 
-const cases: Case[] = [
+const defaultCases: CaseWithId[] = [
   {
     id: "CASE-01",
     title: "塗装くすみの改善",
@@ -48,7 +40,7 @@ const cases: Case[] = [
   },
 ];
 
-function Slider({ caseData }: { caseData: Case }) {
+function Slider({ caseData }: { caseData: CaseWithId }) {
   const [pos, setPos] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -132,7 +124,13 @@ function Slider({ caseData }: { caseData: Case }) {
   );
 }
 
-export default function BeforeAfter() {
+export default function BeforeAfter({ cases }: { cases?: Case[] }) {
+  const data: CaseWithId[] = cases
+    ? cases.map((c, i) => ({
+        ...c,
+        id: `CASE-${String(i + 1).padStart(2, "0")}`,
+      }))
+    : defaultCases;
   return (
     <section
       id="gallery"
@@ -168,7 +166,7 @@ export default function BeforeAfter() {
 
         {/* Cases */}
         <div className="space-y-20">
-          {cases.map((c, idx) => (
+          {data.map((c, idx) => (
             <motion.div
               key={c.id}
               initial={{ opacity: 0, y: 40 }}
