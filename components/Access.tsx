@@ -103,13 +103,8 @@ export default function Access() {
             <div className="relative rounded-2xl overflow-hidden border border-sunset/20 shadow-clinic">
               <div className="aspect-[4/3] lg:aspect-[16/10]">
                 <iframe
-                  /* Use the full postal address as the query so Google
-                     geocodes the exact storefront every time.
-                     Hardcoded lat/lng previously pointed slightly off
-                     the actual location. `output=embed` gives us a
-                     no-API-key iframe; `hl=ja` keeps Japanese UI. */
                   src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                    `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}`,
+                    "WPHM+QC さいたま市、埼玉県",
                   )}&hl=ja&z=17&output=embed`}
                   width="100%"
                   height="100%"
@@ -215,7 +210,7 @@ export default function Access() {
             {/* CTA */}
             <a
               href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}`,
+                "WPHM+QC さいたま市、埼玉県",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
