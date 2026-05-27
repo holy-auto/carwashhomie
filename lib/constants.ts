@@ -16,6 +16,7 @@ export const BUSINESS = {
   instagramUrl: "https://www.instagram.com/japanese_detailer_girl/",
   xHandle: "DetailerGirl",
   xUrl: "https://x.com/DetailerGirl",
+  lineUrl: "https://lin.ee/TuZaUEi",
 
   /* Address */
   postalCode: "339-0021",

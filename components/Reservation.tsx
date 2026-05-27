@@ -187,6 +187,47 @@ export default function Reservation() {
           className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12"
         >
           <a
+            href={BUSINESS.lineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="公式LINEで友だち追加・相談する"
+            className="clinic-card flex items-center gap-4 bg-white border-2 border-[#06C755] rounded-2xl p-6 shadow-clinic group min-w-0 md:col-span-3 relative overflow-hidden"
+          >
+            <span
+              aria-hidden="true"
+              className="absolute -top-2 -right-2 px-2 py-1 rounded-full bg-[#06C755] text-white text-[8px] tracking-[0.2em] uppercase font-pixel rotate-3 shadow-clinic"
+            >
+              ★ Recommended
+            </span>
+            <div className="w-14 h-14 rounded-full bg-[#06C755] flex items-center justify-center shadow-clinic shrink-0 group-hover:animate-hydraulic-bounce">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 36 36"
+                className="w-8 h-8"
+                fill="#fff"
+              >
+                <path d="M18 3C9.716 3 3 8.412 3 15.086c0 5.985 5.32 10.998 12.504 11.946.487.105 1.15.32 1.317.736.151.378.099.97.048 1.353l-.213 1.28c-.066.378-.302 1.482 1.299.808 1.6-.673 8.628-5.08 11.77-8.696 2.17-2.378 3.21-4.79 3.21-7.427C32.935 8.412 26.218 3 18 3z" />
+              </svg>
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[8px] tracking-[0.2em] text-[#06C755] uppercase mb-1 font-pixel">
+                LINE で相談（最速）
+              </div>
+              <div className="font-display text-midnight text-base md:text-lg font-bold leading-snug">
+                公式LINEを友だち追加
+              </div>
+              <div className="text-midnight/60 text-xs mt-0.5">
+                写真を送って状態を診ながら、お見積もり・ご予約まで。
+              </div>
+            </div>
+            <span
+              aria-hidden="true"
+              className="hidden md:inline-flex text-[#06C755] text-2xl font-extrabold group-hover:translate-x-1 transition-transform"
+            >
+              ▶
+            </span>
+          </a>
+          <a
             href={`tel:${BUSINESS.phoneTel}`}
             aria-label={`電話 ${BUSINESS.phone}`}
             className="clinic-card flex items-center gap-4 bg-white border border-midnight/10 rounded-2xl p-6 shadow-clinic group"
@@ -334,8 +375,24 @@ export default function Reservation() {
                   <br />
                   お急ぎの方はお電話（{BUSINESS.phone}）または
                   <br className="md:hidden" />
-                  Instagram DMでもご連絡ください。
+                  Instagram DM・公式LINEでもご連絡ください。
                 </p>
+                <a
+                  href={BUSINESS.lineUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#06C755] text-white font-bold border-2 border-midnight shadow-[4px_4px_0_0_#1A0F08] hover:shadow-[6px_6px_0_0_#FF2E97] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
+                >
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 36 36"
+                    className="w-5 h-5"
+                    fill="#fff"
+                  >
+                    <path d="M18 3C9.716 3 3 8.412 3 15.086c0 5.985 5.32 10.998 12.504 11.946.487.105 1.15.32 1.317.736.151.378.099.97.048 1.353l-.213 1.28c-.066.378-.302 1.482 1.299.808 1.6-.673 8.628-5.08 11.77-8.696 2.17-2.378 3.21-4.79 3.21-7.427C32.935 8.412 26.218 3 18 3z" />
+                  </svg>
+                  公式LINEを追加して状況を共有する
+                </a>
               </div>
             ) : (
               <>

@@ -11,6 +11,7 @@ import {
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingLineCTA from "@/components/FloatingLineCTA";
 import JsonLd from "@/components/JsonLd";
 import { SITE, BUSINESS } from "@/lib/constants";
 
@@ -158,6 +159,7 @@ export default function RootLayout({
         <Navbar />
         <main className="relative overflow-x-hidden">{children}</main>
         <Footer />
+        <FloatingLineCTA />
       </body>
     </html>
   );

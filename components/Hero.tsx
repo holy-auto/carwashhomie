@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { BUSINESS } from "@/lib/constants";
 
 export default function Hero() {
   return (
@@ -136,6 +137,37 @@ export default function Hero() {
           >
             施術メニューを見る
           </Link>
+        </motion.div>
+
+        {/* LINE quick chat — low-friction alternative to the form */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+          className="mt-5 flex justify-center"
+        >
+          <a
+            href={BUSINESS.lineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="公式LINEで気軽に相談"
+            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#06C755]/60 bg-[#06C755]/10 hover:bg-[#06C755]/20 transition-colors backdrop-blur-sm"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 36 36"
+              className="w-4 h-4"
+              fill="#06C755"
+            >
+              <path d="M18 3C9.716 3 3 8.412 3 15.086c0 5.985 5.32 10.998 12.504 11.946.487.105 1.15.32 1.317.736.151.378.099.97.048 1.353l-.213 1.28c-.066.378-.302 1.482 1.299.808 1.6-.673 8.628-5.08 11.77-8.696 2.17-2.378 3.21-4.79 3.21-7.427C32.935 8.412 26.218 3 18 3z" />
+            </svg>
+            <span className="text-cream text-xs font-semibold tracking-wide">
+              またはLINEで気軽に相談
+            </span>
+            <span className="text-[#06C755] group-hover:translate-x-0.5 transition-transform">
+              →
+            </span>
+          </a>
         </motion.div>
 
         {/* Policy */}
