@@ -92,7 +92,7 @@ export default function Footer() {
                 <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">
                   Hours
                 </div>
-                <div>10:00 — 19:00（不定休）</div>
+                <div>10:00 — 19:00（火曜定休）</div>
               </li>
               <li>
                 <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">

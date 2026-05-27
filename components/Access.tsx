@@ -30,7 +30,7 @@ const info = [
       </svg>
     ),
     label: "定休日",
-    value: "不定休",
+    value: "火曜日",
   },
   {
     icon: (
