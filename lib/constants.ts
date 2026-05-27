@@ -25,11 +25,70 @@ export const BUSINESS = {
   addressLocality: "さいたま市岩槻区",
   streetAddress: "末田2421-2",
 
+  /* Approximate coordinates for 末田 2421-2 (岩槻区).
+     Used by LocalBusiness JSON-LD `geo`. Fine-tune later
+     with the exact pin from Google Business Profile. */
+  latitude: 35.940,
+  longitude: 139.712,
+  mapUrl: "https://maps.google.com/?q=%E5%9F%BC%E7%8E%89%E7%9C%8C%E3%81%95%E3%81%84%E3%81%9F%E3%81%BE%E5%B8%82%E5%B2%A9%E6%A7%BB%E5%8C%BA%E6%9C%AB%E7%94%B02421-2",
+
   /* Hours / legal */
   hours: "10:00 — 19:00",
   hoursNote: "火曜日",
   openingHoursSpec: [{ opens: "10:00", closes: "19:00" }],
+  closedDays: ["Tuesday"] as const,
   registrationNumber: "T8810011150208", // 適格請求書発行事業者登録番号
+
+  /* Local SEO — area we accept customers from, primarily
+     さいたま市 + 隣接エリア (車で来店可能な範囲). */
+  areaServed: [
+    "さいたま市",
+    "岩槻区",
+    "大宮区",
+    "浦和区",
+    "見沼区",
+    "緑区",
+    "春日部市",
+    "越谷市",
+    "蓮田市",
+    "白岡市",
+    "上尾市",
+    "川口市",
+    "草加市",
+    "杉戸町",
+    "宮代町",
+  ] as const,
+  paymentAccepted: ["現金", "クレジットカード", "銀行振込", "QRコード決済"] as const,
+  currenciesAccepted: "JPY",
+
+  /* Top-level service categories — surfaced in LocalBusiness
+     `hasOfferCatalog` for richer search results. */
+  services: [
+    {
+      name: "ガラスコーティング",
+      desc: "塗装診断のうえ最適なガラス系コーティングをご提案。",
+    },
+    {
+      name: "セラミックコーティング",
+      desc: "硬度と耐候性を重視したセラミック系コーティング施術。",
+    },
+    {
+      name: "磨き・研磨",
+      desc: "微細傷・水垢・くすみを除去し本来の塗装に戻す研磨。",
+    },
+    {
+      name: "手洗い洗車",
+      desc: "高品質な手洗い洗車。鉄粉除去・室内清掃のオプションも対応。",
+    },
+    {
+      name: "ヘッドライトリペア",
+      desc: "黄ばみ・くもりを除去し透明感を回復させるヘッドライト処置。",
+    },
+    {
+      name: "室内クリーニング",
+      desc: "シート・天井・カーペットの汚れ・匂いを徹底洗浄。",
+    },
+  ] as const,
 
   /* Responsible person */
   operator: "中山 春香",

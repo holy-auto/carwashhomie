@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Playfair_Display,
   UnifrakturMaguntia,
@@ -74,23 +74,46 @@ const dotGothic = DotGothic16({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "車の美容外科 | Car Wash Homies — ただのコーティング屋さんじゃない",
+    default:
+      "車の美容外科 | Car Wash Homies — さいたま市岩槻区のコーティング・洗車・磨き専門店",
     template: "%s | 車の美容外科 Car Wash Homies",
   },
   description: SITE.description,
+  applicationName: BUSINESS.nameJa,
+  category: "automotive",
   keywords: [
     "車の美容外科",
     "カーウォッシュホーミーズ",
+    "Car Wash Homies",
     "コーティング",
-    "洗車",
+    "ガラスコーティング",
+    "セラミックコーティング",
+    "車磨き",
+    "ポリッシュ",
+    "鉄粉除去",
+    "ヘッドライト 黄ばみ 除去",
+    "手洗い洗車",
     "ディテーリング",
+    "内装クリーニング",
+    "車内クリーニング",
     "さいたま市",
     "岩槻",
-    "ガラスコーティング",
+    "岩槻区",
+    "末田",
+    "岩槻IC",
+    "大宮",
+    "春日部",
+    "越谷",
+    "蓮田",
+    "上尾",
+    "埼玉 コーティング",
+    "女性整備士",
+    "二級自動車整備士",
   ],
-  authors: [{ name: BUSINESS.operator }],
+  authors: [{ name: BUSINESS.operator, url: `${SITE.url}/doctor` }],
   creator: BUSINESS.nameJa,
   publisher: BUSINESS.nameJa,
+  manifest: "/manifest.webmanifest",
   alternates: {
     canonical: "/",
   },
@@ -142,6 +165,14 @@ export const metadata: Metadata = {
     address: true,
     email: true,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FF6B1A" },
+    { media: "(prefers-color-scheme: dark)", color: "#1A0F08" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({

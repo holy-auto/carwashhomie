@@ -1,5 +1,6 @@
 import Doctor from "@/components/Doctor";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import PersonJsonLd from "@/components/PersonJsonLd";
 import { pageMetadata } from "@/lib/constants";
 
 export const metadata = pageMetadata({
@@ -27,6 +28,7 @@ export default function DoctorPage() {
           { name: "院長紹介", path: "/doctor" },
         ]}
       />
+      <PersonJsonLd />
       <Doctor />
     </div>
   );
