@@ -4,6 +4,20 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BUSINESS } from "@/lib/constants";
+
+function LineIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 36 36"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M18 3C9.716 3 3 8.412 3 15.086c0 5.985 5.32 10.998 12.504 11.946.487.105 1.15.32 1.317.736.151.378.099.97.048 1.353l-.213 1.28c-.066.378-.302 1.482 1.299.808 1.6-.673 8.628-5.08 11.77-8.696 2.17-2.378 3.21-4.79 3.21-7.427C32.935 8.412 26.218 3 18 3z" />
+    </svg>
+  );
+}
 
 const nav = [
   { label: "当院のコンセプト", href: "/concept" },
@@ -81,38 +95,63 @@ export default function Navbar() {
           })}
         </nav>
 
-        <Link
-          href="/reservation"
-          className="btn-90s hidden lg:inline-flex !text-xs !py-2 !px-4"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-midnight animate-pulse" />
-          無料カウンセリング
-        </Link>
+        <div className="hidden lg:flex items-center gap-2">
+          <a
+            href={BUSINESS.lineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="公式LINEで相談"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md bg-[#06C755] text-white border-2 border-cream/80 shadow-[3px_3px_0_0_#1A0F08] hover:shadow-[4px_4px_0_0_#FF2E97] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
+          >
+            <LineIcon className="w-4 h-4" />
+            <span className="font-pixel text-[10px] tracking-[0.15em] uppercase">
+              Line
+            </span>
+          </a>
+          <Link
+            href="/reservation"
+            className="btn-90s !text-xs !py-2 !px-4"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-midnight animate-pulse" />
+            無料カウンセリング
+          </Link>
+        </div>
 
-        {/* Mobile menu button */}
-        <button
-          className="lg:hidden text-cream p-2"
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
-          <div className="flex flex-col gap-1.5 w-6">
-            <span
-              className={`h-0.5 bg-sunset transition-all ${
-                open ? "rotate-45 translate-y-2" : ""
-              }`}
-            />
-            <span
-              className={`h-0.5 bg-sunset transition-all ${
-                open ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`h-0.5 bg-sunset transition-all ${
-                open ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            />
-          </div>
-        </button>
+        {/* Mobile: always-visible LINE icon + hamburger */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <a
+            href={BUSINESS.lineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="公式LINEで相談"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-[#06C755] text-white border-2 border-cream/80 shadow-[2px_2px_0_0_#1A0F08]"
+          >
+            <LineIcon className="w-5 h-5" />
+          </a>
+          <button
+            className="text-cream p-2"
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+          >
+            <div className="flex flex-col gap-1.5 w-6">
+              <span
+                className={`h-0.5 bg-sunset transition-all ${
+                  open ? "rotate-45 translate-y-2" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 bg-sunset transition-all ${
+                  open ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 bg-sunset transition-all ${
+                  open ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
       {/* Mobile nav */}
@@ -141,6 +180,16 @@ export default function Navbar() {
           >
             ご予約・ご相談
           </Link>
+          <a
+            href={BUSINESS.lineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 py-3 rounded-full bg-[#06C755] text-white font-bold border-2 border-cream/80 shadow-[3px_3px_0_0_#1A0F08]"
+            onClick={() => setOpen(false)}
+          >
+            <LineIcon className="w-5 h-5" />
+            公式LINEで気軽に相談
+          </a>
         </nav>
       )}
     </header>
