@@ -3,6 +3,10 @@ import Testimonials from "@/components/Testimonials";
 import PinStripe from "@/components/PinStripe";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { pageMetadata } from "@/lib/constants";
+import { getGalleryCases, getTestimonials } from "@/lib/content";
+
+// Always reflect the latest content edited in the admin panel.
+export const dynamic = "force-dynamic";
 
 export const metadata = pageMetadata({
   title: "施術事例",
@@ -21,7 +25,12 @@ export const metadata = pageMetadata({
   ],
 });
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const [cases, voices] = await Promise.all([
+    getGalleryCases(),
+    getTestimonials(),
+  ]);
+
   return (
     <div className="pt-20">
       <Breadcrumbs
@@ -30,9 +39,9 @@ export default function GalleryPage() {
           { name: "施術事例", path: "/gallery" },
         ]}
       />
-      <BeforeAfter />
+      <BeforeAfter cases={cases} />
       <PinStripe />
-      <Testimonials />
+      <Testimonials voices={voices} />
     </div>
   );
 }

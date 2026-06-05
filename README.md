@@ -48,3 +48,36 @@ npm run dev
 | midnight | `#1A0F08` | 背景 |
 | cream | `#FFF8F0` | 明るい背景・テキスト |
 | chrome | `#E8E8EC` | クローム（装飾） |
+
+## コンテンツ管理（クライアント自身で編集）
+
+店舗オーナーが **施術事例 / お知らせ / お客様の声** を自分で
+追加・編集できる管理画面を `/admin` に用意しています。
+
+- **公開ページ** は Supabase から「公開」状態の行を読み取って表示
+  （未設定時は組み込みのサンプルにフォールバック）。
+- **管理画面** はパスワードログインで保護。書き込みはサーバー経由
+  （service-role）で行うため、ブラウザ側に秘密鍵は出ません。
+- 画像は Supabase Storage の公開バケット `media` にアップロード。
+
+### データ構成（Supabase）
+
+| テーブル | 内容 |
+| --- | --- |
+| `gallery_cases` | 施術事例（Before/After 画像・色・説明・表示順） |
+| `news_posts` | お知らせ・更新（タイトル・本文・画像・公開日時） |
+| `testimonials` | お客様の声（名前・車種・評価・本文・表示順） |
+
+匿名ユーザーは RLS により「公開」行の閲覧のみ可能。作成・更新・削除は
+すべて `/api/admin/*`（middleware で保護）経由。
+
+### セットアップ
+
+1. `.env.example` を参考に環境変数を設定（ローカルは `.env.local`、
+   本番は Vercel の Environment Variables）。
+   - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`（**秘密** / Supabase → Settings → API）
+   - `ADMIN_PASSWORD`（ログインパスワード）
+   - `ADMIN_SESSION_SECRET`（`openssl rand -hex 32` で生成）
+2. `/admin` を開きパスワードでログイン → 各セクションを編集。
+3. 「公開する」をオフにすると下書きとしてサイトに表示されません。

@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/concept", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/menu", priority: 0.9, changeFrequency: "monthly" as const },
     { path: "/gallery", priority: 0.8, changeFrequency: "weekly" as const },
+    { path: "/news", priority: 0.6, changeFrequency: "weekly" as const },
     { path: "/doctor", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/reservation", priority: 0.9, changeFrequency: "monthly" as const },
     { path: "/access", priority: 0.7, changeFrequency: "yearly" as const },
