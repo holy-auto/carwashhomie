@@ -11,6 +11,7 @@ import {
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ChromeGate from "@/components/ChromeGate";
 import JsonLd from "@/components/JsonLd";
 import { SITE, BUSINESS } from "@/lib/constants";
 
@@ -155,9 +156,13 @@ export default function RootLayout({
     >
       <body className="font-body bg-cream text-midnight antialiased">
         <JsonLd />
-        <Navbar />
+        <ChromeGate>
+          <Navbar />
+        </ChromeGate>
         <main className="relative overflow-x-hidden">{children}</main>
-        <Footer />
+        <ChromeGate>
+          <Footer />
+        </ChromeGate>
       </body>
     </html>
   );
