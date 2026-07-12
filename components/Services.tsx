@@ -2,60 +2,10 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import type { BodyCoating, WashService } from "@/lib/content";
 
-/* ============================================================
-   BODY COATING — 3-tier clinic menu
-   ============================================================ */
-type BodyTier = {
-  code: string;
-  classLabel: string;
-  rank: 1 | 2 | 3;
-  name: string;
-  price: string;
-  duration: string;
-  features: string[];
-  tone: "premium" | "standard" | "basic";
-  tag?: string;
-};
-
-const bodyCoatings: BodyTier[] = [
-  {
-    code: "RECON100",
-    classLabel: "1st Class",
-    rank: 3,
-    name: "ボディコーティング",
-    price: "198,000円〜",
-    duration: "4日〜",
-    features: ["長期保護", "高耐久・高光沢", "ダメージ耐性向上"],
-    tone: "premium",
-    tag: "最高グレード",
-  },
-  {
-    code: "RECON80",
-    classLabel: "2nd Class",
-    rank: 2,
-    name: "ボディコーティング",
-    price: "77,000円〜",
-    duration: "1〜2日",
-    features: ["美観維持・回復", "車両日常使用向け", "耐酸性"],
-    tone: "standard",
-    tag: "人気",
-  },
-  {
-    code: "RECON50",
-    classLabel: "3rd Class",
-    rank: 1,
-    name: "ボディコーティング",
-    price: "33,000円〜77,000円",
-    duration: "1〜2日",
-    features: [
-      "簡易コーティング",
-      "1年耐久",
-      "メンテナンス次第で持続可能",
-    ],
-    tone: "basic",
-  },
-];
+/* Menu data (body coatings / wash services) is edited in the /admin
+   panel and passed in from the server component on /menu. */
 
 /* ============================================================
    INTERIOR / SEAT COATING — pricing table
@@ -112,55 +62,6 @@ const wheelItems = [
       { label: "新品 4本", price: "33,000円〜", note: "下地処理あり" },
       { label: "中古 4本", price: "状態により要相談" },
     ],
-  },
-];
-
-/* ============================================================
-   WASH & MAINTENANCE (real CANVA menu)
-   ============================================================ */
-type WashService = {
-  code: string;
-  name: string;
-  subtitle: string;
-  description: string;
-  price: string;
-  note?: string;
-  icon: string;
-  tag?: string;
-};
-
-const washServices: WashService[] = [
-  {
-    code: "WS-001",
-    name: "私の手洗い洗車",
-    subtitle: "Signature Hand Wash",
-    description:
-      "オーナー自ら手がけるこだわりの手洗い洗車。仕上がり・ケア内容ともにフルコース。",
-    price: "¥5,500〜",
-    note: "※問診にて価格変動のご相談あり",
-    icon: "💎",
-    tag: "シグネチャー",
-  },
-  {
-    code: "WS-002",
-    name: "シンプル手洗い洗車",
-    subtitle: "Simple Hand Wash",
-    description:
-      "日常メンテナンスに最適なシンプル手洗い。プロの手で傷をつけずに丁寧に洗い上げます。",
-    price: "¥3,500〜",
-    note: "※問診にて価格変動のご相談あり",
-    icon: "🧽",
-  },
-  {
-    code: "WS-003",
-    name: "ドライブスルー風 100% HAND洗車",
-    subtitle: "Drive-Through Style (Rainy Day Only)",
-    description:
-      "汚れを蓄積させたくない方・窓ガラスの視界を良くしたい方におすすめの、洗いのみコース。",
-    price: "¥2,200〜",
-    note: "※洗いのみ、拭き上げなし／雨の日限定",
-    icon: "🌧️",
-    tag: "雨の日限定",
   },
 ];
 
@@ -234,7 +135,9 @@ function SectionHeader({
 /* ============================================================
    BODY COATING SECTION
    ============================================================ */
-function BodyCoatingSection() {
+function BodyCoatingSection({ tiers }: { tiers: BodyCoating[] }) {
+  if (tiers.length === 0) return null;
+
   return (
     <section id="coating" className="relative py-24 md:py-32 bg-cream overflow-hidden">
       <div className="absolute inset-0 memphis-dots-sunset opacity-50 pointer-events-none" />
@@ -256,11 +159,16 @@ function BodyCoatingSection() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {bodyCoatings.map((tier, idx) => {
-            const isPremium = tier.tone === "premium";
+          {tiers.map((tier, idx) => {
+            const rank = Math.min(3, Math.max(1, tier.rank || 1));
+            const isPremium = rank === 3;
+            const features = (tier.features ?? "")
+              .split(/\r?\n/)
+              .map((f) => f.trim())
+              .filter(Boolean);
             return (
               <motion.article
-                key={tier.code}
+                key={tier.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -286,7 +194,7 @@ function BodyCoatingSection() {
                           isPremium ? "text-sunset" : "text-midnight/60"
                         }`}
                       >
-                        {tier.classLabel}
+                        {tier.class_label}
                       </div>
                       <div
                         className={`text-[10px] tracking-wider uppercase font-crt mt-1.5 leading-none ${
@@ -318,7 +226,7 @@ function BodyCoatingSection() {
                     }`}
                   >
                     {[1, 2, 3].map((i) => {
-                      const filled = i <= tier.rank;
+                      const filled = i <= rank;
                       return (
                         <span
                           key={i}
@@ -339,7 +247,7 @@ function BodyCoatingSection() {
                         isPremium ? "text-chrome/80" : "text-midnight/60"
                       }`}
                     >
-                      {tier.rank === 3 ? "Triple Star" : tier.rank === 2 ? "Double Star" : "Single Star"}
+                      {rank === 3 ? "Triple Star" : rank === 2 ? "Double Star" : "Single Star"}
                     </span>
                   </div>
 
@@ -365,7 +273,7 @@ function BodyCoatingSection() {
                       isPremium ? "text-chrome/70" : "text-midnight/60"
                     }`}
                   >
-                    日数 {tier.duration}
+                    {tier.duration ? `日数 ${tier.duration}` : " "}
                   </div>
 
                   {/* Divider */}
@@ -377,7 +285,7 @@ function BodyCoatingSection() {
 
                   {/* Features */}
                   <ul className="space-y-2">
-                    {tier.features.map((f) => (
+                    {features.map((f) => (
                       <li
                         key={f}
                         className="flex items-start gap-2 text-sm leading-relaxed"
@@ -712,7 +620,11 @@ function OtherCoatingSection() {
 /* ============================================================
    WASH & MAINTENANCE SECTION
    ============================================================ */
-function WashSection() {
+function WashSection({ services }: { services: WashService[] }) {
+  /* Hidden entirely while no wash menu is published in the admin
+     panel (the hand-wash menu was retired from the site). */
+  if (services.length === 0) return null;
+
   return (
     <section id="wash" className="relative py-24 md:py-32 bg-ivory overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-sunset/[0.04] rounded-full blur-3xl" />
@@ -727,13 +639,13 @@ function WashSection() {
               紹介
             </>
           }
-          description="プロの手洗いで愛車を傷つけず、汚れだけを的確に除去。定期的なメンテナンスでコーティングの持ちも変わります。"
+          description="愛車を傷つけず、汚れだけを的確に除去。定期的なメンテナンスでコーティングの持ちも変わります。"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {washServices.map((service, idx) => (
+          {services.map((service, idx) => (
             <motion.article
-              key={service.code}
+              key={service.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -909,13 +821,19 @@ function BrandsSection() {
 /* ============================================================
    EXPORTS
    ============================================================ */
-export default function Services() {
+export default function Services({
+  bodyCoatings,
+  washServices,
+}: {
+  bodyCoatings: BodyCoating[];
+  washServices: WashService[];
+}) {
   return (
     <>
-      <BodyCoatingSection />
+      <BodyCoatingSection tiers={bodyCoatings} />
       <InteriorCoatingSection />
       <OtherCoatingSection />
-      <WashSection />
+      <WashSection services={washServices} />
       <B2BSection />
       <BrandsSection />
     </>
