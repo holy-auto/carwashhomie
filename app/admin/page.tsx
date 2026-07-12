@@ -4,6 +4,16 @@ import { isSupabaseWritable } from "@/lib/supabase";
 
 const cards = [
   {
+    href: "/admin/menu-body",
+    title: "メニュー：ボディコーティング",
+    desc: "コーティング料金プランを追加・編集します。",
+  },
+  {
+    href: "/admin/menu-wash",
+    title: "メニュー：洗車サービス",
+    desc: "洗車メニューを追加・編集します。全て非公開にすると欄ごと非表示になります。",
+  },
+  {
     href: "/admin/gallery",
     title: "施術事例",
     desc: "Before / After 写真と説明を追加・編集します。",

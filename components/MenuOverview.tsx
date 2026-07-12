@@ -21,7 +21,7 @@ const menu = [
     num: "02",
     label: "Menu",
     title: "施術メニュー",
-    desc: "ボディ・内装・ガラス・ホイール・洗車の料金一覧。業者様向けも対応。",
+    desc: "ボディ・内装・ガラス・ホイールの料金一覧。業者様向けも対応。",
     href: "/menu",
     icon: (
       <svg aria-hidden="true" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

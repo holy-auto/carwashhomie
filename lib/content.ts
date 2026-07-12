@@ -33,6 +33,35 @@ export type NewsPost = {
   published_at: string;
 };
 
+export type BodyCoating = {
+  id: string;
+  code: string | null;
+  class_label: string | null;
+  rank: number;
+  name: string;
+  price: string | null;
+  duration: string | null;
+  /** One feature per line. */
+  features: string | null;
+  tag: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+export type WashService = {
+  id: string;
+  code: string | null;
+  name: string;
+  subtitle: string | null;
+  description: string | null;
+  price: string | null;
+  note: string | null;
+  icon: string | null;
+  tag: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
 export type Testimonial = {
   id: string;
   author_name: string;
@@ -134,6 +163,50 @@ export const DEFAULT_TESTIMONIALS: Testimonial[] = [
   },
 ];
 
+/** Shown only while Supabase is not configured (local dev). Once the
+    DB is wired up, the seeded rows there are the source of truth. */
+export const DEFAULT_BODY_COATINGS: BodyCoating[] = [
+  {
+    id: "default-1",
+    code: "RECON100",
+    class_label: "1st Class",
+    rank: 3,
+    name: "ボディコーティング",
+    price: "198,000円〜",
+    duration: "4日〜",
+    features: "長期保護\n高耐久・高光沢\nダメージ耐性向上",
+    tag: "最高グレード",
+    sort_order: 1,
+    published: true,
+  },
+  {
+    id: "default-2",
+    code: "RECON80",
+    class_label: "2nd Class",
+    rank: 2,
+    name: "ボディコーティング",
+    price: "77,000円〜",
+    duration: "1〜2日",
+    features: "美観維持・回復\n車両日常使用向け\n耐酸性",
+    tag: "人気",
+    sort_order: 2,
+    published: true,
+  },
+  {
+    id: "default-3",
+    code: "RECON50",
+    class_label: "3rd Class",
+    rank: 1,
+    name: "ボディコーティング",
+    price: "33,000円〜77,000円",
+    duration: "1〜2日",
+    features: "簡易コーティング\n1年耐久\nメンテナンス次第で持続可能",
+    tag: null,
+    sort_order: 3,
+    published: true,
+  },
+];
+
 /* Fetchers below are called from `force-dynamic` Server Components so
    the client's edits appear right away rather than on next deploy. */
 
@@ -175,6 +248,46 @@ export async function getTestimonials(): Promise<Testimonial[]> {
   return data && data.length > 0
     ? (data as Testimonial[])
     : DEFAULT_TESTIMONIALS;
+}
+
+/* For the /menu page the DB is the source of truth: what's published
+   in the admin panel is exactly what shows on the site. An empty list
+   hides the section instead of resurrecting hard-coded defaults. */
+
+export async function getBodyCoatings(): Promise<BodyCoating[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return DEFAULT_BODY_COATINGS;
+
+  const { data, error } = await supabase
+    .from("body_coatings")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getBodyCoatings:", error.message);
+    return DEFAULT_BODY_COATINGS;
+  }
+  return (data ?? []) as BodyCoating[];
+}
+
+export async function getWashServices(): Promise<WashService[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("wash_services")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getWashServices:", error.message);
+    return [];
+  }
+  return (data ?? []) as WashService[];
 }
 
 export async function getNewsPosts(): Promise<NewsPost[]> {

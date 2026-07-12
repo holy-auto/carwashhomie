@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 
 const links = [
   { href: "/admin", label: "ホーム" },
+  { href: "/admin/menu-body", label: "コーティング料金" },
+  { href: "/admin/menu-wash", label: "洗車メニュー" },
   { href: "/admin/gallery", label: "施術事例" },
   { href: "/admin/news", label: "お知らせ" },
   { href: "/admin/testimonials", label: "お客様の声" },
