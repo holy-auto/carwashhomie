@@ -127,6 +127,23 @@ export default function Footer() {
               >
                 X
               </a>
+              <a
+                href={BUSINESS.lineUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-lg border-2 border-cream flex items-center justify-center text-white shadow-[3px_3px_0_0_#FFF8F0] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
+                style={{ backgroundColor: "#06C755" }}
+                aria-label="公式LINE"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738C5.383.566 0 4.935 0 10.304c0 4.814 4.27 8.846 10.035 9.608.391.084.923.258 1.058.592.121.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967C23.176 14.393 24 12.458 24 10.304zM7.71 12.98H5.328a.63.63 0 01-.63-.629V7.591a.63.63 0 111.26 0v4.13h1.752a.63.63 0 010 1.259zm2.466-.629a.63.63 0 01-1.26 0V7.591a.63.63 0 011.26 0v4.76zm5.741 0a.629.629 0 01-.51.618.596.596 0 01-.541-.203l-2.442-3.32v2.905a.63.63 0 01-1.26 0V7.591a.629.629 0 011.15-.415l2.442 3.32V7.591a.63.63 0 011.261 0v4.76zm3.876-2.38a.63.63 0 010 1.259h-1.752v1.121h1.752a.629.629 0 110 1.259h-2.382a.63.63 0 01-.63-.629V7.591a.63.63 0 01.63-.629h2.382a.63.63 0 010 1.259h-1.752v1.121h1.752z" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
