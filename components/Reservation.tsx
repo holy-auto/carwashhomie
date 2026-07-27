@@ -177,6 +177,57 @@ export default function Reservation() {
           </p>
         </motion.div>
 
+        {/* Official LINE — primary CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-4"
+        >
+          <a
+            href={BUSINESS.lineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="公式LINEで友だち追加して相談・予約する"
+            className="clinic-card flex items-center gap-4 rounded-2xl p-6 shadow-clinic group border-2"
+            style={{ backgroundColor: "#06C755", borderColor: "#05a648" }}
+          >
+            <div className="w-14 h-14 rounded-full bg-white/95 flex items-center justify-center shadow-clinic shrink-0 group-hover:animate-hydraulic-bounce">
+              <svg
+                aria-hidden="true"
+                className="w-8 h-8"
+                fill="#06C755"
+                viewBox="0 0 24 24"
+              >
+                <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738C5.383.566 0 4.935 0 10.304c0 4.814 4.27 8.846 10.035 9.608.391.084.923.258 1.058.592.121.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967C23.176 14.393 24 12.458 24 10.304zM7.71 12.98H5.328a.63.63 0 01-.63-.629V7.591a.63.63 0 111.26 0v4.13h1.752a.63.63 0 010 1.259zm2.466-.629a.63.63 0 01-1.26 0V7.591a.63.63 0 011.26 0v4.76zm5.741 0a.629.629 0 01-.51.618.596.596 0 01-.541-.203l-2.442-3.32v2.905a.63.63 0 01-1.26 0V7.591a.629.629 0 011.15-.415l2.442 3.32V7.591a.63.63 0 011.261 0v4.76zm3.876-2.38a.63.63 0 010 1.259h-1.752v1.121h1.752a.629.629 0 110 1.259h-2.382a.63.63 0 01-.63-.629V7.591a.63.63 0 01.63-.629h2.382a.63.63 0 010 1.259h-1.752v1.121h1.752z" />
+              </svg>
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[8px] tracking-[0.2em] text-white/80 uppercase mb-1 font-pixel">
+                公式LINE ／ かんたん相談・予約
+              </div>
+              <div className="font-display text-white text-lg md:text-xl font-bold leading-snug">
+                LINEで友だち追加して相談する
+              </div>
+            </div>
+            <svg
+              aria-hidden="true"
+              className="w-6 h-6 text-white/90 shrink-0 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </a>
+        </motion.div>
+
         {/* Contact methods */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -331,7 +382,7 @@ export default function Reservation() {
                 <p className="text-midnight/60 leading-relaxed font-readable">
                   内容を確認の上、折り返しご連絡いたします。
                   <br />
-                  お急ぎの方はお電話（{BUSINESS.phone}）または
+                  お急ぎの方は公式LINE・お電話（{BUSINESS.phone}）または
                   <br className="md:hidden" />
                   Instagram DMでもご連絡ください。
                 </p>
@@ -545,7 +596,7 @@ export default function Reservation() {
                     )}
                   </button>
                   <p className="text-xs text-midnight/50 italic">
-                    ※ お急ぎの方はお電話（{BUSINESS.phone}）またはInstagram DMでもお気軽にどうぞ。
+                    ※ お急ぎの方は公式LINE・お電話（{BUSINESS.phone}）またはInstagram DMでもお気軽にどうぞ。
                   </p>
                 </div>
               </>

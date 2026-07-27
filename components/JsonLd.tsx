@@ -41,7 +41,7 @@ export default function JsonLd() {
       opens: h.opens,
       closes: h.closes,
     })),
-    sameAs: [BUSINESS.instagramUrl, BUSINESS.xUrl],
+    sameAs: [BUSINESS.instagramUrl, BUSINESS.xUrl, BUSINESS.lineUrl],
     founder: {
       "@type": "Person",
       name: BUSINESS.operator,
