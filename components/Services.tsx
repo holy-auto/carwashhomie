@@ -2,68 +2,33 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import type { BodyCoating, WashService } from "@/lib/content";
+import type {
+  BodyCoating,
+  WashService,
+  InteriorCoating,
+  PriceLine,
+  WheelCoating,
+} from "@/lib/content";
 
-/* Menu data (body coatings / wash services) is edited in the /admin
-   panel and passed in from the server component on /menu. */
+/* Menu data (body / interior / glass / wheel / wash) is edited in the
+   /admin panel and passed in from the server component on /menu. */
 
-/* ============================================================
-   INTERIOR / SEAT COATING — pricing table
-   ============================================================ */
-const interiorCarTypes = ["軽自動車", "小型車", "中型車", "高級車・外車等"];
-const interiorPrices = [
-  ["17,600円〜", "29,700円〜", "41,800円〜"],
-  ["23,100円〜", "35,200円〜", "59,400円〜"],
-  ["29,700円〜", "53,900円〜", "83,600円〜"],
-  ["35,200円〜", "59,400円〜", "93,500円〜"],
-];
-const interiorOptions = [
-  { label: "3列シート", price: "23,100円〜", note: "※ハイエースなど" },
-  { label: "コンビネーションシート", price: "+8,800円〜" },
-  { label: "クリーニング", price: "2,200円〜/脚" },
-  { label: "ドアトリム（1枚）", price: "7,150円〜" },
-  { label: "センターコンソール", price: "5,940円〜" },
-  { label: "ハンドル", price: "8,360円〜" },
-  {
-    label: "車内クリーニング",
-    price: "22,000円〜",
-    note: "ブロワー・ケミカル洗浄等",
-  },
-  {
-    label: "車内清掃",
-    price: "5,500円〜",
-    note: "一般的な掃除機・窓拭き・パネル拭き",
-  },
-];
-
-/* ============================================================
-   OTHER COATINGS (glass + wheel)
-   ============================================================ */
-const glassItems = [
-  { label: "フロントガラスのみ", price: "16,500円〜", note: "※サイズが大きい場合＋α" },
-  {
-    label: "全面",
-    price: "33,000円〜",
-    note: "※サイズが大きい場合／枚数が多い場合＋α",
-  },
-];
-const wheelItems = [
-  {
-    title: "お車についている状態",
-    rows: [
-      { label: "新車 4本", price: "22,000円〜", note: "下地処理あり" },
-      { label: "中古 4本", price: "要相談" },
-    ],
-    note: "※脱着希望の場合は別途",
-  },
-  {
-    title: "ホイール持ち込み（表裏施工）",
-    rows: [
-      { label: "新品 4本", price: "33,000円〜", note: "下地処理あり" },
-      { label: "中古 4本", price: "状態により要相談" },
-    ],
-  },
-];
+/** Group wheel rows by their group_label, preserving first-seen order. */
+function groupWheelRows(
+  rows: WheelCoating[],
+): { title: string; rows: WheelCoating[] }[] {
+  const groups: { title: string; rows: WheelCoating[] }[] = [];
+  for (const row of rows) {
+    const title = row.group_label ?? "";
+    let group = groups.find((g) => g.title === title);
+    if (!group) {
+      group = { title, rows: [] };
+      groups.push(group);
+    }
+    group.rows.push(row);
+  }
+  return groups;
+}
 
 /* ============================================================
    B2B (業者様向けご依頼)
@@ -330,7 +295,13 @@ function BodyCoatingSection({ tiers }: { tiers: BodyCoating[] }) {
 /* ============================================================
    INTERIOR COATING SECTION (table)
    ============================================================ */
-function InteriorCoatingSection() {
+function InteriorCoatingSection({
+  rows,
+  options,
+}: {
+  rows: InteriorCoating[];
+  options: PriceLine[];
+}) {
   return (
     <section className="relative py-24 md:py-32 bg-ivory overflow-hidden">
       <div className="absolute top-40 left-0 w-80 h-80 bg-chrome/20 rounded-full blur-3xl" />
@@ -387,22 +358,24 @@ function InteriorCoatingSection() {
                 </tr>
               </thead>
               <tbody>
-                {interiorCarTypes.map((type, i) => (
+                {rows.map((row) => (
                   <tr
-                    key={type}
+                    key={row.id}
                     className="border-b border-midnight/10 last:border-b-0 hover:bg-cream/40 transition-colors"
                   >
                     <td className="py-4 px-4 md:px-6 font-semibold text-midnight text-sm whitespace-nowrap">
-                      {type}
+                      {row.car_type}
                     </td>
-                    {interiorPrices[i].map((p, j) => (
-                      <td
-                        key={j}
-                        className="py-4 px-4 md:px-6 text-right font-crt text-midnight text-lg leading-none whitespace-nowrap"
-                      >
-                        {p}
-                      </td>
-                    ))}
+                    {[row.price_driver, row.price_pair, row.price_full].map(
+                      (p, j) => (
+                        <td
+                          key={j}
+                          className="py-4 px-4 md:px-6 text-right font-crt text-midnight text-lg leading-none whitespace-nowrap"
+                        >
+                          {p}
+                        </td>
+                      ),
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -428,9 +401,9 @@ function InteriorCoatingSection() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3">
-            {interiorOptions.map((opt) => (
+            {options.map((opt) => (
               <div
-                key={opt.label}
+                key={opt.id}
                 className="flex items-start justify-between gap-4 py-2 border-b border-dashed border-midnight/10"
               >
                 <div className="flex-1 min-w-0">
@@ -461,7 +434,14 @@ function InteriorCoatingSection() {
 /* ============================================================
    OTHER COATINGS SECTION (glass + wheel)
    ============================================================ */
-function OtherCoatingSection() {
+function OtherCoatingSection({
+  glass,
+  wheel,
+}: {
+  glass: PriceLine[];
+  wheel: WheelCoating[];
+}) {
+  const wheelGroups = groupWheelRows(wheel);
   return (
     <section className="relative py-24 md:py-32 bg-cream overflow-hidden">
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-sunset/[0.04] rounded-full blur-3xl" />
@@ -504,9 +484,9 @@ function OtherCoatingSection() {
             </div>
             <div className="p-6 md:p-7">
               <ul className="divide-y divide-dashed divide-midnight/10">
-                {glassItems.map((g) => (
+                {glass.map((g) => (
                   <li
-                    key={g.label}
+                    key={g.id}
                     className="py-3 flex items-start justify-between gap-4"
                   >
                     <div className="flex-1 min-w-0">
@@ -553,15 +533,17 @@ function OtherCoatingSection() {
               </div>
             </div>
             <div className="p-6 md:p-7 space-y-6">
-              {wheelItems.map((w) => (
-                <div key={w.title}>
-                  <div className="text-[11px] tracking-wider text-sunset uppercase font-pixel mb-3">
-                    {w.title}
-                  </div>
+              {wheelGroups.map((w) => (
+                <div key={w.title || "wheel-group"}>
+                  {w.title && (
+                    <div className="text-[11px] tracking-wider text-sunset uppercase font-pixel mb-3">
+                      {w.title}
+                    </div>
+                  )}
                   <ul className="divide-y divide-dashed divide-midnight/10">
                     {w.rows.map((r) => (
                       <li
-                        key={r.label}
+                        key={r.id}
                         className="py-2.5 flex items-start justify-between gap-4"
                       >
                         <div className="flex-1 min-w-0">
@@ -580,11 +562,6 @@ function OtherCoatingSection() {
                       </li>
                     ))}
                   </ul>
-                  {w.note && (
-                    <p className="mt-2 text-[11px] text-midnight/50">
-                      {w.note}
-                    </p>
-                  )}
                 </div>
               ))}
               <div className="bg-sunset/10 border border-sunset/30 rounded-xl p-4 text-sm text-midnight/80 leading-relaxed">
@@ -824,15 +801,23 @@ function BrandsSection() {
 export default function Services({
   bodyCoatings,
   washServices,
+  interiorCoatings,
+  interiorOptions,
+  glassCoatings,
+  wheelCoatings,
 }: {
   bodyCoatings: BodyCoating[];
   washServices: WashService[];
+  interiorCoatings: InteriorCoating[];
+  interiorOptions: PriceLine[];
+  glassCoatings: PriceLine[];
+  wheelCoatings: WheelCoating[];
 }) {
   return (
     <>
       <BodyCoatingSection tiers={bodyCoatings} />
-      <InteriorCoatingSection />
-      <OtherCoatingSection />
+      <InteriorCoatingSection rows={interiorCoatings} options={interiorOptions} />
+      <OtherCoatingSection glass={glassCoatings} wheel={wheelCoatings} />
       <WashSection services={washServices} />
       <B2BSection />
       <BrandsSection />

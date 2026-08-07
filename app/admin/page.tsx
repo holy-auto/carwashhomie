@@ -14,6 +14,26 @@ const cards = [
     desc: "洗車メニューを追加・編集します。全て非公開にすると欄ごと非表示になります。",
   },
   {
+    href: "/admin/menu-interior",
+    title: "メニュー：内装コーティング料金表",
+    desc: "車種ごとの内装コーティング料金（運転席／助手席／前後）を編集します。",
+  },
+  {
+    href: "/admin/menu-interior-options",
+    title: "メニュー：内装オプション",
+    desc: "3列シート・クリーニングなど内装オプションの料金を編集します。",
+  },
+  {
+    href: "/admin/menu-glass",
+    title: "メニュー：ガラスコーティング",
+    desc: "フロント・全面などガラスコーティングの料金を編集します。",
+  },
+  {
+    href: "/admin/menu-wheel",
+    title: "メニュー：ホイールコーティング",
+    desc: "ホイールコーティングの料金をグループごとに編集します。",
+  },
+  {
     href: "/admin/gallery",
     title: "施術事例",
     desc: "Before / After 写真と説明を追加・編集します。",
@@ -22,6 +42,11 @@ const cards = [
     href: "/admin/news",
     title: "お知らせ・更新",
     desc: "最新情報やキャンペーンを投稿します。",
+  },
+  {
+    href: "/admin/useful",
+    title: "お役立ち情報",
+    desc: "ブログとは別に、洗車・メンテのお役立ちコンテンツを掲載します。",
   },
   {
     href: "/admin/testimonials",

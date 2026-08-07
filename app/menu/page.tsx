@@ -1,7 +1,14 @@
 import Services from "@/components/Services";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { pageMetadata } from "@/lib/constants";
-import { getBodyCoatings, getWashServices } from "@/lib/content";
+import {
+  getBodyCoatings,
+  getWashServices,
+  getInteriorCoatings,
+  getInteriorOptions,
+  getGlassCoatings,
+  getWheelCoatings,
+} from "@/lib/content";
 
 // Always reflect the latest menu edited in the admin panel.
 export const dynamic = "force-dynamic";
@@ -24,9 +31,20 @@ export const metadata = pageMetadata({
 });
 
 export default async function MenuPage() {
-  const [bodyCoatings, washServices] = await Promise.all([
+  const [
+    bodyCoatings,
+    washServices,
+    interiorCoatings,
+    interiorOptions,
+    glassCoatings,
+    wheelCoatings,
+  ] = await Promise.all([
     getBodyCoatings(),
     getWashServices(),
+    getInteriorCoatings(),
+    getInteriorOptions(),
+    getGlassCoatings(),
+    getWheelCoatings(),
   ]);
 
   return (
@@ -37,7 +55,14 @@ export default async function MenuPage() {
           { name: "施術メニュー", path: "/menu" },
         ]}
       />
-      <Services bodyCoatings={bodyCoatings} washServices={washServices} />
+      <Services
+        bodyCoatings={bodyCoatings}
+        washServices={washServices}
+        interiorCoatings={interiorCoatings}
+        interiorOptions={interiorOptions}
+        glassCoatings={glassCoatings}
+        wheelCoatings={wheelCoatings}
+      />
     </div>
   );
 }

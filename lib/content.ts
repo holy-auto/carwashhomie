@@ -74,6 +74,45 @@ export type Testimonial = {
   published: boolean;
 };
 
+/** お役立ち情報（ブログ=お知らせとは別のコンテンツ枠）。 */
+export type UsefulArticle = {
+  id: string;
+  title: string;
+  category: string | null;
+  excerpt: string | null;
+  body: string | null;
+  image_url: string | null;
+  sort_order: number;
+  published: boolean;
+  published_at: string;
+};
+
+/** 内装コーティング料金表の1行（車種 × 施工範囲）。 */
+export type InteriorCoating = {
+  id: string;
+  car_type: string;
+  price_driver: string | null;
+  price_pair: string | null;
+  price_full: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+/** 内装オプション / ガラスコーティング 共通の料金行。 */
+export type PriceLine = {
+  id: string;
+  label: string;
+  price: string | null;
+  note: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+/** ホイールコーティング料金行（group_label でグループ表示）。 */
+export type WheelCoating = PriceLine & {
+  group_label: string | null;
+};
+
 /* ─────────────────────────── Defaults ─────────────────────────── */
 
 /** Shown until the client adds their own cases in the admin panel. */
@@ -207,6 +246,42 @@ export const DEFAULT_BODY_COATINGS: BodyCoating[] = [
   },
 ];
 
+/* The interior / glass / wheel price sections are always meant to be
+   visible, so these built-in defaults are used whenever Supabase is
+   not configured OR the table is empty. Once the client edits rows in
+   the admin panel, those rows become the source of truth. The values
+   mirror the rows seeded into Supabase. */
+
+export const DEFAULT_INTERIOR_COATINGS: InteriorCoating[] = [
+  { id: "default-1", car_type: "軽自動車", price_driver: "17,600円〜", price_pair: "29,700円〜", price_full: "41,800円〜", sort_order: 1, published: true },
+  { id: "default-2", car_type: "小型車", price_driver: "23,100円〜", price_pair: "35,200円〜", price_full: "59,400円〜", sort_order: 2, published: true },
+  { id: "default-3", car_type: "中型車", price_driver: "29,700円〜", price_pair: "53,900円〜", price_full: "83,600円〜", sort_order: 3, published: true },
+  { id: "default-4", car_type: "高級車・外車等", price_driver: "35,200円〜", price_pair: "59,400円〜", price_full: "93,500円〜", sort_order: 4, published: true },
+];
+
+export const DEFAULT_INTERIOR_OPTIONS: PriceLine[] = [
+  { id: "default-1", label: "3列シート", price: "23,100円〜", note: "※ハイエースなど", sort_order: 1, published: true },
+  { id: "default-2", label: "コンビネーションシート", price: "+8,800円〜", note: null, sort_order: 2, published: true },
+  { id: "default-3", label: "クリーニング", price: "2,200円〜/脚", note: null, sort_order: 3, published: true },
+  { id: "default-4", label: "ドアトリム（1枚）", price: "7,150円〜", note: null, sort_order: 4, published: true },
+  { id: "default-5", label: "センターコンソール", price: "5,940円〜", note: null, sort_order: 5, published: true },
+  { id: "default-6", label: "ハンドル", price: "8,360円〜", note: null, sort_order: 6, published: true },
+  { id: "default-7", label: "車内クリーニング", price: "22,000円〜", note: "ブロワー・ケミカル洗浄等", sort_order: 7, published: true },
+  { id: "default-8", label: "車内清掃", price: "5,500円〜", note: "一般的な掃除機・窓拭き・パネル拭き", sort_order: 8, published: true },
+];
+
+export const DEFAULT_GLASS_COATINGS: PriceLine[] = [
+  { id: "default-1", label: "フロントガラスのみ", price: "16,500円〜", note: "※サイズが大きい場合＋α", sort_order: 1, published: true },
+  { id: "default-2", label: "全面", price: "33,000円〜", note: "※サイズが大きい場合／枚数が多い場合＋α", sort_order: 2, published: true },
+];
+
+export const DEFAULT_WHEEL_COATINGS: WheelCoating[] = [
+  { id: "default-1", group_label: "お車についている状態", label: "新車 4本", price: "22,000円〜", note: "下地処理あり", sort_order: 1, published: true },
+  { id: "default-2", group_label: "お車についている状態", label: "中古 4本", price: "要相談", note: "※脱着希望の場合は別途", sort_order: 2, published: true },
+  { id: "default-3", group_label: "ホイール持ち込み（表裏施工）", label: "新品 4本", price: "33,000円〜", note: "下地処理あり", sort_order: 3, published: true },
+  { id: "default-4", group_label: "ホイール持ち込み（表裏施工）", label: "中古 4本", price: "状態により要相談", note: null, sort_order: 4, published: true },
+];
+
 /* Fetchers below are called from `force-dynamic` Server Components so
    the client's edits appear right away rather than on next deploy. */
 
@@ -305,4 +380,108 @@ export async function getNewsPosts(): Promise<NewsPost[]> {
     return [];
   }
   return (data ?? []) as NewsPost[];
+}
+
+/* お役立ち情報 — お知らせ（ブログ）とは別枠のコンテンツ。公開行が
+   無ければ空配列を返し、ページ側で「準備中」を表示する。 */
+export async function getUsefulArticles(): Promise<UsefulArticle[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("useful_articles")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("published_at", { ascending: false });
+
+  if (error) {
+    console.error("getUsefulArticles:", error.message);
+    return [];
+  }
+  return (data ?? []) as UsefulArticle[];
+}
+
+/* Interior / glass / wheel price sections are always visible: an empty
+   or unconfigured table falls back to the built-in defaults so the
+   /menu page never loses these blocks. */
+
+export async function getInteriorCoatings(): Promise<InteriorCoating[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return DEFAULT_INTERIOR_COATINGS;
+
+  const { data, error } = await supabase
+    .from("interior_coatings")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getInteriorCoatings:", error.message);
+    return DEFAULT_INTERIOR_COATINGS;
+  }
+  return data && data.length > 0
+    ? (data as InteriorCoating[])
+    : DEFAULT_INTERIOR_COATINGS;
+}
+
+export async function getInteriorOptions(): Promise<PriceLine[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return DEFAULT_INTERIOR_OPTIONS;
+
+  const { data, error } = await supabase
+    .from("interior_options")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getInteriorOptions:", error.message);
+    return DEFAULT_INTERIOR_OPTIONS;
+  }
+  return data && data.length > 0
+    ? (data as PriceLine[])
+    : DEFAULT_INTERIOR_OPTIONS;
+}
+
+export async function getGlassCoatings(): Promise<PriceLine[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return DEFAULT_GLASS_COATINGS;
+
+  const { data, error } = await supabase
+    .from("glass_coatings")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getGlassCoatings:", error.message);
+    return DEFAULT_GLASS_COATINGS;
+  }
+  return data && data.length > 0
+    ? (data as PriceLine[])
+    : DEFAULT_GLASS_COATINGS;
+}
+
+export async function getWheelCoatings(): Promise<WheelCoating[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return DEFAULT_WHEEL_COATINGS;
+
+  const { data, error } = await supabase
+    .from("wheel_coatings")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getWheelCoatings:", error.message);
+    return DEFAULT_WHEEL_COATINGS;
+  }
+  return data && data.length > 0
+    ? (data as WheelCoating[])
+    : DEFAULT_WHEEL_COATINGS;
 }
