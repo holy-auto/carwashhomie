@@ -268,6 +268,43 @@ export const FORM_SCHEMAS: Record<string, FormSchema> = {
       { name: "published", label: "公開する", type: "checkbox" },
     ],
   },
+  "menu-b2b": {
+    key: "menu-b2b",
+    label: "メニュー：業者様向けご依頼",
+    titleField: "title",
+    subtitleField: "subtitle",
+    defaults: { published: true, sort_order: 0 },
+    fields: [
+      { name: "title", label: "項目名（日本語）", type: "text", placeholder: "技術講習依頼" },
+      { name: "subtitle", label: "英語ラベル", type: "text", placeholder: "Training（任意）" },
+      {
+        name: "sort_order",
+        label: "表示順",
+        type: "number",
+        help: "小さいほど先に表示されます。",
+      },
+      { name: "published", label: "公開する", type: "checkbox" },
+    ],
+  },
+  "menu-brands": {
+    key: "menu-brands",
+    label: "メニュー：取り扱いブランド",
+    titleField: "name",
+    subtitleField: "region",
+    defaults: { published: true, sort_order: 0 },
+    fields: [
+      { name: "name", label: "ブランド名", type: "text", placeholder: "Adam's Polishes" },
+      { name: "region", label: "補足（産地・カテゴリ等）", type: "text", placeholder: "Premium Car Care, USA（任意）" },
+      { name: "label", label: "バッジ", type: "text", placeholder: "Official Dealer（任意）" },
+      {
+        name: "sort_order",
+        label: "表示順",
+        type: "number",
+        help: "小さいほど先に表示されます。",
+      },
+      { name: "published", label: "公開する", type: "checkbox" },
+    ],
+  },
   testimonials: {
     key: "testimonials",
     label: "お客様の声",

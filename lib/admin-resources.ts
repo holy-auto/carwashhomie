@@ -140,6 +140,22 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     order: { column: "sort_order", ascending: true },
     label: "メニュー：ホイールコーティング",
   },
+  "menu-b2b": {
+    table: "b2b_services",
+    fields: ["title", "subtitle", "sort_order", "published"],
+    numericFields: ["sort_order"],
+    booleanFields: ["published"],
+    order: { column: "sort_order", ascending: true },
+    label: "メニュー：業者様向けご依頼",
+  },
+  "menu-brands": {
+    table: "brands",
+    fields: ["name", "region", "label", "sort_order", "published"],
+    numericFields: ["sort_order"],
+    booleanFields: ["published"],
+    order: { column: "sort_order", ascending: true },
+    label: "メニュー：取り扱いブランド",
+  },
   testimonials: {
     table: "testimonials",
     fields: [

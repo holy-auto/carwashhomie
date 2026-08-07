@@ -113,6 +113,25 @@ export type WheelCoating = PriceLine & {
   group_label: string | null;
 };
 
+/** 業者様向けご依頼のカード。 */
+export type B2BService = {
+  id: string;
+  title: string;
+  subtitle: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+/** 取り扱い施工・販売ブランド。 */
+export type Brand = {
+  id: string;
+  name: string;
+  region: string | null;
+  label: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
 /* ─────────────────────────── Defaults ─────────────────────────── */
 
 /** Shown until the client adds their own cases in the admin panel. */
@@ -280,6 +299,19 @@ export const DEFAULT_WHEEL_COATINGS: WheelCoating[] = [
   { id: "default-2", group_label: "お車についている状態", label: "中古 4本", price: "要相談", note: "※脱着希望の場合は別途", sort_order: 2, published: true },
   { id: "default-3", group_label: "ホイール持ち込み（表裏施工）", label: "新品 4本", price: "33,000円〜", note: "下地処理あり", sort_order: 3, published: true },
   { id: "default-4", group_label: "ホイール持ち込み（表裏施工）", label: "中古 4本", price: "状態により要相談", note: null, sort_order: 4, published: true },
+];
+
+export const DEFAULT_B2B_SERVICES: B2BService[] = [
+  { id: "default-1", title: "技術講習依頼", subtitle: "Training", sort_order: 1, published: true },
+  { id: "default-2", title: "中古車両仕上げ部門", subtitle: "Car Stylist", sort_order: 2, published: true },
+  { id: "default-3", title: "コーティング", subtitle: "Coating", sort_order: 3, published: true },
+  { id: "default-4", title: "ルームクリーニング", subtitle: "Interior Cleaning", sort_order: 4, published: true },
+  { id: "default-5", title: "ガラス研磨", subtitle: "Glass Polish", sort_order: 5, published: true },
+  { id: "default-6", title: "ヘッドライト研磨", subtitle: "Headlight Polish", sort_order: 6, published: true },
+];
+
+export const DEFAULT_BRANDS: Brand[] = [
+  { id: "default-1", name: "Adam's Polishes", region: "Premium Car Care, USA", label: "Official Dealer", sort_order: 1, published: true },
 ];
 
 /* Fetchers below are called from `force-dynamic` Server Components so
@@ -484,4 +516,42 @@ export async function getWheelCoatings(): Promise<WheelCoating[]> {
   return data && data.length > 0
     ? (data as WheelCoating[])
     : DEFAULT_WHEEL_COATINGS;
+}
+
+export async function getB2BServices(): Promise<B2BService[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return DEFAULT_B2B_SERVICES;
+
+  const { data, error } = await supabase
+    .from("b2b_services")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getB2BServices:", error.message);
+    return DEFAULT_B2B_SERVICES;
+  }
+  return data && data.length > 0
+    ? (data as B2BService[])
+    : DEFAULT_B2B_SERVICES;
+}
+
+export async function getBrands(): Promise<Brand[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return DEFAULT_BRANDS;
+
+  const { data, error } = await supabase
+    .from("brands")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getBrands:", error.message);
+    return DEFAULT_BRANDS;
+  }
+  return data && data.length > 0 ? (data as Brand[]) : DEFAULT_BRANDS;
 }

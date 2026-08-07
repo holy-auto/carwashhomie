@@ -34,6 +34,16 @@ const cards = [
     desc: "ホイールコーティングの料金をグループごとに編集します。",
   },
   {
+    href: "/admin/menu-b2b",
+    title: "メニュー：業者様向けご依頼",
+    desc: "技術講習・中古車両仕上げなど、業者様向け項目を追加・編集します。",
+  },
+  {
+    href: "/admin/menu-brands",
+    title: "メニュー：取り扱いブランド",
+    desc: "取り扱い施工・販売ブランドを追加・編集します。",
+  },
+  {
     href: "/admin/gallery",
     title: "施術事例",
     desc: "Before / After 写真と説明を追加・編集します。",
