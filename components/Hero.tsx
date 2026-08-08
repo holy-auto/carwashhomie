@@ -45,18 +45,6 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Opening badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="sticker mb-10 !bg-cyan90/20 !text-cream !border-cyan90 shadow-neon-cyan"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan90 animate-pulse" />
-          <span className="font-pixel">2026.04.15 ★ NOW OPEN</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-magenta animate-pulse" />
-        </motion.div>
-
         {/* Logo image - hero center */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
