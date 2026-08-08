@@ -7,10 +7,11 @@ import { useCollection } from "@/components/collection/CollectionProvider";
 import CardArt from "@/components/collection/CardArt";
 import { MILESTONES } from "@/lib/collection";
 
-/* The collection book (/book): binder grid of every published card.
-   Collected cards show their face + tip; uncollected show a silhouette
-   with a hint. A progress gauge tracks the weighted count toward the
-   next milestone, whose reward is claimed via the LINE shop card. */
+/* The collection book (/book), styled after the Greed Island binder:
+   a gold-trimmed leather cover, aged parchment pages with a centre
+   fold and ring-binder holes, and a grid of plastic sleeve pockets.
+   Collected cards sit in their sleeve; empty pockets show the slot
+   number and a hint pointing back into the site. */
 
 const ALL = "すべて";
 
@@ -44,125 +45,148 @@ export default function Book() {
   const topReward = reached[reached.length - 1] ?? null;
 
   return (
-    <section className="relative min-h-screen py-24 md:py-28 bg-midnight overflow-hidden grain">
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-sunset/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-magenta/10 rounded-full blur-3xl pointer-events-none" />
+    <section className="relative min-h-screen py-16 md:py-24 bg-midnight overflow-hidden grain">
+      <div className="absolute top-1/3 left-0 w-96 h-96 bg-sunset/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan90/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-5xl mx-auto px-5 lg:px-10">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 text-chrome/50 text-[10px] tracking-[0.3em] uppercase font-pixel mb-3">
-            <div className="w-8 h-[1px] bg-chrome/20" />
-            Collection Book
-            <div className="w-8 h-[1px] bg-chrome/20" />
-          </div>
-          <h1 className="font-display text-[2rem] md:text-5xl text-cream mb-3 leading-tight">
-            カード<span className="text-sunset">ブック</span>
-          </h1>
-          <p className="text-chrome/60 text-sm font-readable">
-            サイトに潜むカードを集めて、洗車のお役立ち情報とごほうびをコンプリート。
-          </p>
-        </div>
-
-        {/* Progress */}
-        <div className="max-w-xl mx-auto mb-10 rounded-2xl border border-sunset/25 bg-white/[0.04] p-5">
-          <div className="flex items-baseline justify-between mb-2">
-            <span className="font-pixel-jp text-[11px] tracking-wider text-chrome/70">
-              あつめた枚数
-            </span>
-            <span className="font-crt text-2xl text-sunset tabular-nums">
-              {collectedCount}
-              <span className="text-chrome/40 text-lg">/{total}</span>
-            </span>
-          </div>
-          <div className="h-2.5 rounded-full bg-midnight/60 overflow-hidden border border-white/5">
-            <motion.div
-              className="h-full bg-sunset-gradient"
-              initial={{ width: 0 }}
-              animate={{ width: `${pct}%` }}
-              transition={{ duration: 0.6 }}
-            />
-          </div>
-          <p className="mt-2 text-center text-[11px] text-chrome/60 font-readable">
-            {next
-              ? `次の「${next.title}」まであと ${Math.max(0, Math.round((target - points) * 10) / 10)} ポイント`
-              : "全マイルストーン達成！コンプリートを目指そう。"}
-          </p>
-
-          {topReward && (
-            <a
-              href={BUSINESS.lineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 flex flex-col items-center gap-1 rounded-xl bg-sunset text-midnight px-4 py-3 font-bold hover:opacity-90 transition"
-            >
-              <span className="text-sm">🎁 {topReward.title}特典を受け取る</span>
-              <span className="text-[10px] font-normal">
-                {topReward.reward}（LINEで提示・店頭でお渡し）
-              </span>
-            </a>
-          )}
-        </div>
-
-        {overGuestLimit && (
-          <div className="max-w-xl mx-auto mb-8 rounded-xl border border-cyan90/30 bg-cyan90/5 px-4 py-3 text-center text-[12px] text-chrome/75 font-readable">
-            いまはこの端末にカードを保存しています。
-            <br className="sm:hidden" />
-            LINE連携（会員登録）で機種変更後も引き継げるようになります（近日公開）。
-          </div>
-        )}
-
-        {/* Series tabs */}
-        {seriesList.length > 1 && (
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {seriesList.map((s) => (
-              <button
-                key={s}
-                onClick={() => setSeries(s)}
-                className={`px-3.5 py-1.5 rounded-full text-[11px] font-pixel-jp tracking-wider border transition ${
-                  series === s
-                    ? "bg-sunset text-midnight border-sunset"
-                    : "text-chrome/70 border-chrome/20 hover:border-sunset/50"
-                }`}
-              >
-                {s}
-              </button>
+      <div className="relative max-w-5xl mx-auto px-4 lg:px-8">
+        {/* ── The book ── */}
+        <div className="gi-book">
+          {/* ring binder holes */}
+          <div className="gi-rings">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <span key={i} className="gi-ring" />
             ))}
           </div>
-        )}
 
-        {/* Grid */}
-        {!loaded ? (
-          <p className="text-center text-chrome/50 py-16 font-readable">
-            読み込み中…
-          </p>
-        ) : total === 0 ? (
-          <p className="text-center text-chrome/50 py-16 font-readable">
-            カードは現在準備中です。もうしばらくお待ちください。
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-5">
-            {shown.map((c, idx) => {
-              const got = has(c.code);
-              return (
-                <motion.div
-                  key={c.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.4, delay: Math.min(idx * 0.03, 0.3) }}
-                  className={got ? "" : "opacity-90"}
-                >
-                  <CardArt card={c} revealed={got} />
-                </motion.div>
-              );
-            })}
+          {/* cover title plate */}
+          <div className="text-center mb-5">
+            <span className="gi-plate font-display text-lg md:text-2xl tracking-wide">
+              収集手帳
+            </span>
+            <p className="mt-3 text-[10px] tracking-[0.35em] uppercase font-pixel text-[#e9cf87]/80">
+              Collection Book
+            </p>
           </div>
-        )}
 
-        <p className="mt-12 text-center text-[11px] text-chrome/40 font-readable">
-          カードは施術事例・お役立ち情報のページに潜んでいます。読みながら探してみてください。
-        </p>
+          {/* parchment pages */}
+          <div className="gi-pages">
+            <div className="gi-fold" />
+
+            {/* index / progress plate */}
+            <div className="relative max-w-xl mx-auto mb-7 rounded-xl border border-[#a9843f]/50 bg-[#f5ecd3]/70 p-4 shadow-inner">
+              <div className="flex items-baseline justify-between mb-2">
+                <span className="font-pixel-jp text-[11px] tracking-wider text-[#5b4a2e]">
+                  あつめた枚数
+                </span>
+                <span className="font-crt text-2xl text-[#7a4a1a] tabular-nums">
+                  {collectedCount}
+                  <span className="text-[#a9843f]">/{total}</span>
+                </span>
+              </div>
+              <div className="h-2.5 rounded-full bg-[#d8c49a] overflow-hidden border border-[#a9843f]/40">
+                <motion.div
+                  className="h-full bg-sunset-gradient"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${pct}%` }}
+                  transition={{ duration: 0.6 }}
+                />
+              </div>
+              <p className="mt-2 text-center text-[11px] text-[#5b4a2e] font-readable">
+                {next
+                  ? `次の「${next.title}」まであと ${Math.max(0, Math.round((target - points) * 10) / 10)} ポイント`
+                  : "全マイルストーン達成！コンプリートを目指そう。"}
+              </p>
+
+              {topReward && (
+                <a
+                  href={BUSINESS.lineUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 flex flex-col items-center gap-0.5 rounded-lg bg-[#0d3d31] text-[#e9cf87] px-4 py-2.5 font-bold border border-[#c9a24b]/60 hover:bg-[#124a3c] transition"
+                >
+                  <span className="text-sm">🎁 {topReward.title}特典を受け取る</span>
+                  <span className="text-[10px] font-normal text-[#e9cf87]/80">
+                    {topReward.reward}（LINEで提示・店頭でお渡し）
+                  </span>
+                </a>
+              )}
+            </div>
+
+            {overGuestLimit && (
+              <div className="max-w-xl mx-auto mb-6 rounded-lg border border-[#a9843f]/40 bg-[#efe3c3]/80 px-4 py-2.5 text-center text-[11px] text-[#5b4a2e] font-readable">
+                いまはこの端末にカードを保存しています。LINE連携（会員登録）で機種変更後も引き継げるようになります（近日公開）。
+              </div>
+            )}
+
+            {/* series bookmarks */}
+            {seriesList.length > 1 && (
+              <div className="flex flex-wrap justify-center gap-2 mb-6">
+                {seriesList.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setSeries(s)}
+                    className={`px-3.5 py-1.5 rounded-t-md text-[11px] font-pixel-jp tracking-wider border-b-2 transition ${
+                      series === s
+                        ? "bg-[#0d3d31] text-[#e9cf87] border-[#c9a24b]"
+                        : "bg-[#e0cfa5] text-[#5b4a2e] border-transparent hover:border-[#a9843f]"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* pockets grid */}
+            {!loaded ? (
+              <p className="text-center text-[#5b4a2e]/70 py-16 font-readable">
+                読み込み中…
+              </p>
+            ) : total === 0 ? (
+              <p className="text-center text-[#5b4a2e]/70 py-16 font-readable">
+                カードは現在準備中です。もうしばらくお待ちください。
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+                {shown.map((c, idx) => {
+                  const got = has(c.code);
+                  return (
+                    <motion.div
+                      key={c.id}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
+                      transition={{ duration: 0.35, delay: Math.min(idx * 0.03, 0.3) }}
+                    >
+                      {got ? (
+                        <div className="gi-pocket gi-sleeve">
+                          <CardArt card={c} revealed />
+                        </div>
+                      ) : (
+                        <div className="gi-pocket gi-pocket--empty text-center">
+                          <span className="gi-slotno text-[10px] tracking-wider">
+                            No.{c.card_number ?? "??"}
+                          </span>
+                          <span className="font-chunky text-3xl text-[#8a6a34]/40 leading-none">
+                            ？
+                          </span>
+                          <span className="px-2 text-[9px] leading-tight text-[#6b5327]/80 font-readable line-clamp-2">
+                            {c.hint || "サイトのどこかに"}
+                          </span>
+                        </div>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
+
+            <p className="mt-10 text-center text-[11px] text-[#6b5327]/70 font-readable">
+              カードは施術事例・お役立ち情報のページに潜んでいます。読みながら探してみてください。
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
