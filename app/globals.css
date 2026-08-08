@@ -524,7 +524,7 @@ input[type="number"],
 .cardframe {
   position: relative;
   border-radius: 5px;
-  padding: 3px; /* この余白ぶんが箔の縁として見える */
+  padding: 4px; /* この余白ぶんが箔の縁として見える */
   background:
     radial-gradient(circle at 18% 26%, rgba(255, 255, 255, 0.9) 0 0.8px, transparent 1.7px),
     radial-gradient(circle at 66% 60%, rgba(255, 255, 255, 0.65) 0 0.8px, transparent 1.7px),
@@ -560,3 +560,63 @@ input[type="number"],
 .reader-spine {
   background: linear-gradient(90deg, rgba(90, 60, 20, 0.05), rgba(90, 60, 20, 0.3), rgba(90, 60, 20, 0.05));
 }
+
+/* ─────────── GI「ブック端末」風リーダー ─────────── */
+.gi-device {
+  position: relative;
+  border-radius: 20px;
+  padding: clamp(16px, 3vw, 30px);
+  background: linear-gradient(160deg, #9aa7b6 0%, #808e9e 52%, #6b798a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -4px 10px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 6px rgba(0, 0, 0, 0.12),
+    0 44px 90px -26px rgba(0, 0, 0, 0.85);
+}
+/* 表紙の赤いしおりタブ */
+.gi-tab {
+  position: absolute;
+  top: -12px;
+  left: 26px;
+  width: 46px;
+  height: 28px;
+  background: linear-gradient(#e0503d, #b5301f);
+  border-radius: 5px 5px 0 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+/* 大画面 */
+.gi-screen {
+  position: relative;
+  border-radius: 8px;
+  background: radial-gradient(130% 100% at 50% 0%, #141a22 0%, #0a0d12 100%);
+  border: 2px solid #e8e2cf;
+  box-shadow: inset 0 0 34px rgba(0, 0, 0, 0.75), 0 2px 5px rgba(0, 0, 0, 0.4);
+  perspective: 1500px;
+}
+/* 緑の小ボタン */
+.gi-gbtn {
+  background: linear-gradient(#abd7a4, #6faf72);
+  border: 1px solid #4f7c54;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+/* 黒い操作ダイヤル */
+.gi-dial {
+  background: radial-gradient(circle at 40% 32%, #4c4c4c 0%, #202020 62%, #0d0d0d 100%);
+  border: 2px solid #111;
+  border-radius: 9999px;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.16),
+    inset 0 -4px 7px rgba(0, 0, 0, 0.6),
+    0 2px 3px rgba(0, 0, 0, 0.4);
+}
+/* 黄色の十字キー */
+.gi-key {
+  background: linear-gradient(#ffe07a, #f2c33c);
+  border: 1.5px solid #b07d1e;
+  color: #5a3d0a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.gi-key:hover { filter: brightness(1.06); }
+.gi-key:active { filter: brightness(0.94); }
