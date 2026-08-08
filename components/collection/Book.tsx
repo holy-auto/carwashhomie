@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { BUSINESS } from "@/lib/constants";
 import { useCollection } from "@/components/collection/CollectionProvider";
 import CardArt from "@/components/collection/CardArt";
+import CardReader from "@/components/collection/CardReader";
 import { MILESTONES } from "@/lib/collection";
 
 /* The collection book (/book), styled after the Greed Island binder:
@@ -28,6 +29,7 @@ export default function Book() {
     overGuestLimit,
   } = useCollection();
   const [series, setSeries] = useState<string>(ALL);
+  const [readerIdx, setReaderIdx] = useState<number | null>(null);
 
   const seriesList = useMemo(() => {
     const set = new Set<string>();
@@ -38,6 +40,12 @@ export default function Book() {
   const shown = useMemo(
     () => (series === ALL ? cards : cards.filter((c) => c.series === series)),
     [cards, series],
+  );
+
+  // Collected cards within the current filter — the set the reader flips through.
+  const collectedShown = useMemo(
+    () => shown.filter((c) => has(c.code)),
+    [shown, has],
   );
 
   const target = next?.points ?? (MILESTONES[MILESTONES.length - 1]?.points || 1);
@@ -160,9 +168,19 @@ export default function Book() {
                       transition={{ duration: 0.35, delay: Math.min(idx * 0.03, 0.3) }}
                     >
                       {got ? (
-                        <div className="gi-pocket gi-sleeve">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const i = collectedShown.findIndex(
+                              (x) => x.id === c.id,
+                            );
+                            if (i >= 0) setReaderIdx(i);
+                          }}
+                          className="gi-pocket gi-sleeve block w-full text-left cursor-pointer transition-transform hover:-translate-y-0.5"
+                          aria-label={`${c.name} を開いて読む`}
+                        >
                           <CardArt card={c} revealed />
-                        </div>
+                        </button>
                       ) : (
                         <div className="gi-pocket gi-pocket--empty text-center">
                           <span className="gi-slotno text-[10px] tracking-wider">
@@ -188,6 +206,15 @@ export default function Book() {
           </div>
         </div>
       </div>
+
+      {readerIdx !== null && collectedShown[readerIdx] && (
+        <CardReader
+          cards={collectedShown}
+          index={readerIdx}
+          onClose={() => setReaderIdx(null)}
+          onIndex={(n) => setReaderIdx(n)}
+        />
+      )}
     </section>
   );
 }

@@ -23,13 +23,16 @@ export type RarityMeta = {
   glow: string;
   /** Description-box border colour. */
   edge: string;
+  /** Glitter-foil gradient stops (dark → light) for the framed parts. */
+  foilA: string;
+  foilB: string;
 };
 
 const RARITY: Record<string, RarityMeta> = {
-  N: { label: "N", frame: "#d4af37", glow: "#f4e4a1", edge: "#b8962e" },
-  R: { label: "R", frame: "#4a90d9", glow: "#a9cdf2", edge: "#2f6fb0" },
-  SR: { label: "SR", frame: "#2fae8f", glow: "#9fe6d2", edge: "#1e8a70" },
-  SS: { label: "SS", frame: "#c02a4a", glow: "#f2a9bd", edge: "#8f1f38" },
+  N: { label: "N", frame: "#d4af37", glow: "#f4e4a1", edge: "#b8962e", foilA: "#9c7a2f", foilB: "#ffe9a8" },
+  R: { label: "R", frame: "#4a90d9", glow: "#a9cdf2", edge: "#2f6fb0", foilA: "#1f4e8a", foilB: "#cfe6ff" },
+  SR: { label: "SR", frame: "#2fae8f", glow: "#9fe6d2", edge: "#1e8a70", foilA: "#166a57", foilB: "#b6f0dd" },
+  SS: { label: "SS", frame: "#c02a4a", glow: "#f2a9bd", edge: "#8f1f38", foilA: "#7a1330", foilB: "#ffb3c6" },
 };
 
 export function rarityMeta(rarity: string | null | undefined): RarityMeta {
