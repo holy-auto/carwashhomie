@@ -7,8 +7,15 @@ const links = [
   { href: "/admin", label: "ホーム" },
   { href: "/admin/menu-body", label: "コーティング料金" },
   { href: "/admin/menu-wash", label: "洗車メニュー" },
+  { href: "/admin/menu-interior", label: "内装料金" },
+  { href: "/admin/menu-interior-options", label: "内装オプション" },
+  { href: "/admin/menu-glass", label: "ガラス" },
+  { href: "/admin/menu-wheel", label: "ホイール" },
+  { href: "/admin/menu-b2b", label: "業者様向け" },
+  { href: "/admin/menu-brands", label: "ブランド" },
   { href: "/admin/gallery", label: "施術事例" },
   { href: "/admin/news", label: "お知らせ" },
+  { href: "/admin/useful", label: "お役立ち情報" },
   { href: "/admin/testimonials", label: "お客様の声" },
 ];
 
@@ -31,7 +38,7 @@ export default function AdminNav() {
             const active =
               l.href === "/admin"
                 ? pathname === "/admin"
-                : pathname.startsWith(l.href);
+                : pathname === l.href || pathname.startsWith(`${l.href}/`);
             return (
               <Link
                 key={l.href}
