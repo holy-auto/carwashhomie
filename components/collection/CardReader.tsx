@@ -76,16 +76,16 @@ export default function CardReader({
             <motion.div
               key={card.id}
               custom={dir}
-              initial={{ rotateY: dir >= 0 ? 38 : -38, opacity: 0 }}
-              animate={{ rotateY: 0, opacity: 1 }}
-              exit={{ rotateY: dir >= 0 ? -22 : 22, opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              style={{ transformOrigin: dir >= 0 ? "left center" : "right center" }}
+              initial={{ scaleX: 0.04, rotateY: dir >= 0 ? 28 : -28, opacity: 0 }}
+              animate={{ scaleX: 1, rotateY: 0, opacity: 1 }}
+              exit={{ scaleX: 0.04, rotateY: dir >= 0 ? -28 : 28, opacity: 0 }}
+              transition={{ duration: 0.34, ease: [0.4, 0, 0.2, 1] }}
+              style={{ transformOrigin: "center center", transformStyle: "preserve-3d" }}
               className="grid grid-cols-1 md:grid-cols-[1fr_14px_1fr] gap-4 md:gap-0 items-stretch"
             >
               {/* left page — the card */}
               <div className="reader-page p-5 md:p-6 flex items-center justify-center">
-                <div className="w-[210px] max-w-full">
+                <div className="w-[185px] max-w-full aspect-[5/7]">
                   <CardArt card={card} revealed />
                 </div>
               </div>

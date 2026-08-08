@@ -482,7 +482,7 @@ input[type="number"],
 /* カードを差し込むスリーブポケット */
 .gi-pocket {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 7;
   border-radius: 7px;
   padding: 5px;
   background: rgba(40, 26, 8, 0.06);
@@ -524,6 +524,7 @@ input[type="number"],
 .cardframe {
   position: relative;
   border-radius: 5px;
+  padding: 3px; /* この余白ぶんが箔の縁として見える */
   background:
     radial-gradient(circle at 18% 26%, rgba(255, 255, 255, 0.9) 0 0.8px, transparent 1.7px),
     radial-gradient(circle at 66% 60%, rgba(255, 255, 255, 0.65) 0 0.8px, transparent 1.7px),

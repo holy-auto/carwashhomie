@@ -7,7 +7,8 @@ import { rarityMeta } from "@/lib/collection";
 /* Presentational collectible-card face, styled after the Greed Island
    card reference: a black border, a glitter-foil frame around each part
    (number/name/code bar, illustration, description), coloured by
-   rarity. `revealed={false}` renders the silhouette. */
+   rarity. Fills its parent as a portrait rectangle — always wrap it in
+   a box with a 5/7 aspect ratio. `revealed={false}` = silhouette. */
 
 const CREAM = "#f3e8ca";
 
@@ -24,7 +25,7 @@ export default function CardArt({
 
   return (
     <div
-      className="relative w-full rounded-lg p-1 select-none"
+      className="relative flex flex-col w-full h-full rounded-lg p-1 select-none"
       style={{
         ...vars,
         background: "#0b0c10",
@@ -34,7 +35,7 @@ export default function CardArt({
       }}
     >
       {/* number | name | code */}
-      <div className="cardframe">
+      <div className="cardframe shrink-0">
         <div
           className="flex items-stretch rounded-[3px] overflow-hidden"
           style={{ background: CREAM }}
@@ -60,9 +61,9 @@ export default function CardArt({
         </div>
       </div>
 
-      {/* illustration */}
-      <div className="cardframe mt-1">
-        <div className="relative aspect-[4/3] rounded-[3px] overflow-hidden">
+      {/* illustration — takes the remaining height so the card is a rectangle */}
+      <div className="cardframe mt-1 flex-1 min-h-0">
+        <div className="relative h-full rounded-[3px] overflow-hidden">
           {revealed && card.image_url ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -112,17 +113,17 @@ export default function CardArt({
       </div>
 
       {/* description / hint */}
-      <div className="cardframe mt-1">
+      <div className="cardframe mt-1 shrink-0">
         <div
-          className="rounded-[3px] px-2 py-1.5 min-h-[3.4rem]"
+          className="rounded-[3px] px-2 py-1.5 min-h-[3.2rem]"
           style={{ background: CREAM }}
         >
           {revealed ? (
-            <p className="text-[#241a0a] text-[10.5px] leading-snug font-readable whitespace-pre-wrap">
+            <p className="text-[#241a0a] text-[10px] leading-snug font-readable whitespace-pre-wrap line-clamp-4">
               {card.description || card.name}
             </p>
           ) : (
-            <p className="text-[#241a0a]/60 text-[10.5px] leading-snug font-readable">
+            <p className="text-[#241a0a]/60 text-[10px] leading-snug font-readable line-clamp-3">
               {card.hint || "まだ見つかっていないカード。サイトのどこかを探してみよう。"}
             </p>
           )}

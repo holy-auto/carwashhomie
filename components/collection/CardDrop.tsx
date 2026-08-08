@@ -24,7 +24,7 @@ export default function CardDrop({ code }: { code: string | null }) {
   if (!loaded) {
     return (
       <div className="my-8 flex justify-center" aria-hidden>
-        <div className="w-[240px] h-[300px] rounded-xl border border-white/10 bg-white/[0.03] animate-pulse" />
+        <div className="w-[210px] aspect-[5/7] rounded-xl border border-white/10 bg-white/[0.03] animate-pulse" />
       </div>
     );
   }
@@ -43,7 +43,7 @@ export default function CardDrop({ code }: { code: string | null }) {
 
   return (
     <div className="my-10 flex flex-col items-center">
-      <div className="w-[240px] max-w-full">
+      <div className="w-[210px] max-w-full">
         <AnimatePresence mode="wait">
           {collected ? (
             <motion.div
@@ -52,7 +52,9 @@ export default function CardDrop({ code }: { code: string | null }) {
               animate={{ rotateY: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <CardArt card={card} revealed />
+              <div className="aspect-[5/7]">
+                <CardArt card={card} revealed />
+              </div>
               <p className="mt-2 text-center text-[11px] font-pixel-jp tracking-wider text-sunset">
                 {justGot ? "手に入れた！" : "取得済み"}
               </p>
@@ -67,7 +69,7 @@ export default function CardDrop({ code }: { code: string | null }) {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="group relative block w-full aspect-[3/4] rounded-xl overflow-hidden border-2 border-sunset/60 shadow-sunset-glow"
+              className="group relative block w-full aspect-[5/7] rounded-xl overflow-hidden border-2 border-sunset/60 shadow-sunset-glow"
               aria-label="カードを手に入れる"
             >
               <div className="foil absolute inset-0 opacity-70" />
