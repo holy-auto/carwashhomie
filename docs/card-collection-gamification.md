@@ -368,13 +368,13 @@ cards: {
 > ゲストで即遊べる部分を先に出し、会員化・配信を同じPhase内で仕上げる。
 
 ### Phase 1a — ゲストで遊べるMVP（数日で出せる範囲）
-- [ ] `collectible_cards` テーブル + RLS（公開読み取り） + シードデータ
-- [ ] `gallery_cases.card_code` / `useful_articles.card_code` 列追加
-- [ ] `admin-resources.ts` に `cards` 追加、`gallery`/`useful` に `card_code` 追加
-- [ ] `lib/content.ts` に `getCards()` 追加
-- [ ] `<CardDrop>` + `CollectionProvider`（localStorage）+ 進捗バッジ + **お試し上限**
-- [ ] `/book` ページ（取得済み/未取得/Tip表示/回遊ヒント）
-- [ ] 簡易イベントログ（`card_collected` 等）
+- [x] `collectible_cards` テーブル + RLS（公開読み取り） + シードデータ
+- [x] `gallery_cases.card_code` / `useful_articles.card_code` 列追加
+- [x] `admin-resources.ts` に `cards` 追加、`gallery`/`useful` に `card_code` 追加
+- [x] `lib/content.ts` に `getCards()` 追加（公開 `/api/cards` も）
+- [x] `<CardDrop>` + `CollectionProvider`（localStorage）+ 進捗バッジ + **お試し上限**
+- [x] `/book` ページ（取得済み/未取得/Tip表示/回遊ヒント/マイルストーン）
+- [ ] 簡易イベントログ（`card_collected` 等）※未着手
 
 ### Phase 1b — LINE会員化・友だち（方針Aの本体 / ショップカード止まり）
 - [ ] LINE **Loginチャネル** 作成、`members` / `user_collections` テーブル + RLS + サーバーAPI

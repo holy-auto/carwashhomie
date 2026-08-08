@@ -13,6 +13,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ChromeGate from "@/components/ChromeGate";
 import JsonLd from "@/components/JsonLd";
+import CollectionProvider from "@/components/collection/CollectionProvider";
+import CollectionBadge from "@/components/collection/CollectionBadge";
 import { SITE, BUSINESS } from "@/lib/constants";
 
 const playfair = Playfair_Display({
@@ -159,7 +161,10 @@ export default function RootLayout({
         <ChromeGate>
           <Navbar />
         </ChromeGate>
-        <main className="relative overflow-x-hidden">{children}</main>
+        <CollectionProvider>
+          <main className="relative overflow-x-hidden">{children}</main>
+          <CollectionBadge />
+        </CollectionProvider>
         <ChromeGate>
           <Footer />
         </ChromeGate>

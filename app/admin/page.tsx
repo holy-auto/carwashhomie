@@ -63,6 +63,11 @@ const cards = [
     title: "お客様の声",
     desc: "レビューを追加・編集します。",
   },
+  {
+    href: "/admin/cards",
+    title: "コレクションカード",
+    desc: "集めて遊ぶカードを追加・編集します。事例／お役立ち記事の編集画面で「潜ませるカード」に設定します。",
+  },
 ];
 
 export default function AdminHome() {
