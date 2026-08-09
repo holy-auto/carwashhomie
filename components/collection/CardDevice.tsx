@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { CollectibleCard } from "@/lib/content";
 import { rarityMeta } from "@/lib/collection";
 import CardArt from "@/components/collection/CardArt";
 
-/* The left page of the book: a Greed Island "book" device that displays
-   the selected card in its screen with a fold animation, plus the game
-   controls (green buttons, dial, yellow D-pad). Inline — not a popup.
-   ◀▶▲▼ flip through the collected cards. */
+/* Left page of the book: the Greed Island "book" device. Selecting a
+   card in the holder "sets" it into the slot — it slides in, the screen
+   scans it (scanline + LOADING), then the content is displayed. ◀▶▲▼
+   flip through the collected cards; each flip re-runs the load. */
+
+const LOAD_MS = 720;
 
 export default function CardDevice({
   card,
@@ -25,7 +27,20 @@ export default function CardDevice({
   onNext: () => void;
 }) {
   const [dir, setDir] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const multi = total > 1;
+
+  // Re-run the "insert + scan" sequence whenever the shown card changes.
+  useEffect(() => {
+    if (!card) return;
+    setLoading(true);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => setLoading(false), LOAD_MS);
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, [card?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const go = (d: number) => {
     if (!multi) return;
@@ -41,56 +56,118 @@ export default function CardDevice({
       <span className="gi-tab" />
 
       {/* screen */}
-      <div className="gi-screen p-3 md:p-4 min-h-[280px] md:min-h-[340px] flex">
+      <div className="gi-screen p-3 md:p-4 min-h-[300px] md:min-h-[360px] flex">
         {!card || !r ? (
           <div className="m-auto text-center px-4">
             <p className="font-crt text-cyan90/70 text-sm mb-1">▶ NO CARD</p>
             <p className="text-cream/50 text-[11px] font-readable">
-              右のページで手に入れたカードをタップすると、ここに表示されます。
+              右のホルダーで手に入れたカードをタップすると、ここにセットされます。
             </p>
           </div>
         ) : (
-          <AnimatePresence mode="wait" custom={dir}>
-            <motion.div
-              key={card.id}
-              custom={dir}
-              initial={{ scaleX: 0.04, rotateY: dir >= 0 ? 26 : -26, opacity: 0 }}
-              animate={{ scaleX: 1, rotateY: 0, opacity: 1 }}
-              exit={{ scaleX: 0.04, rotateY: dir >= 0 ? -26 : 26, opacity: 0 }}
-              transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
-              style={{ transformOrigin: "center center", transformStyle: "preserve-3d" }}
-              className="w-full flex flex-col items-center gap-3"
-            >
-              <div className="w-[132px] sm:w-[146px] aspect-[5/7] shadow-[0_10px_28px_-8px_rgba(0,0,0,0.85)]">
+          <div className="relative w-full flex flex-col items-center gap-3">
+            {/* the card being set into the slot */}
+            <AnimatePresence mode="wait" custom={dir}>
+              <motion.div
+                key={card.id}
+                custom={dir}
+                initial={{ y: 34, opacity: 0, rotateX: -12, scale: 0.96 }}
+                animate={{ y: 0, opacity: 1, rotateX: 0, scale: 1 }}
+                exit={{ y: -20, opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.34, ease: [0.33, 1, 0.68, 1] }}
+                style={{ transformOrigin: "center bottom" }}
+                className="w-[132px] sm:w-[146px] aspect-[5/7] shadow-[0_12px_28px_-8px_rgba(0,0,0,0.85)]"
+              >
                 <CardArt card={card} revealed />
-              </div>
+                {/* dim veil while scanning */}
+                <AnimatePresence>
+                  {loading && (
+                    <motion.div
+                      className="absolute inset-0 rounded-md bg-[#04121a]/45"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    />
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
 
-              <div className="w-full text-cream text-center">
-                <div className="flex items-center justify-center gap-2 mb-1">
-                  <span
-                    className="rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wider"
-                    style={{ background: r.frame, color: "#0a0b0e" }}
+            {/* scanning line sweeping the whole screen */}
+            <AnimatePresence>
+              {loading && (
+                <motion.div
+                  key="scan"
+                  className="gi-scanbar"
+                  initial={{ top: "-8%", opacity: 0 }}
+                  animate={{ top: ["-8%", "104%"], opacity: [0, 1, 1, 0] }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: LOAD_MS / 1000, ease: "linear" }}
+                />
+              )}
+            </AnimatePresence>
+
+            {/* readout: LOADING → content */}
+            <div className="w-full text-cream text-center min-h-[110px]">
+              <AnimatePresence mode="wait">
+                {loading ? (
+                  <motion.div
+                    key="loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    {r.label}
-                  </span>
-                  <span className="font-crt text-[11px] text-cyan90/80">
-                    No.{card.card_number ?? "—"} ・ {card.code}
-                  </span>
-                </div>
-                <h2 className="font-display text-lg md:text-xl leading-tight mb-2">
-                  {card.name}
-                </h2>
-                <p className="text-cream/85 text-[11.5px] leading-relaxed font-readable whitespace-pre-wrap">
-                  {card.description || "（説明は準備中です）"}
-                </p>
-                {card.instant_reward && (
-                  <p className="mt-2 inline-block rounded bg-sunset/15 text-sunset px-2 py-1 text-[10px] border border-sunset/40">
-                    ★ 単体で特典対象
-                  </p>
+                    <p className="font-crt text-cyan90 text-sm tracking-widest animate-pulse mb-2">
+                      ▶ NOW LOADING…
+                    </p>
+                    <div className="mx-auto w-40 h-1.5 rounded-full bg-cyan90/15 overflow-hidden border border-cyan90/25">
+                      <motion.div
+                        className="h-full bg-cyan90"
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: LOAD_MS / 1000, ease: "linear" }}
+                      />
+                    </div>
+                    <p className="mt-2 font-crt text-[10px] text-cream/40">
+                      No.{card.card_number ?? "—"} ・ {card.code}
+                    </p>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="content"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="flicker"
+                  >
+                    <div className="flex items-center justify-center gap-2 mb-1">
+                      <span
+                        className="rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wider"
+                        style={{ background: r.frame, color: "#0a0b0e" }}
+                      >
+                        {r.label}
+                      </span>
+                      <span className="font-crt text-[11px] text-cyan90/80">
+                        No.{card.card_number ?? "—"} ・ {card.code}
+                      </span>
+                    </div>
+                    <h2 className="font-display text-lg md:text-xl leading-tight mb-2">
+                      {card.name}
+                    </h2>
+                    <p className="text-cream/85 text-[11.5px] leading-relaxed font-readable whitespace-pre-wrap">
+                      {card.description || "（説明は準備中です）"}
+                    </p>
+                    {card.instant_reward && (
+                      <p className="mt-2 inline-block rounded bg-sunset/15 text-sunset px-2 py-1 text-[10px] border border-sunset/40">
+                        ★ 単体で特典対象
+                      </p>
+                    )}
+                  </motion.div>
                 )}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </AnimatePresence>
+            </div>
+          </div>
         )}
       </div>
 
