@@ -650,6 +650,18 @@ input[type="number"],
   );
   box-shadow: 0 0 14px rgba(0, 229, 255, 0.6);
 }
+/* カードを差し込むスロット（ダイヤルと十字キーの間） */
+.gi-slot {
+  padding: 5px 6px 7px;
+  border-radius: 8px;
+  background: linear-gradient(#4b5563, #2f3742);
+  box-shadow:
+    inset 0 3px 7px rgba(0, 0, 0, 0.65),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+}
+
 /* 緑の小ボタン */
 .gi-gbtn {
   background: linear-gradient(#abd7a4, #6faf72);
