@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { CollectibleCard } from "@/lib/content";
 import { rarityMeta } from "@/lib/collection";
 import CardArt from "@/components/collection/CardArt";
+import Illustration from "@/components/collection/Illustration";
 
 /* Left page of the book: the Greed Island "book" device.
    - TOP: the big screen displays the selected card's content
@@ -26,14 +27,7 @@ function Art({ card }: { card: CollectibleCard }) {
       />
     );
   }
-  return (
-    <div
-      className="absolute inset-0"
-      style={{
-        background: `radial-gradient(ellipse at 50% 40%, ${accent} 0%, ${accent}cc 45%, #090c14 100%)`,
-      }}
-    />
-  );
+  return <Illustration accent={accent} />;
 }
 
 export default function CardDevice({
@@ -142,7 +136,7 @@ export default function CardDevice({
                     style={{ boxShadow: `inset 0 0 0 1.5px ${r.frame}80` }}
                   >
                     <Art card={card} />
-                    <div className="foil absolute inset-0 opacity-[0.14] mix-blend-screen pointer-events-none" />
+                    <div className="foil absolute inset-0 opacity-[0.08] mix-blend-screen pointer-events-none" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
                     <span
                       className="absolute top-1.5 left-1.5 rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wider"

@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import type { CollectibleCard } from "@/lib/content";
 import { rarityMeta } from "@/lib/collection";
+import Illustration from "@/components/collection/Illustration";
 
 /* Collectible-card face, closely following the Greed Island card:
    - a black double-framed header split into number | name | code
@@ -71,30 +72,21 @@ export default function CardArt({
               alt={card.name}
               className="absolute inset-0 w-full h-full object-cover"
             />
+          ) : revealed ? (
+            <Illustration accent={accent} />
           ) : (
             <div
               className="absolute inset-0"
               style={{
-                background: revealed
-                  ? `radial-gradient(ellipse at 50% 40%, ${accent} 0%, ${accent}cc 45%, #090c14 100%)`
-                  : "repeating-linear-gradient(135deg,#141a2b 0 10px,#0d1220 10px 20px)",
+                background:
+                  "repeating-linear-gradient(135deg,#141a2b 0 10px,#0d1220 10px 20px)",
               }}
             />
           )}
 
-          {/* subtle crosshatch + foil sheen like the printed card */}
+          {/* gentle foil sheen like the printed card */}
           {revealed && (
-            <>
-              <div
-                className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(45deg, rgba(0,0,0,0.5) 0 1px, transparent 1px 3px)",
-                }}
-              />
-              <div className="foil absolute inset-0 opacity-[0.15] mix-blend-screen pointer-events-none" />
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/30 via-transparent to-white/10" />
-            </>
+            <div className="foil absolute inset-0 opacity-[0.09] mix-blend-screen pointer-events-none" />
           )}
 
           {!revealed && (
