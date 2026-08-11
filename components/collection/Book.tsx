@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { BUSINESS } from "@/lib/constants";
 import { useCollection } from "@/components/collection/CollectionProvider";
-import CardArt from "@/components/collection/CardArt";
-import CardDevice from "@/components/collection/CardDevice";
 import { MILESTONES } from "@/lib/collection";
+import type { CollectibleCard } from "@/lib/content";
+import styles from "@/components/collection/CollectionBook.module.css";
 
-/* The collection book (/book) as an open Greed Island spread:
-   LEFT page = the "book" device that displays the selected card,
-   RIGHT page = the parchment binder of sleeve pockets. Tapping a
-   collected pocket loads it into the device on the left. */
+/* 収集手帳（/book）。参照デザインを当サイトのデータ（getCards / provider の
+   localStorage 取得状況 / マイルストーン）に接続した版。左＝端末（選択カードを
+   セット→走査線でLOADING→内容表示）、右＝羊皮紙のホルダー。 */
 
 const ALL = "すべて";
+const LOAD_MS = 720;
+const num = (c: CollectibleCard) => `No.${c.card_number ?? "—"}`;
 
 export default function Book() {
   const {
@@ -27,9 +28,11 @@ export default function Book() {
     next,
     overGuestLimit,
   } = useCollection();
+
   const [series, setSeries] = useState<string>(ALL);
-  const [selIdx, setSelIdx] = useState(0);
-  const deviceRef = useRef<HTMLDivElement>(null);
+  const [selectedCode, setSelectedCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const seriesList = useMemo(() => {
     const set = new Set<string>();
@@ -42,138 +45,209 @@ export default function Book() {
     [cards, series],
   );
 
-  // Collected cards within the current filter — the set the device flips through.
-  const collectedShown = useMemo(
-    () => shown.filter((c) => has(c.code)),
-    [shown, has],
-  );
+  const selectedCard = cards.find((c) => c.code === selectedCode) ?? null;
+  const selectedOwned = selectedCard ? has(selectedCard.code) : false;
 
-  // Keep the selected index in range as the collection / filter changes.
+  // "set + scan" whenever the shown card changes
   useEffect(() => {
-    if (selIdx > collectedShown.length - 1) {
-      setSelIdx(Math.max(0, collectedShown.length - 1));
-    }
-  }, [collectedShown.length, selIdx]);
+    if (!selectedCode) return;
+    setLoading(true);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => setLoading(false), LOAD_MS);
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, [selectedCode]);
 
-  const selectedCard = collectedShown[selIdx] ?? null;
-
-  function selectCard(id: string) {
-    const i = collectedShown.findIndex((c) => c.id === id);
-    if (i < 0) return;
-    setSelIdx(i);
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      deviceRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+  function select(code: string) {
+    setSelectedCode(code);
   }
 
+  function step(d: number) {
+    if (shown.length === 0) return;
+    const i = shown.findIndex((c) => c.code === selectedCode);
+    const nextI = i < 0 ? 0 : (i + d + shown.length) % shown.length;
+    setSelectedCode(shown[nextI].code);
+  }
+
+  const progressPct =
+    total === 0 ? 0 : Math.round((collectedCount / total) * 100);
   const target = next?.points ?? (MILESTONES[MILESTONES.length - 1]?.points || 1);
-  const pct = Math.min(100, Math.round((points / target) * 100));
+  const remaining = Math.max(0, Math.round((target - points) * 10) / 10);
   const topReward = reached[reached.length - 1] ?? null;
 
   return (
-    <section className="relative min-h-screen py-16 md:py-24 bg-midnight overflow-hidden grain">
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-sunset/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan90/10 rounded-full blur-3xl pointer-events-none" />
+    <div
+      className="px-3 py-10 md:py-14"
+      style={{
+        background:
+          "radial-gradient(circle at 50% -10%, rgba(152,83,31,0.16), transparent 36rem), linear-gradient(180deg, #1b0e08 0%, #0e0805 100%)",
+      }}
+    >
+      <section className={styles.stage} aria-label="収集手帳">
+        <header className={styles.bookHeader}>
+          <div className={styles.headerPlaque}>収集手帳</div>
+          <div className={styles.headerEnglish}>
+            <span aria-hidden="true">◆</span>
+            COLLECTION BOOK
+            <span aria-hidden="true">◆</span>
+          </div>
+        </header>
 
-      <div className="relative max-w-6xl mx-auto px-4 lg:px-8">
-        {/* title plate */}
-        <div className="text-center mb-5">
-          <span className="gi-plate font-display text-lg md:text-2xl tracking-wide">
-            収集手帳
-          </span>
-          <p className="mt-3 text-[10px] tracking-[0.35em] uppercase font-pixel text-[#e9cf87]/80">
-            Collection Book
-          </p>
-        </div>
+        <div className={styles.bookShell}>
+          {/* ── 左：端末 ── */}
+          <section className={styles.devicePage} aria-label="カードスロット">
+            <div className={styles.deviceFrame}>
+              <div className={styles.deviceCrest} aria-hidden="true">
+                <span>✦</span>
+              </div>
 
-        {/* open spread */}
-        <div className="gi-spread">
-          <div className="grid md:grid-cols-[1fr_26px_1.12fr] gap-5 md:gap-0">
-            {/* LEFT page — the device */}
-            <div ref={deviceRef} className="md:pr-3">
-              <CardDevice
-                card={selectedCard}
-                index={selIdx}
-                total={collectedShown.length}
-                onPrev={() =>
-                  setSelIdx(
-                    (i) =>
-                      (i - 1 + collectedShown.length) % collectedShown.length,
-                  )
-                }
-                onNext={() =>
-                  setSelIdx((i) => (i + 1) % collectedShown.length)
-                }
-              />
-            </div>
+              <div className={styles.displayWindow}>
+                <div className={styles.scanlines} aria-hidden="true" />
 
-            {/* centre spine + rings */}
-            <div className="gi-spine-rings">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <span key={i} className="gi-ring" />
-              ))}
-            </div>
+                <AnimatePresence>
+                  {loading && (
+                    <motion.div
+                      key="scan"
+                      className={styles.scanSweep}
+                      initial={{ top: "-8%", opacity: 0 }}
+                      animate={{ top: ["-8%", "104%"], opacity: [0, 1, 1, 0] }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: LOAD_MS / 1000, ease: "linear" }}
+                    />
+                  )}
+                </AnimatePresence>
 
-            {/* RIGHT page — the binder */}
-            <div className="gi-pages md:ml-3">
-              {/* progress plate */}
-              <div className="relative rounded-xl border border-[#a9843f]/50 bg-[#f5ecd3]/70 p-4 shadow-inner mb-5">
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="font-pixel-jp text-[11px] tracking-wider text-[#5b4a2e]">
-                    あつめた枚数
-                  </span>
-                  <span className="font-crt text-2xl text-[#7a4a1a] tabular-nums">
-                    {collectedCount}
-                    <span className="text-[#a9843f]">/{total}</span>
-                  </span>
+                {!selectedCard ? (
+                  <EmptyScreen />
+                ) : loading ? (
+                  <div className={styles.loadingBox}>
+                    <p className={styles.loadingText}>▶ NOW LOADING…</p>
+                    <div className={styles.loadingTrack}>
+                      <motion.span
+                        style={{ display: "block", height: "100%", background: "#38dfd3" }}
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: LOAD_MS / 1000, ease: "linear" }}
+                      />
+                    </div>
+                    <p className={styles.loadingMeta}>{num(selectedCard)} ・ {selectedCard.code}</p>
+                  </div>
+                ) : (
+                  <SelectedCardScreen card={selectedCard} owned={selectedOwned} />
+                )}
+              </div>
+
+              <div className={styles.slotLabel}>
+                <span>◆</span>
+                CARD SLOT
+                <span>◆</span>
+              </div>
+
+              <div className={styles.slotArea}>
+                {selectedCard ? (
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={selectedCard.code}
+                      className={styles.slotCard}
+                      data-owned={selectedOwned}
+                      initial={{ y: -34, opacity: 0, scale: 0.95 }}
+                      animate={{ y: 0, opacity: 1, scale: 1 }}
+                      exit={{ y: 26, opacity: 0 }}
+                      transition={{ duration: 0.34, ease: [0.33, 1, 0.68, 1] }}
+                    >
+                      <span className={styles.slotNumber}>{num(selectedCard)}</span>
+                      <span className={styles.slotTitle}>
+                        {selectedOwned ? selectedCard.name : "LOCKED"}
+                      </span>
+                      <span className={styles.slotSigil} aria-hidden="true">✦</span>
+                    </motion.div>
+                  </AnimatePresence>
+                ) : (
+                  <div className={styles.slotCardPlaceholder}>
+                    <span className={styles.slotSigil} aria-hidden="true">✦</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.deviceControls}>
+                <div className={styles.dialWrap} aria-hidden="true">
+                  <div className={styles.dialOuter}>
+                    <div className={styles.dialInner} />
+                  </div>
                 </div>
-                <div className="h-2.5 rounded-full bg-[#d8c49a] overflow-hidden border border-[#a9843f]/40">
-                  <motion.div
-                    className="h-full bg-sunset-gradient"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${pct}%` }}
-                    transition={{ duration: 0.6 }}
-                  />
+
+                <div className={styles.statusPanel}>
+                  <StatusRow label="電源" active />
+                  <StatusRow label="接続" active={loaded} />
                 </div>
-                <p className="mt-2 text-center text-[11px] text-[#5b4a2e] font-readable">
+
+                <DPad onPrev={() => step(-1)} onNext={() => step(1)} disabled={shown.length === 0} />
+              </div>
+            </div>
+          </section>
+
+          <div className={styles.binding} aria-hidden="true">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <span key={i} className={styles.bindingRing} />
+            ))}
+          </div>
+
+          {/* ── 右：ホルダー ── */}
+          <section className={styles.parchmentPage} aria-label="コレクション一覧">
+            <div className={styles.parchmentInner}>
+              <div className={styles.progressCard}>
+                <div className={styles.progressHeader}>
+                  <span>あつめた枚数</span>
+                  <strong>
+                    {collectedCount}/{total}
+                  </strong>
+                </div>
+                <div
+                  className={styles.progressTrack}
+                  role="progressbar"
+                  aria-label="カード収集率"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={progressPct}
+                >
+                  <span style={{ width: `${progressPct}%` }} />
+                </div>
+                <p>
                   {next
-                    ? `次の「${next.title}」まであと ${Math.max(0, Math.round((target - points) * 10) / 10)} ポイント`
+                    ? <>次の「<strong>{next.title}</strong>」まであと {remaining} ポイント</>
                     : "全マイルストーン達成！コンプリートを目指そう。"}
                 </p>
 
                 {topReward && (
                   <a
+                    className={styles.rewardButton}
                     href={BUSINESS.lineUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 flex flex-col items-center gap-0.5 rounded-lg bg-[#0d3d31] text-[#e9cf87] px-4 py-2.5 font-bold border border-[#c9a24b]/60 hover:bg-[#124a3c] transition"
                   >
-                    <span className="text-sm">🎁 {topReward.title}特典を受け取る</span>
-                    <span className="text-[10px] font-normal text-[#e9cf87]/80">
-                      {topReward.reward}（LINEで提示・店頭でお渡し）
-                    </span>
+                    🎁 {topReward.title}特典を受け取る
+                    <small>{topReward.reward}（LINEで提示・店頭でお渡し）</small>
                   </a>
                 )}
               </div>
 
               {overGuestLimit && (
-                <div className="mb-5 rounded-lg border border-[#a9843f]/40 bg-[#efe3c3]/80 px-4 py-2.5 text-center text-[11px] text-[#5b4a2e] font-readable">
+                <div className={styles.guestNote}>
                   いまはこの端末にカードを保存しています。LINE連携（会員登録）で機種変更後も引き継げるようになります（近日公開）。
                 </div>
               )}
 
-              {/* series bookmarks */}
               {seriesList.length > 1 && (
-                <div className="flex flex-wrap justify-center gap-2 mb-5">
+                <div className={styles.tabs} role="tablist" aria-label="カードシリーズ">
                   {seriesList.map((s) => (
                     <button
                       key={s}
+                      type="button"
+                      role="tab"
+                      aria-selected={series === s}
+                      className={series === s ? styles.tabActive : styles.tab}
                       onClick={() => setSeries(s)}
-                      className={`px-3 py-1.5 rounded-t-md text-[11px] font-pixel-jp tracking-wider border-b-2 transition ${
-                        series === s
-                          ? "bg-[#0d3d31] text-[#e9cf87] border-[#c9a24b]"
-                          : "bg-[#e0cfa5] text-[#5b4a2e] border-transparent hover:border-[#a9843f]"
-                      }`}
                     >
                       {s}
                     </button>
@@ -181,65 +255,148 @@ export default function Book() {
                 </div>
               )}
 
-              {/* pockets */}
               {!loaded ? (
-                <p className="text-center text-[#5b4a2e]/70 py-14 font-readable">
-                  読み込み中…
-                </p>
+                <div className={styles.emptyCategory}>読み込み中…</div>
               ) : total === 0 ? (
-                <p className="text-center text-[#5b4a2e]/70 py-14 font-readable">
+                <div className={styles.emptyCategory}>
                   カードは現在準備中です。もうしばらくお待ちください。
-                </p>
+                </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-                  {shown.map((c, idx) => {
-                    const got = has(c.code);
-                    const active = selectedCard?.id === c.id;
+                <div className={styles.cardGrid}>
+                  {shown.map((card) => {
+                    const owned = has(card.code);
+                    const selected = selectedCode === card.code;
                     return (
-                      <motion.div
-                        key={c.id}
-                        initial={{ opacity: 0, y: 14 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-40px" }}
-                        transition={{ duration: 0.32, delay: Math.min(idx * 0.03, 0.3) }}
+                      <button
+                        key={card.id}
+                        type="button"
+                        className={styles.collectionCard}
+                        data-owned={owned}
+                        data-selected={selected}
+                        onClick={() => select(card.code)}
+                        aria-label={`${num(card)} ${owned ? card.name : "未取得カード"}`}
                       >
-                        {got ? (
-                          <button
-                            type="button"
-                            onClick={() => selectCard(c.id)}
-                            className={`gi-pocket gi-sleeve block w-full text-left cursor-pointer transition-transform hover:-translate-y-0.5 ${
-                              active ? "ring-2 ring-sunset ring-offset-2 ring-offset-[#e6d6ae]" : ""
-                            }`}
-                            aria-label={`${c.name} を端末で表示`}
-                          >
-                            <CardArt card={c} revealed />
-                          </button>
-                        ) : (
-                          <div className="gi-pocket gi-pocket--empty text-center">
-                            <span className="gi-slotno text-[10px] tracking-wider">
-                              No.{c.card_number ?? "??"}
-                            </span>
-                            <span className="font-chunky text-3xl text-[#8a6a34]/40 leading-none">
-                              ？
-                            </span>
-                            <span className="px-2 text-[9px] leading-tight text-[#6b5327]/80 font-readable line-clamp-2">
-                              {c.hint || "サイトのどこかに"}
-                            </span>
-                          </div>
-                        )}
-                      </motion.div>
+                        <span className={styles.cardCrown} aria-hidden="true">♛</span>
+                        <span className={styles.cardNumber}>{num(card)}</span>
+                        <span className={styles.cardDivider} />
+                        <span className={styles.cardMystery} aria-hidden="true">
+                          {owned ? "✦" : "?"}
+                        </span>
+                        <strong className={styles.cardTitle}>
+                          {owned ? card.name : "未取得"}
+                        </strong>
+                        <span className={styles.cardHint}>
+                          {owned ? card.description : card.hint}
+                        </span>
+                        <span className={styles.cardCategory}>
+                          {card.category || card.series || ""}
+                        </span>
+                      </button>
                     );
                   })}
                 </div>
               )}
             </div>
-          </div>
+          </section>
         </div>
 
-        <p className="mt-8 text-center text-[11px] text-[#e9cf87]/50 font-readable">
-          カードは施術事例・お役立ち情報のページに潜んでいます。読みながら探してみてください。
+        <p className={styles.footerHint}>
+          カードは施術事例・お役立ち情報のページに潜んでいます。読みながら探して、集めたカードをここで開いてください。
         </p>
-      </div>
-    </section>
+      </section>
+    </div>
+  );
+}
+
+function EmptyScreen() {
+  return (
+    <div className={styles.screenContent}>
+      <span className={styles.screenEyebrow}>NO CARD</span>
+      <span className={styles.screenOrnament} aria-hidden="true">◆</span>
+      <p>
+        右のホルダーでカードを選ぶと、
+        <br />
+        スロットにセットされて内容が表示されます。
+      </p>
+    </div>
+  );
+}
+
+function SelectedCardScreen({
+  card,
+  owned,
+}: {
+  card: CollectibleCard;
+  owned: boolean;
+}) {
+  return (
+    <div className={`${styles.screenContent} flicker`}>
+      <span className={styles.screenEyebrow}>{owned ? num(card) : "LOCKED CARD"}</span>
+      <span className={styles.screenOrnament} aria-hidden="true">◆</span>
+      <h2 className={styles.screenTitle}>{owned ? card.name : num(card)}</h2>
+      <p>{owned ? card.description : card.hint}</p>
+      <span className={styles.screenMeta}>{card.category || card.series || ""}</span>
+    </div>
+  );
+}
+
+function StatusRow({ label, active }: { label: string; active?: boolean }) {
+  return (
+    <div className={styles.statusRow}>
+      <span>{label}</span>
+      <span className={styles.statusLight} data-active={active} aria-hidden="true" />
+    </div>
+  );
+}
+
+function DPad({
+  onPrev,
+  onNext,
+  disabled,
+}: {
+  onPrev: () => void;
+  onNext: () => void;
+  disabled: boolean;
+}) {
+  return (
+    <div className={styles.dpad}>
+      <button
+        type="button"
+        onClick={onPrev}
+        disabled={disabled}
+        aria-label="前のカード"
+        className={`${styles.dpadKey} ${styles.dpadUp} ${styles.dpadButton}`}
+      >
+        ▲
+      </button>
+      <button
+        type="button"
+        onClick={onPrev}
+        disabled={disabled}
+        aria-label="前のカード"
+        className={`${styles.dpadKey} ${styles.dpadLeft} ${styles.dpadButton}`}
+      >
+        ◀
+      </button>
+      <span className={styles.dpadCenter} aria-hidden="true" />
+      <button
+        type="button"
+        onClick={onNext}
+        disabled={disabled}
+        aria-label="次のカード"
+        className={`${styles.dpadKey} ${styles.dpadRight} ${styles.dpadButton}`}
+      >
+        ▶
+      </button>
+      <button
+        type="button"
+        onClick={onNext}
+        disabled={disabled}
+        aria-label="次のカード"
+        className={`${styles.dpadKey} ${styles.dpadDown} ${styles.dpadButton}`}
+      >
+        ▼
+      </button>
+    </div>
   );
 }
