@@ -107,8 +107,8 @@
 
 .deviceFrame {
   position: relative;
-  min-height: 680px;
-  padding: 28px 28px 24px;
+  min-height: 600px;
+  padding: 24px 24px 22px;
   border: 1px solid #76572a;
   border-radius: 28px;
   background:
@@ -376,9 +376,9 @@
 
 .deviceControls {
   display: grid;
-  grid-template-columns: 112px 1fr 116px;
+  grid-template-columns: 100px 1fr 104px;
   align-items: end;
-  gap: 18px;
+  gap: 14px;
   margin-top: 15px;
 }
 
@@ -913,48 +913,78 @@
     border-radius: 20px;
   }
 
+  .deviceFrame {
+    min-height: 0;
+  }
+
   .displayWindow {
-    min-height: 280px;
+    min-height: 232px;
   }
 
   .screenContent {
-    padding: 28px 18px;
+    padding: 24px 16px;
   }
 
   .screenContent p {
     font-size: 0.8rem;
   }
 
+  .slotArea {
+    min-height: 128px;
+  }
+
   .slotCard,
   .slotCardPlaceholder {
     width: 88%;
+    min-height: 118px;
   }
 
   .deviceControls {
-    grid-template-columns: 78px 1fr 82px;
-    gap: 8px;
+    grid-template-columns: 62px 1fr 68px;
+    gap: 7px;
   }
 
   .dialOuter {
-    width: 70px;
-    height: 70px;
+    width: 58px;
+    height: 58px;
+    box-shadow:
+      0 6px 12px rgba(0, 0, 0, 0.35),
+      inset 0 0 0 5px #211b13,
+      inset 0 0 0 7px #7e5a29;
   }
 
   .dialInner {
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
   }
 
   .dpad {
-    width: 82px;
-    height: 82px;
-    transform: scale(0.72);
-    transform-origin: bottom right;
+    width: 66px;
+    height: 66px;
+  }
+
+  .dpadKey,
+  .dpadCenter {
+    width: 24px;
+    height: 24px;
+    font-size: 0.6rem;
+  }
+
+  .dpadUp { left: 21px; }
+  .dpadDown { left: 21px; }
+  .dpadLeft { top: 21px; }
+  .dpadRight { top: 21px; }
+  .dpadCenter { top: 21px; left: 21px; }
+
+  .statusPanel {
+    padding: 8px 9px;
   }
 
   .statusRow {
-    grid-template-columns: 42px 1fr;
-    font-size: 0.66rem;
+    grid-template-columns: 34px 1fr;
+    gap: 7px;
+    min-height: 24px;
+    font-size: 0.62rem;
   }
 
   .parchmentPage {
