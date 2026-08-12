@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BUSINESS } from "@/lib/constants";
 import { useCollection } from "@/components/collection/CollectionProvider";
+import CardArt from "@/components/collection/CardArt";
 import { MILESTONES } from "@/lib/collection";
 import type { CollectibleCard } from "@/lib/content";
 import styles from "@/components/collection/CollectionBook.module.css";
@@ -149,23 +150,22 @@ export default function Book() {
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={selectedCard.code}
-                      className={styles.slotCard}
-                      data-owned={selectedOwned}
+                      className={styles.slotCardWrap}
                       initial={{ y: -34, opacity: 0, scale: 0.95 }}
                       animate={{ y: 0, opacity: 1, scale: 1 }}
                       exit={{ y: 26, opacity: 0 }}
                       transition={{ duration: 0.34, ease: [0.33, 1, 0.68, 1] }}
                     >
-                      <span className={styles.slotNumber}>{num(selectedCard)}</span>
-                      <span className={styles.slotTitle}>
-                        {selectedOwned ? selectedCard.name : "LOCKED"}
-                      </span>
-                      <span className={styles.slotSigil} aria-hidden="true">✦</span>
+                      <div className="aspect-[5/7]">
+                        <CardArt card={selectedCard} revealed={selectedOwned} />
+                      </div>
                     </motion.div>
                   </AnimatePresence>
                 ) : (
-                  <div className={styles.slotCardPlaceholder}>
-                    <span className={styles.slotSigil} aria-hidden="true">✦</span>
+                  <div className={styles.slotCardWrap}>
+                    <div className="aspect-[5/7]">
+                      <span className={styles.slotEmpty} aria-hidden="true">✦</span>
+                    </div>
                   </div>
                 )}
               </div>
@@ -270,27 +270,14 @@ export default function Book() {
                       <button
                         key={card.id}
                         type="button"
-                        className={styles.collectionCard}
-                        data-owned={owned}
+                        className={styles.holderCard}
                         data-selected={selected}
                         onClick={() => select(card.code)}
                         aria-label={`${num(card)} ${owned ? card.name : "未取得カード"}`}
                       >
-                        <span className={styles.cardCrown} aria-hidden="true">♛</span>
-                        <span className={styles.cardNumber}>{num(card)}</span>
-                        <span className={styles.cardDivider} />
-                        <span className={styles.cardMystery} aria-hidden="true">
-                          {owned ? "✦" : "?"}
-                        </span>
-                        <strong className={styles.cardTitle}>
-                          {owned ? card.name : "未取得"}
-                        </strong>
-                        <span className={styles.cardHint}>
-                          {owned ? card.description : card.hint}
-                        </span>
-                        <span className={styles.cardCategory}>
-                          {card.category || card.series || ""}
-                        </span>
+                        <div className="aspect-[5/7]">
+                          <CardArt card={card} revealed={owned} />
+                        </div>
                       </button>
                     );
                   })}
