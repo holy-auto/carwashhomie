@@ -399,10 +399,16 @@ function ImageField({
   const [uploading, setUploading] = useState(false);
   const [err, setErr] = useState("");
 
-  async function upload(file: File) {
+  async function upload(original: File) {
     setUploading(true);
     setErr("");
     try {
+      // Shrink/re-encode the photo in the browser before sending it.
+      // Phone photos are often 5–12MB (and iPhone HEIC), which both
+      // exceed the serverless request-body limit and get rejected by
+      // the upload API. Compressing here keeps files small and turns
+      // them into a supported JPEG.
+      const file = await compressImage(original);
       const fd = new FormData();
       fd.append("file", file);
       const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
@@ -455,6 +461,56 @@ function ImageField({
       {err && <p className="text-red-600 text-sm mt-1">{err}</p>}
     </div>
   );
+}
+
+/* Downscale + re-encode an image to JPEG in the browser so uploads
+   stay well under the serverless request-body limit and always arrive
+   in a format the upload API accepts. Falls back to the original file
+   if the browser can't decode it (e.g. HEIC on some browsers) so the
+   server can validate and report a clear error. */
+const MAX_EDGE = 2400; // px, longest side
+const JPEG_QUALITY = 0.85;
+
+async function compressImage(file: File): Promise<File> {
+  if (!file.type.startsWith("image/")) return file;
+  if (typeof document === "undefined" || typeof createImageBitmap !== "function") {
+    return file;
+  }
+  try {
+    const bitmap = await createImageBitmap(file, {
+      imageOrientation: "from-image",
+    });
+    const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
+    const width = Math.max(1, Math.round(bitmap.width * scale));
+    const height = Math.max(1, Math.round(bitmap.height * scale));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      bitmap.close?.();
+      return file;
+    }
+    ctx.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close?.();
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob((b) => resolve(b), "image/jpeg", JPEG_QUALITY),
+    );
+    if (!blob) return file;
+
+    // Keep the original only if it's already a smaller JPEG that we
+    // didn't need to downscale.
+    if (scale === 1 && file.type === "image/jpeg" && blob.size >= file.size) {
+      return file;
+    }
+
+    const base = file.name.replace(/\.[^.]+$/, "") || "image";
+    return new File([blob], `${base}.jpg`, { type: "image/jpeg" });
+  } catch {
+    return file;
+  }
 }
 
 /** ISO string → value for <input type="datetime-local"> (local TZ). */
