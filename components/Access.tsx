@@ -61,6 +61,13 @@ const access = [
   },
 ];
 
+// 住所からGoogle Mapを表示（座標のハードコードではなく実住所をジオコーディングさせる）
+const MAP_QUERY = encodeURIComponent(
+  `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}`,
+);
+const MAP_EMBED_SRC = `https://maps.google.com/maps?q=${MAP_QUERY}&hl=ja&z=16&output=embed`;
+const MAP_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${MAP_QUERY}`;
+
 export default function Access() {
   return (
     <section
@@ -103,7 +110,7 @@ export default function Access() {
             <div className="relative rounded-2xl overflow-hidden border border-sunset/20 shadow-clinic">
               <div className="aspect-[4/3] lg:aspect-[16/10]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3230.5!2d139.7150!3d35.9430!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z5bKp5qe95Yy65pyr55SwMjQyMS0y!5e0!3m2!1sja!2sjp!4v1700000000000"
+                  src={MAP_EMBED_SRC}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -207,7 +214,7 @@ export default function Access() {
 
             {/* CTA */}
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=35.9430,139.7150"
+              href={MAP_DIRECTIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center gap-3 w-full px-6 py-4 rounded-full bg-sunset-gradient text-midnight font-bold shadow-chrome hover:shadow-sunset-glow transition-all hover:scale-105"
