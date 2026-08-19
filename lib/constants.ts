@@ -40,7 +40,7 @@ export const SITE = {
   url: "https://carwashhomies.com",
   name: BUSINESS.nameJa,
   description:
-    "埼玉県さいたま市岩槻区の車の美容外科 Car Wash Homies。塗装状態・使用環境・年式を診断し、車両ごとに最適な施術計画をご提案。コーティング・洗車・磨きなど、車の寿命を延ばし価値を守る施術をご提供します。",
+    "埼玉県さいたま市でボディコーティングをお考えなら「車の美容外科 Car Wash Homies」へ。ただのコーティング屋さんではなく、お車の塗装状態や使用環境を診断し、1台1台に最適な施術をご提案。愛車の寿命を延ばし価値を守るプロの技術をご体感ください。",
   ogImage: "/og-image.png",
   locale: "ja_JP",
 } as const;
@@ -51,18 +51,20 @@ export const SITE = {
    without duplicating boilerplate. */
 export function pageMetadata({
   title,
+  absoluteTitle,
   description,
   path,
   keywords,
 }: {
   title: string;
+  absoluteTitle?: boolean;
   description: string;
   path: string;
   keywords?: readonly string[];
 }) {
-  const fullTitle = `${title} | ${BUSINESS.nameJa}`;
+  const fullTitle = absoluteTitle ? title : `${title} | ${BUSINESS.nameJa}`;
   return {
-    title, // root-layout template adds the "| 車の美容外科..." suffix
+    title: absoluteTitle ? { absolute: title } : title,
     description,
     keywords: keywords ? [...keywords] : undefined,
     alternates: {
