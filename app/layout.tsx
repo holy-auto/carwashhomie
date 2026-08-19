@@ -74,7 +74,7 @@ const dotGothic = DotGothic16({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "車の美容外科 | Car Wash Homies — ただのコーティング屋さんじゃない",
+    default: "さいたま市のボディコーティング専門店 | 車の美容外科 Car Wash Homies",
     template: "%s | 車の美容外科 Car Wash Homies",
   },
   description: SITE.description,
@@ -99,9 +99,8 @@ export const metadata: Metadata = {
     locale: SITE.locale,
     url: SITE.url,
     siteName: BUSINESS.nameJa,
-    title: "車の美容外科 | Car Wash Homies",
-    description:
-      "ただのコーティング屋さんじゃない、車の美容外科です。車の寿命を延ばし、価値を守る。",
+    title: "さいたま市のボディコーティング専門店 | 車の美容外科 Car Wash Homies",
+    description: SITE.description,
     images: [
       {
         url: SITE.ogImage,
@@ -113,9 +112,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "車の美容外科 | Car Wash Homies",
-    description:
-      "ただのコーティング屋さんじゃない、車の美容外科です。車の寿命を延ばし、価値を守る。",
+    title: "さいたま市のボディコーティング専門店 | 車の美容外科 Car Wash Homies",
+    description: SITE.description,
     images: [SITE.ogImage],
     creator: `@${BUSINESS.xHandle}`,
   },
