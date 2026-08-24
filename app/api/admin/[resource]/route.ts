@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { getResource, sanitizeBody } from "@/lib/admin-resources";
+import {
+  getResource,
+  needsAutoNumberOnCreate,
+  sanitizeBody,
+} from "@/lib/admin-resources";
+import { nextAutoNumber } from "@/lib/admin-sort";
 import { getServiceClient, isSupabaseWritable } from "@/lib/supabase";
 
 /* GET  /api/admin/<resource>  — list ALL rows (incl. unpublished)
@@ -47,6 +52,12 @@ export async function POST(req: Request, { params }: Ctx) {
 
   const values = sanitizeBody(cfg, body);
   const supabase = getServiceClient();
+
+  // 表示順が空欄なら自動採番（ブログ系は先頭、メニュー系は末尾）。
+  if (needsAutoNumberOnCreate(cfg, values)) {
+    values[cfg.autoNumber!.column] = await nextAutoNumber(supabase, cfg);
+  }
+
   const { data, error } = await supabase
     .from(cfg.table)
     .insert(values)

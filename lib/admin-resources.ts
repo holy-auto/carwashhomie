@@ -13,6 +13,14 @@ export type ResourceConfig = {
   /** Boolean columns — coerced from checkbox values. */
   booleanFields?: readonly string[];
   order: { column: string; ascending: boolean };
+  /** Automatic numbering for the display-order column.
+
+     When the client leaves the column blank, the API fills it in:
+     - "start" → the row goes to the FRONT (blog-like content, so a
+       new post shows up first without touching the older ones).
+     - "end"   → the row is appended after the current last row
+       (menus and other hand-curated lists). */
+  autoNumber?: { column: string; position: "start" | "end" };
   /** Human label used in the UI. */
   label: string;
 };
@@ -37,6 +45,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "start" },
     label: "施術事例",
   },
   news: {
@@ -63,6 +72,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["rank", "sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：ボディコーティング",
   },
   "menu-wash": {
@@ -82,6 +92,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：洗車サービス",
   },
   useful: {
@@ -99,6 +110,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "start" },
     label: "お役立ち情報",
   },
   "menu-interior": {
@@ -114,6 +126,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：内装コーティング料金表",
   },
   "menu-interior-options": {
@@ -122,6 +135,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：内装オプション",
   },
   "menu-glass": {
@@ -130,6 +144,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：ガラスコーティング",
   },
   "menu-wheel": {
@@ -138,6 +153,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：ホイールコーティング",
   },
   "menu-b2b": {
@@ -146,6 +162,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：業者様向けご依頼",
   },
   "menu-brands": {
@@ -154,6 +171,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "メニュー：取り扱いブランド",
   },
   testimonials: {
@@ -171,6 +189,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     numericFields: ["rating", "sort_order"],
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
+    autoNumber: { column: "sort_order", position: "end" },
     label: "お客様の声",
   },
 };
@@ -208,4 +227,29 @@ export function sanitizeBody(
     out[field] = value;
   }
   return out;
+}
+
+/* ── Auto numbering ───────────────────────────────────────────────
+   The 表示順 field is optional in the admin form: when it is left
+   blank the API assigns the next number itself (see lib/admin-sort). */
+
+/** Create: a missing OR blank value means "number it for me". */
+export function needsAutoNumberOnCreate(
+  cfg: ResourceConfig,
+  values: Record<string, unknown>,
+): boolean {
+  const column = cfg.autoNumber?.column;
+  if (!column) return false;
+  return values[column] == null;
+}
+
+/** Update: only a value the editor explicitly cleared is re-numbered —
+    a column that was not sent at all must stay untouched. */
+export function needsAutoNumberOnUpdate(
+  cfg: ResourceConfig,
+  values: Record<string, unknown>,
+): boolean {
+  const column = cfg.autoNumber?.column;
+  if (!column) return false;
+  return column in values && values[column] == null;
 }

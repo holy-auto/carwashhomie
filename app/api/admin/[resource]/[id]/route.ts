@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { getResource, sanitizeBody } from "@/lib/admin-resources";
+import {
+  getResource,
+  needsAutoNumberOnUpdate,
+  sanitizeBody,
+} from "@/lib/admin-resources";
+import { nextAutoNumber } from "@/lib/admin-sort";
 import { getServiceClient, isSupabaseWritable } from "@/lib/supabase";
 
 /* PATCH  /api/admin/<resource>/<id> — update a row
@@ -26,6 +31,12 @@ export async function PATCH(req: Request, { params }: Ctx) {
 
   const values = sanitizeBody(cfg, body);
   const supabase = getServiceClient();
+
+  // 表示順を空欄にして保存した場合も、新規追加と同じ規則で採番し直す。
+  if (needsAutoNumberOnUpdate(cfg, values)) {
+    values[cfg.autoNumber!.column] = await nextAutoNumber(supabase, cfg);
+  }
+
   const { data, error } = await supabase
     .from(cfg.table)
     .update(values)
