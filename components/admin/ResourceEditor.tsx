@@ -165,6 +165,14 @@ export default function ResourceEditor({ schema }: { schema: FormSchema }) {
             key={row.id}
             className="flex items-center gap-4 rounded-xl border border-midnight/10 bg-white p-4"
           >
+            {typeof row.sort_order === "number" && (
+              <span
+                title="表示順（自動採番）"
+                className="shrink-0 w-9 text-center text-xs tabular-nums text-midnight/40"
+              >
+                #{row.sort_order}
+              </span>
+            )}
             <div className="flex-1 min-w-0">
               <div className="font-semibold truncate">
                 {row[schema.titleField] || "（無題）"}
