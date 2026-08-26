@@ -27,7 +27,7 @@ export const BUSINESS = {
 
   /* Hours / legal */
   hours: "10:00 — 19:00",
-  hoursNote: "不定休",
+  hoursNote: "火曜日",
   openingHoursSpec: [{ opens: "10:00", closes: "19:00" }],
   registrationNumber: "T8810011150208", // 適格請求書発行事業者登録番号
 

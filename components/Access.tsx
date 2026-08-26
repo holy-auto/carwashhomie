@@ -30,7 +30,7 @@ const info = [
       </svg>
     ),
     label: "定休日",
-    value: "不定休",
+    value: BUSINESS.hoursNote,
   },
   {
     icon: (
