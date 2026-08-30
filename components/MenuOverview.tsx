@@ -55,6 +55,19 @@ const menu = [
   },
   {
     num: "05",
+    label: "Brands",
+    title: "取扱いブランド",
+    desc: "Adam's Polishes 埼玉 施工代理店。FunCruise・BULLET・TACSYSTEMも取扱い。",
+    href: "/brands",
+    icon: (
+      <svg aria-hidden="true" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 5a2 2 0 012-2h6.586a2 2 0 011.414.586l4.414 4.414a2 2 0 01.586 1.414V19a2 2 0 01-2 2H7a2 2 0 01-2-2V5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 13l2 2 4-4" />
+      </svg>
+    ),
+  },
+  {
+    num: "06",
     label: "Reservation",
     title: "ご予約・ご相談",
     desc: "無料カウンセリング受付中。お電話・Instagram DM・フォームから。",
@@ -66,7 +79,7 @@ const menu = [
     ),
   },
   {
-    num: "06",
+    num: "07",
     label: "Access",
     title: "アクセス",
     desc: "埼玉県さいたま市岩槻区末田2421-2。岩槻ICから約10分・駐車場完備。",

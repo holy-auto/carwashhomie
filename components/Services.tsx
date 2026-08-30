@@ -807,6 +807,16 @@ function BrandsSection({ brands }: { brands: Brand[] }) {
             <span className="h-[1px] w-8 bg-midnight/20" />
           </div>
         </div>
+
+        <div className="mt-6 text-center">
+          <Link
+            href="/brands"
+            className="inline-flex items-center gap-2 text-sunset font-bold hover:gap-4 transition-all"
+          >
+            取扱いブランドの詳細を見る
+            <span>→</span>
+          </Link>
+        </div>
       </div>
     </section>
   );
