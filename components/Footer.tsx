@@ -54,6 +54,7 @@ export default function Footer() {
               {[
                 { label: "当院のコンセプト", href: "/concept" },
                 { label: "施術メニュー", href: "/menu" },
+                { label: "取扱いブランド", href: "/brands" },
                 { label: "施術事例", href: "/gallery" },
                 { label: "お役立ち情報", href: "/useful" },
                 { label: "院長紹介", href: "/doctor" },

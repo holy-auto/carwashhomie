@@ -1,4 +1,5 @@
 import { BUSINESS, SITE } from "@/lib/constants";
+import { DEFAULT_BRANDS } from "@/lib/content";
 
 /* Structured data for Google / Bing / social crawlers.
    Emits an AutomotiveBusiness LocalBusiness schema with
@@ -46,6 +47,14 @@ export default function JsonLd() {
       name: BUSINESS.operator,
       jobTitle: BUSINESS.operatorTitle,
     },
+    /* Mirrors the curated defaults in lib/content.ts (Adam's Polishes
+       埼玉施工代理店 ほか) so every page carries the brand roster as a
+       search/LLM-answer-engine hint. The dedicated /brands page is the
+       live, admin-editable source of truth for the full brand copy. */
+    brand: DEFAULT_BRANDS.map((b) => ({
+      "@type": "Brand",
+      name: b.name,
+    })),
   };
 
   return (

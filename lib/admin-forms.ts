@@ -304,7 +304,7 @@ export const FORM_SCHEMAS: Record<string, FormSchema> = {
     fields: [
       { name: "name", label: "ブランド名", type: "text", placeholder: "Adam's Polishes" },
       { name: "region", label: "補足（産地・カテゴリ等）", type: "text", placeholder: "Premium Car Care, USA（任意）" },
-      { name: "label", label: "バッジ", type: "text", placeholder: "Official Dealer（任意）" },
+      { name: "label", label: "バッジ", type: "text", placeholder: "埼玉 施工代理店（任意）" },
       {
         name: "sort_order",
         label: "表示順",
