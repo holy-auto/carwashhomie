@@ -20,6 +20,29 @@ export type GalleryCase = {
   after_image_url: string | null;
   before_color: string | null;
   after_color: string | null;
+  /** コレクションカードの設置（この事例に潜ませる card の code）。 */
+  card_code: string | null;
+  sort_order: number;
+  published: boolean;
+};
+
+/** コレクションカード（ゲーミフィケーション）のマスタ1件。 */
+export type CollectibleCard = {
+  id: string;
+  code: string;
+  card_number: number | null;
+  name: string;
+  rarity: string; // "N" | "R" | "SR" | "SS"
+  category: string | null;
+  description: string | null;
+  hint: string | null;
+  image_url: string | null;
+  accent_color: string | null;
+  /** コンプ/マイルストーンでの重み（易しいカードは < 1）。 */
+  count_weight: number;
+  /** 単体で特典が出るか（SS 等）。 */
+  instant_reward: boolean;
+  series: string | null;
   sort_order: number;
   published: boolean;
 };
@@ -82,6 +105,8 @@ export type UsefulArticle = {
   excerpt: string | null;
   body: string | null;
   image_url: string | null;
+  /** コレクションカードの設置（この記事に潜ませる card の code）。 */
+  card_code: string | null;
   sort_order: number;
   published: boolean;
   published_at: string;
@@ -148,6 +173,7 @@ export const DEFAULT_CASES: GalleryCase[] = [
     after_image_url: null,
     before_color: "#5a4a3a",
     after_color: "#ff6b1a",
+    card_code: null,
     sort_order: 1,
     published: true,
   },
@@ -164,6 +190,7 @@ export const DEFAULT_CASES: GalleryCase[] = [
     after_image_url: null,
     before_color: "#6b5847",
     after_color: "#ffb347",
+    card_code: null,
     sort_order: 2,
     published: true,
   },
@@ -179,6 +206,7 @@ export const DEFAULT_CASES: GalleryCase[] = [
     after_image_url: null,
     before_color: "#3d3028",
     after_color: "#e8e8ec",
+    card_code: null,
     sort_order: 3,
     published: true,
   },
@@ -539,6 +567,31 @@ export async function getB2BServices(): Promise<B2BService[]> {
   return data && data.length > 0
     ? (data as B2BService[])
     : DEFAULT_B2B_SERVICES;
+}
+
+/* コレクションカードのマスタ。公開カードのみを返す。未設定なら空配列
+   （カード機能は「設置済みコンテンツがあれば動く」ので既定は空でよい）。
+   Supabase(PostgREST) は numeric を文字列で返すため count_weight を数値へ寄せる。 */
+export async function getCards(): Promise<CollectibleCard[]> {
+  const supabase = getPublicClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("collectible_cards")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("getCards:", error.message);
+    return [];
+  }
+  return (data ?? []).map((c) => ({
+    ...(c as CollectibleCard),
+    count_weight: Number((c as { count_weight: unknown }).count_weight ?? 1) || 0,
+    instant_reward: Boolean((c as { instant_reward: unknown }).instant_reward),
+  }));
 }
 
 export async function getBrands(): Promise<Brand[]> {
