@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import type { UsefulArticle } from "@/lib/content";
 
-/* お役立ち情報 — お知らせ（ブログ）とは別の、洗車・メンテナンスに
-   まつわるお役立ちコンテンツ枠。データは Supabase から `articles`
+/* ホームケア処方箋 — お知らせ（ブログ）とは別の、洗車・メンテナンスに
+   まつわるセルフケアのコンテンツ枠。データは Supabase から `articles`
    プロップスとして渡される。本文は改行を保持して表示する。 */
 
 function formatDate(iso: string): string {
@@ -38,11 +38,11 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
         >
           <div className="inline-flex items-center gap-3 text-midnight/50 text-[9px] tracking-[0.3em] uppercase font-pixel mb-4">
             <div className="w-8 h-[1px] bg-midnight/30" />
-            Useful Tips
+            Home Care
             <div className="w-8 h-[1px] bg-midnight/30" />
           </div>
           <h1 className="font-display text-[2rem] md:text-5xl text-midnight mb-6 leading-tight">
-            お役立ち情報
+            ホームケア処方箋
           </h1>
           <p className="text-midnight/60 max-w-2xl mx-auto leading-relaxed font-readable">
             洗車・コーティング・メンテナンスにまつわる豆知識やお手入れのコツを、車の美容外科の視点でお届けします。
@@ -51,7 +51,7 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
 
         {articles.length === 0 ? (
           <p className="text-center text-midnight/50 py-12 font-readable">
-            お役立ち情報は現在準備中です。
+            ホームケア処方箋は現在準備中です。
           </p>
         ) : (
           <div className="space-y-8">

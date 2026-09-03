@@ -45,7 +45,7 @@ const cards = [
   },
   {
     href: "/admin/gallery",
-    title: "施術事例",
+    title: "症例カルテ",
     desc: "Before / After 写真と説明を追加・編集します。",
   },
   {
@@ -55,8 +55,8 @@ const cards = [
   },
   {
     href: "/admin/useful",
-    title: "お役立ち情報",
-    desc: "ブログとは別に、洗車・メンテのお役立ちコンテンツを掲載します。",
+    title: "ホームケア処方箋",
+    desc: "ブログとは別に、洗車・メンテのセルフケア記事を掲載します。",
   },
   {
     href: "/admin/testimonials",
