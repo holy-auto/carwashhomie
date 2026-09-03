@@ -74,7 +74,7 @@ export type Testimonial = {
   published: boolean;
 };
 
-/** お役立ち情報（ブログ=お知らせとは別のコンテンツ枠）。 */
+/** ホームケア処方箋（ブログ=お知らせとは別のコンテンツ枠）。 */
 export type UsefulArticle = {
   id: string;
   title: string;
@@ -417,7 +417,7 @@ export async function getNewsPosts(): Promise<NewsPost[]> {
   return (data ?? []) as NewsPost[];
 }
 
-/* お役立ち情報 — お知らせ（ブログ）とは別枠のコンテンツ。公開行が
+/* ホームケア処方箋 — お知らせ（ブログ）とは別枠のコンテンツ。公開行が
    無ければ空配列を返し、ページ側で「準備中」を表示する。 */
 export async function getUsefulArticles(): Promise<UsefulArticle[]> {
   const supabase = getPublicClient();

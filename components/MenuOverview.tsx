@@ -31,9 +31,9 @@ const menu = [
   },
   {
     num: "03",
-    label: "Gallery",
-    title: "施術事例",
-    desc: "Before / After で見る仕上がり。実際の診断・処置の事例紹介。",
+    label: "Records",
+    title: "症例カルテ",
+    desc: "Before / After で見る仕上がり。実際の診断・処置の記録をご紹介。",
     href: "/gallery",
     icon: (
       <svg aria-hidden="true" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

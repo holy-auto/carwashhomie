@@ -46,7 +46,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
     autoNumber: { column: "sort_order", position: "start" },
-    label: "施術事例",
+    label: "症例カルテ",
   },
   news: {
     table: "news_posts",
@@ -111,7 +111,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
     autoNumber: { column: "sort_order", position: "start" },
-    label: "お役立ち情報",
+    label: "ホームケア処方箋",
   },
   "menu-interior": {
     table: "interior_coatings",
