@@ -156,7 +156,7 @@ export const FORM_SCHEMAS: Record<string, FormSchema> = {
   },
   useful: {
     key: "useful",
-    label: "ホームケア処方箋",
+    label: "お役立ち情報",
     titleField: "title",
     subtitleField: "category",
     defaults: { published: true },

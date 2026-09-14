@@ -8,12 +8,11 @@ import { getUsefulArticles } from "@/lib/content";
 export const dynamic = "force-dynamic";
 
 export const metadata = pageMetadata({
-  title: "ホームケア処方箋",
+  title: "お役立ち情報",
   description:
     "洗車・コーティング・メンテナンスにまつわる豆知識やお手入れのコツを、車の美容外科 Car Wash Homies がお届けします。",
   path: "/useful",
   keywords: [
-    "ホームケア処方箋",
     "お役立ち情報",
     "洗車のコツ",
     "コーティング",
@@ -32,7 +31,7 @@ export default async function UsefulPage() {
       <Breadcrumbs
         crumbs={[
           { name: "ホーム", path: "/" },
-          { name: "ホームケア処方箋", path: "/useful" },
+          { name: "お役立ち情報", path: "/useful" },
         ]}
       />
       <Useful articles={articles} />

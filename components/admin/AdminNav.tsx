@@ -15,7 +15,7 @@ const links = [
   { href: "/admin/menu-brands", label: "ブランド" },
   { href: "/admin/gallery", label: "症例カルテ" },
   { href: "/admin/news", label: "お知らせ" },
-  { href: "/admin/useful", label: "ホームケア処方箋" },
+  { href: "/admin/useful", label: "お役立ち情報" },
   { href: "/admin/testimonials", label: "お客様の声" },
 ];
 

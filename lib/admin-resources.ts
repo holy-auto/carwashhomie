@@ -111,7 +111,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     booleanFields: ["published"],
     order: { column: "sort_order", ascending: true },
     autoNumber: { column: "sort_order", position: "start" },
-    label: "ホームケア処方箋",
+    label: "お役立ち情報",
   },
   "menu-interior": {
     table: "interior_coatings",

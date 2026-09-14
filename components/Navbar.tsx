@@ -11,7 +11,7 @@ const nav = [
   { label: "取扱いブランド", href: "/brands" },
   { label: "症例カルテ", href: "/gallery" },
   { label: "お知らせ", href: "/news" },
-  { label: "ホームケア処方箋", href: "/useful" },
+  { label: "お役立ち情報", href: "/useful" },
   { label: "院長紹介", href: "/doctor" },
   { label: "ご予約", href: "/reservation" },
   { label: "アクセス", href: "/access" },

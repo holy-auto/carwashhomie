@@ -55,8 +55,8 @@ const cards = [
   },
   {
     href: "/admin/useful",
-    title: "ホームケア処方箋",
-    desc: "ブログとは別に、洗車・メンテのセルフケア記事を掲載します。",
+    title: "お役立ち情報",
+    desc: "ブログとは別に、洗車・メンテのお役立ちコンテンツを掲載します。",
   },
   {
     href: "/admin/testimonials",
