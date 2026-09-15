@@ -463,7 +463,6 @@ function OtherCoatingSection({
                 Glass Coating
               </div>
               <div className="flex items-center gap-3 mt-1">
-                <span className="text-2xl">🪟</span>
                 <span className="font-display text-cream text-xl">
                   窓ガラスコーティング
                 </span>
@@ -516,7 +515,6 @@ function OtherCoatingSection({
                 Wheel Coating
               </div>
               <div className="flex items-center gap-3 mt-1">
-                <span className="text-2xl">🛞</span>
                 <span className="font-display text-cream text-xl">
                   ホイールコーティング
                 </span>
