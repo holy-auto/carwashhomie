@@ -13,7 +13,7 @@ const links = [
   { href: "/admin/menu-wheel", label: "ホイール" },
   { href: "/admin/menu-b2b", label: "業者様向け" },
   { href: "/admin/menu-brands", label: "ブランド" },
-  { href: "/admin/gallery", label: "施術事例" },
+  { href: "/admin/gallery", label: "症例カルテ" },
   { href: "/admin/news", label: "お知らせ" },
   { href: "/admin/useful", label: "お役立ち情報" },
   { href: "/admin/testimonials", label: "お客様の声" },

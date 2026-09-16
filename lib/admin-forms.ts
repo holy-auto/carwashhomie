@@ -34,7 +34,7 @@ export type FormSchema = {
 export const FORM_SCHEMAS: Record<string, FormSchema> = {
   gallery: {
     key: "gallery",
-    label: "施術事例",
+    label: "症例カルテ",
     titleField: "title",
     subtitleField: "service",
     defaults: { published: true },

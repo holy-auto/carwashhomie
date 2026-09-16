@@ -6,7 +6,7 @@ import type { FormField, FormSchema } from "@/lib/admin-forms";
 type Row = Record<string, any>;
 
 /* Generic create/read/update/delete editor driven by a FormSchema.
-   Used for 施術事例 / お知らせ / お客様の声. Talks to the
+   Used for 症例カルテ / お知らせ / お客様の声. Talks to the
    /api/admin/<resource> route handlers. */
 
 export default function ResourceEditor({ schema }: { schema: FormSchema }) {

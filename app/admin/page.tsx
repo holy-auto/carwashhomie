@@ -45,7 +45,7 @@ const cards = [
   },
   {
     href: "/admin/gallery",
-    title: "施術事例",
+    title: "症例カルテ",
     desc: "Before / After 写真と説明を追加・編集します。",
   },
   {

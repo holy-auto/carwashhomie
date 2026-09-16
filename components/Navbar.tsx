@@ -9,7 +9,7 @@ const nav = [
   { label: "当院のコンセプト", href: "/concept" },
   { label: "施術メニュー", href: "/menu" },
   { label: "取扱いブランド", href: "/brands" },
-  { label: "施術事例", href: "/gallery" },
+  { label: "症例カルテ", href: "/gallery" },
   { label: "お知らせ", href: "/news" },
   { label: "お役立ち情報", href: "/useful" },
   { label: "院長紹介", href: "/doctor" },
