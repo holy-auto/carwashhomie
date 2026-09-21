@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { BUSINESS } from "@/lib/constants";
 import type { GalleryCase } from "@/lib/content";
+import CardDrop from "@/components/collection/CardDrop";
 
 /* Presentational Before/After gallery. Data comes from the server
    (Supabase, with built-in fallbacks) via the `cases` prop. Each
@@ -163,8 +164,8 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
         {/* Cases */}
         <div className="space-y-20">
           {cases.map((c, idx) => (
+            <div key={c.id}>
             <motion.div
-              key={c.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -219,6 +220,8 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
                 )}
               </div>
             </motion.div>
+              {c.card_code && <CardDrop code={c.card_code} />}
+            </div>
           ))}
         </div>
 

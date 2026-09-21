@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { UsefulArticle } from "@/lib/content";
+import CardDrop from "@/components/collection/CardDrop";
 
 /* お役立ち情報 — お知らせ（ブログ）とは別の、洗車・メンテナンスに
    まつわるお役立ちコンテンツ枠。データは Supabase から `articles`
@@ -98,6 +99,8 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
                     {article.body}
                   </p>
                 )}
+
+                {article.card_code && <CardDrop code={article.card_code} />}
               </motion.article>
             ))}
           </div>
