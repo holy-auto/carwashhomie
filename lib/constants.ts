@@ -1,6 +1,18 @@
 /* Central constants for business info — change once, propagate
    everywhere. Used across Navbar, Hero, Reservation, Access,
-   Footer, tokusho, privacy, metadata / JSON-LD etc. */
+   Footer, tokusho, privacy, metadata / JSON-LD, FAQ, llms.txt etc. */
+
+/* Weekday master: schema.org `dayOfWeek` (English) ↔ on-page label. */
+export const WEEKDAYS = [
+  { en: "Monday", ja: "月" },
+  { en: "Tuesday", ja: "火" },
+  { en: "Wednesday", ja: "水" },
+  { en: "Thursday", ja: "木" },
+  { en: "Friday", ja: "金" },
+  { en: "Saturday", ja: "土" },
+  { en: "Sunday", ja: "日" },
+] as const;
+export type Weekday = (typeof WEEKDAYS)[number]["en"];
 
 export const BUSINESS = {
   /* Human-facing name */
@@ -25,16 +37,38 @@ export const BUSINESS = {
   addressLocality: "さいたま市岩槻区",
   streetAddress: "末田2421-2",
 
-  /* Hours / legal */
-  hours: "10:00 — 19:00",
-  hoursNote: "火曜日",
-  openingHoursSpec: [{ opens: "10:00", closes: "19:00" }],
+  /* Hours — the ONLY place to edit opening hours / closed days.
+     The on-page labels, JSON-LD dayOfWeek, FAQ answers and llms.txt
+     are all derived from these three values. */
+  opens: "10:00",
+  closes: "19:00",
+  closedDays: ["Tuesday"] as readonly Weekday[],
+
+  /* Legal */
   registrationNumber: "T8810011150208", // 適格請求書発行事業者登録番号
 
   /* Responsible person */
   operator: "中山 春香",
   operatorTitle: "二級自動車整備士",
 } as const;
+
+/** Weekdays the shop is open — feeds JSON-LD `dayOfWeek`. */
+export function openDays(): Weekday[] {
+  return WEEKDAYS.map((d) => d.en).filter(
+    (d) => !BUSINESS.closedDays.includes(d),
+  );
+}
+
+/** 「火曜日」「火曜日・水曜日」, or 「年中無休」 when never closed. */
+export function closedDaysLabel(): string {
+  if (BUSINESS.closedDays.length === 0) return "年中無休";
+  return BUSINESS.closedDays
+    .map((en) => `${WEEKDAYS.find((d) => d.en === en)?.ja ?? en}曜日`)
+    .join("・");
+}
+
+/** 「10:00 — 19:00」 */
+export const hoursLabel = `${BUSINESS.opens} — ${BUSINESS.closes}`;
 
 export const SITE = {
   url: "https://carwashhomies.com",
@@ -55,14 +89,32 @@ export function pageMetadata({
   description,
   path,
   keywords,
+  article,
 }: {
   title: string;
   absoluteTitle?: boolean;
   description: string;
   path: string;
   keywords?: readonly string[];
+  /** Set for blog/news posts: switches OG type to `article` and uses
+      the post's own image + dates. */
+  article?: {
+    image?: string | null;
+    publishedTime: string;
+    modifiedTime?: string;
+  };
 }) {
   const fullTitle = absoluteTitle ? title : `${title} | ${BUSINESS.nameJa}`;
+  const images = article?.image
+    ? [{ url: article.image, alt: title }]
+    : [
+        {
+          url: SITE.ogImage,
+          width: 1200,
+          height: 630,
+          alt: BUSINESS.nameJa,
+        },
+      ];
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
@@ -71,26 +123,26 @@ export function pageMetadata({
       canonical: path,
     },
     openGraph: {
-      type: "website" as const,
       locale: SITE.locale,
       url: `${SITE.url}${path}`,
       siteName: BUSINESS.nameJa,
       title: fullTitle,
       description,
-      images: [
-        {
-          url: SITE.ogImage,
-          width: 1200,
-          height: 630,
-          alt: BUSINESS.nameJa,
-        },
-      ],
+      images,
+      ...(article
+        ? {
+            type: "article" as const,
+            publishedTime: article.publishedTime,
+            modifiedTime: article.modifiedTime,
+            authors: [BUSINESS.operator],
+          }
+        : { type: "website" as const }),
     },
     twitter: {
       card: "summary_large_image" as const,
       title: fullTitle,
       description,
-      images: [SITE.ogImage],
+      images: images.map((img) => img.url),
       creator: `@${BUSINESS.xHandle}`,
     },
   };

@@ -286,26 +286,27 @@ export const metadata: Metadata = {
 
 ### 3-2. ページ別メタデータ（`pageMetadata()` ヘルパー）
 
-記事ページでも使えるよう、`type`・`image`・公開日時・更新日時を受け取れる形にしておく。
+記事ページでも使えるよう、`article`（画像・公開日時・更新日時）を受け取れる形にしておく。
+`article` を渡すと OGP の type が `article` になり、記事のアイキャッチが OGP 画像になる。
 
 ```ts
 export function pageMetadata({
-  title, absoluteTitle, description, path, keywords,
-  type = "website", image, publishedTime, modifiedTime,
+  title, absoluteTitle, description, path, keywords, article,
 }: {
   title: string;
   absoluteTitle?: boolean;
   description: string;
   path: string;
   keywords?: readonly string[];
-  type?: "website" | "article";
-  image?: string | null;          // 記事のアイキャッチ（なければ共通OGP）
-  publishedTime?: string;         // ISO 8601
-  modifiedTime?: string;
+  article?: {
+    image?: string | null;        // 記事のアイキャッチ（なければ共通OGP）
+    publishedTime: string;        // ISO 8601
+    modifiedTime?: string;
+  };
 }) {
   const fullTitle = absoluteTitle ? title : `${title} | ${BUSINESS.nameJa}`;
-  const images = image
-    ? [{ url: image, alt: title }]
+  const images = article?.image
+    ? [{ url: article.image, alt: title }]
     : [{ url: SITE.ogImage, width: 1200, height: 630, alt: BUSINESS.nameJa }];
   return {
     title: absoluteTitle ? { absolute: title } : title,  // template の二重付与を防ぐ
@@ -313,9 +314,12 @@ export function pageMetadata({
     keywords: keywords ? [...keywords] : undefined,
     alternates: { canonical: path },                     // 全ページ自己参照canonical
     openGraph: {
-      type, locale: SITE.locale, url: `${SITE.url}${path}`, siteName: BUSINESS.nameJa,
+      locale: SITE.locale, url: `${SITE.url}${path}`, siteName: BUSINESS.nameJa,
       title: fullTitle, description, images,
-      ...(type === "article" && { publishedTime, modifiedTime, authors: [BUSINESS.operator] }),
+      ...(article
+        ? { type: "article" as const, publishedTime: article.publishedTime,
+            modifiedTime: article.modifiedTime, authors: [BUSINESS.operator] }
+        : { type: "website" as const }),
     },
     twitter: { card: "summary_large_image" as const, title: fullTitle, description,
                images: images.map((i) => i.url), creator: `@${BUSINESS.xHandle}` },
@@ -637,10 +641,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: article.title,
     description: excerptOf(article),
     path: `/useful/${article.slug}`,
-    type: "article",
-    image: article.image_url,
-    publishedTime: article.published_at,
-    modifiedTime: article.updated_at,
+    article: {
+      image: article.image_url,
+      publishedTime: article.published_at,
+      modifiedTime: article.updated_at ?? undefined,
+    },
   });
 }
 
@@ -839,6 +844,10 @@ export function allFaqs(): FaqItem[] {
   return Object.values(FAQS).flat().filter((f) => !seen.has(f.question) && seen.add(f.question));
 }
 ```
+
+**料金・期間の FAQ は CMS のデータから組み立てる**：メニューの料金表を管理画面で変えたときに
+FAQ の回答だけ古い金額のまま残らないよう、`menuFaqs(bodyCoatings)` のように
+料金表のデータを受け取って回答文を作る関数にする（固定の配列にしない）。
 
 **ページ別の FAQ 配置**
 
@@ -1073,3 +1082,25 @@ RESEND_FROM=                     # 任意：送信元
 | 8 | 電話番号の国際表記 | 文字列置換で生成 | `BUSINESS.phoneIntl: "+81-48-606-4977"` として定数で持つ |
 | 9 | 記事本文の書式 | プレーンテキスト（改行のみ） | Markdown 対応にして本文中の h2・リスト・表を使えるようにする（AI にも構造が伝わる） |
 | 10 | llms-full.txt | 未設置 | 記事本文まで含めた `/llms-full.txt` を追加（記事数が増えてから） |
+
+---
+
+## 10. このサイト（carwashhomies.com）での適用状況
+
+v2 の4項目は、このサイトに次のファイルで実装済み。他の案件ではここをコピー元にする。
+
+| 項目 | 実装ファイル |
+|---|---|
+| 定休日の一元化 | `lib/constants.ts`（`closedDays`・`openDays()`・`closedDaysLabel()`・`hoursLabel`）→ `components/JsonLd.tsx`・`Footer.tsx`・`Access.tsx`・`Tokusho.tsx` |
+| sitemap の更新日 | `lib/routes.ts`（静的ページの `updated` / CMS ページの `tables`）、`lib/content.ts` の `getLastModified()`、`app/sitemap.ts` |
+| 記事の個別ページ | `app/news/[slug]/page.tsx`・`app/useful/[slug]/page.tsx`・`components/ArticleDetail.tsx`・`components/ArticleJsonLd.tsx`・`lib/articles.ts` |
+| 記事の slug | DB：`supabase/migrations/20261002000000_add_article_slugs.sql`／管理画面：`lib/admin-forms.ts`（URL欄）・`lib/admin-resources.ts`（`prepareSlug()`） |
+| FAQ の一元管理・展開 | `lib/faqs.ts`・`components/FaqSection.tsx`（トップ・メニュー・ブランド・アクセス・予約） |
+| llms.txt | `app/llms.txt/route.ts` |
+
+**slug まわりの仕様**
+- URL は `/news/<slug>`・`/useful/<slug>`。slug がない記事は ID で表示し、slug があるのに ID の URL で来たら slug の URL へ 308 リダイレクト（URL を1つに統一）。
+- 管理画面で URL 欄を空欄のまま新規保存すると `公開日-ランダム8文字`（例：`20261002-1a2b3c4d`）を自動で付ける。
+- 編集時に URL 欄を空にしても、既存の URL は消さない（リンク切れ防止）。
+- 重複した slug で保存しようとすると「このURL（スラッグ）は既に使われています」と表示する。
+

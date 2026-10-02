@@ -1,4 +1,4 @@
-import { BUSINESS, SITE } from "@/lib/constants";
+import { BUSINESS, SITE, openDays } from "@/lib/constants";
 import { DEFAULT_BRANDS } from "@/lib/content";
 
 /* Structured data for Google / Bing / social crawlers.
@@ -28,19 +28,17 @@ export default function JsonLd() {
       addressLocality: BUSINESS.addressLocality,
       streetAddress: BUSINESS.streetAddress,
     },
-    openingHoursSpecification: BUSINESS.openingHoursSpec.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: h.opens,
-      closes: h.closes,
-    })),
+    /* dayOfWeek is derived from BUSINESS.closedDays — never list
+       weekdays by hand here, or a closed-day change drifts out of
+       sync with the visible hours. */
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: openDays(),
+        opens: BUSINESS.opens,
+        closes: BUSINESS.closes,
+      },
+    ],
     sameAs: [BUSINESS.instagramUrl, BUSINESS.xUrl, BUSINESS.lineUrl],
     founder: {
       "@type": "Person",

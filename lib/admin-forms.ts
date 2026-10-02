@@ -77,6 +77,13 @@ export const FORM_SCHEMAS: Record<string, FormSchema> = {
     defaults: { published: true },
     fields: [
       { name: "title", label: "タイトル", type: "text", placeholder: "年末年始の営業について" },
+      {
+        name: "slug",
+        label: "URL（スラッグ）",
+        type: "text",
+        placeholder: "new-year-holidays（任意）",
+        help: "記事ページのURL（/news/○○）になります。半角英数字とハイフンのみ。空欄のまま保存すると自動で決まります。公開後は変更しないでください（変えると以前のURLが使えなくなります）。",
+      },
       { name: "body", label: "本文", type: "textarea", placeholder: "本文を入力…" },
       { name: "image_url", label: "画像", type: "image" },
       {
@@ -162,13 +169,20 @@ export const FORM_SCHEMAS: Record<string, FormSchema> = {
     defaults: { published: true },
     fields: [
       { name: "title", label: "タイトル", type: "text", placeholder: "洗車キズを防ぐ正しい拭き上げ方" },
+      {
+        name: "slug",
+        label: "URL（スラッグ）",
+        type: "text",
+        placeholder: "how-to-dry-without-scratches（任意）",
+        help: "記事ページのURL（/useful/○○）になります。半角英数字とハイフンのみ。空欄のまま保存すると自動で決まります。公開後は変更しないでください（変えると以前のURLが使えなくなります）。",
+      },
       { name: "category", label: "カテゴリ", type: "text", placeholder: "洗車のコツ / メンテナンス（任意）" },
       {
         name: "excerpt",
         label: "リード文（一覧の要約）",
         type: "textarea",
         placeholder: "一覧に表示される短い紹介文（任意）",
-        help: "未入力の場合は本文の冒頭が使われます。",
+        help: "一覧と検索結果の説明文に使われます（120字程度がおすすめ）。未入力の場合は本文の冒頭が使われます。",
       },
       { name: "body", label: "本文", type: "textarea", placeholder: "本文を入力…" },
       { name: "image_url", label: "画像", type: "image" },

@@ -1,6 +1,9 @@
 import Access from "@/components/Access";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import FaqJsonLd from "@/components/FaqJsonLd";
+import FaqSection from "@/components/FaqSection";
 import { pageMetadata } from "@/lib/constants";
+import { ACCESS_FAQS } from "@/lib/faqs";
 
 export const metadata = pageMetadata({
   title: "アクセス・店舗情報 | 岩槻のボディコーティング専門店 Car Wash Homies",
@@ -32,6 +35,8 @@ export default function AccessPage() {
         ]}
       />
       <Access />
+      <FaqJsonLd faqs={ACCESS_FAQS} />
+      <FaqSection faqs={ACCESS_FAQS} heading="アクセスについてのご質問" />
     </div>
   );
 }
