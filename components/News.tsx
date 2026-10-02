@@ -1,22 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { articlePath, excerptOf } from "@/lib/articles";
 import type { NewsPost } from "@/lib/content";
+import { formatDate } from "@/lib/format";
 
 /* Presentational お知らせ / news list. Data comes from Supabase via
-   the `posts` prop. Body text preserves line breaks; an optional
-   image is shown above the text. */
-
-function formatDate(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "";
-  return new Intl.DateTimeFormat("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    timeZone: "Asia/Tokyo",
-  }).format(d);
-}
+   the `posts` prop. Each card shows a short excerpt and links to the
+   post's own page (/news/<slug>), which carries the full text. */
 
 export default function News({ posts }: { posts: NewsPost[] }) {
   return (
@@ -67,7 +59,12 @@ export default function News({ posts }: { posts: NewsPost[] }) {
                   {formatDate(post.published_at)}
                 </time>
                 <h2 className="font-display text-2xl md:text-3xl text-cream mt-2 mb-4 leading-snug">
-                  {post.title}
+                  <Link
+                    href={articlePath("news", post)}
+                    className="hover:text-sunset transition-colors"
+                  >
+                    {post.title}
+                  </Link>
                 </h2>
 
                 {post.image_url && (
@@ -80,10 +77,18 @@ export default function News({ posts }: { posts: NewsPost[] }) {
                 )}
 
                 {post.body && (
-                  <p className="text-chrome/80 text-sm md:text-base leading-relaxed whitespace-pre-wrap font-readable">
-                    {post.body}
+                  <p className="text-chrome/80 text-sm md:text-base leading-relaxed font-readable">
+                    {excerptOf(post)}
                   </p>
                 )}
+
+                <Link
+                  href={articlePath("news", post)}
+                  className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-sunset hover:text-sunset-300 transition-colors"
+                >
+                  続きを読む
+                  <span aria-hidden="true">→</span>
+                </Link>
               </motion.article>
             ))}
           </div>

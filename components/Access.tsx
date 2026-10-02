@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, closedDaysLabel, hoursLabel } from "@/lib/constants";
 
 const info = [
   {
@@ -12,7 +12,7 @@ const info = [
       </svg>
     ),
     label: "所在地",
-    value: "〒339-0021 埼玉県さいたま市岩槻区末田2421-2",
+    value: `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}`,
   },
   {
     icon: (
@@ -21,7 +21,7 @@ const info = [
       </svg>
     ),
     label: "営業時間",
-    value: "10:00 — 19:00",
+    value: hoursLabel,
   },
   {
     icon: (
@@ -30,7 +30,7 @@ const info = [
       </svg>
     ),
     label: "定休日",
-    value: BUSINESS.hoursNote,
+    value: closedDaysLabel(),
   },
   {
     icon: (
@@ -274,8 +274,8 @@ export default function Access() {
                 { label: "所在地", value: `〒${BUSINESS.postalCode} ${BUSINESS.addressLine}` },
                 { label: "登録番号", value: BUSINESS.registrationNumber },
                 { label: "電話番号", value: BUSINESS.phone },
-                { label: "営業時間", value: BUSINESS.hours },
-                { label: "定休日", value: BUSINESS.hoursNote },
+                { label: "営業時間", value: hoursLabel },
+                { label: "定休日", value: closedDaysLabel() },
                 { label: "開業", value: "2026年4月15日" },
               ].map((row) => (
                 <div

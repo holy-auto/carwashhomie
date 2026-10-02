@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, closedDaysLabel, hoursLabel } from "@/lib/constants";
 
 const rows = [
   {
@@ -27,11 +27,11 @@ const rows = [
   },
   {
     label: "営業時間",
-    value: BUSINESS.hours,
+    value: hoursLabel,
   },
   {
     label: "定休日",
-    value: BUSINESS.hoursNote,
+    value: closedDaysLabel(),
   },
   {
     label: "登録番号",

@@ -1,5 +1,7 @@
 import Services from "@/components/Services";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import FaqJsonLd from "@/components/FaqJsonLd";
+import FaqSection from "@/components/FaqSection";
 import { pageMetadata } from "@/lib/constants";
 import {
   getBodyCoatings,
@@ -11,6 +13,7 @@ import {
   getB2BServices,
   getBrands,
 } from "@/lib/content";
+import { menuFaqs } from "@/lib/faqs";
 
 // Always reflect the latest menu edited in the admin panel.
 export const dynamic = "force-dynamic";
@@ -53,6 +56,9 @@ export default async function MenuPage() {
     getBrands(),
   ]);
 
+  // Prices / durations in the answers come from the live price table.
+  const faqs = menuFaqs(bodyCoatings);
+
   return (
     <div className="pt-20">
       <Breadcrumbs
@@ -71,6 +77,8 @@ export default async function MenuPage() {
         b2bServices={b2bServices}
         brands={brands}
       />
+      <FaqJsonLd faqs={faqs} />
+      <FaqSection faqs={faqs} heading="施術メニューについてのご質問" />
     </div>
   );
 }

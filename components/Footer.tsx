@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, closedDaysLabel, hoursLabel } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -85,16 +85,16 @@ export default function Footer() {
                   Address
                 </div>
                 <div>
-                  〒339-0021
+                  〒{BUSINESS.postalCode}
                   <br />
-                  埼玉県さいたま市岩槻区末田2421-2
+                  {BUSINESS.addressLine}
                 </div>
               </li>
               <li>
                 <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">
                   Hours
                 </div>
-                <div>{BUSINESS.hours}（{BUSINESS.hoursNote}定休）</div>
+                <div>{hoursLabel}（{closedDaysLabel()}定休）</div>
               </li>
               <li>
                 <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">
