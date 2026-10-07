@@ -1,4 +1,5 @@
-import { BUSINESS, SITE } from "@/lib/constants";
+import { BUSINESS, SITE, openDays } from "@/lib/constants";
+import { DEFAULT_BRANDS } from "@/lib/content";
 
 /* Structured data for Google / Bing / social crawlers.
    Emits an AutomotiveBusiness LocalBusiness schema with
@@ -27,26 +28,31 @@ export default function JsonLd() {
       addressLocality: BUSINESS.addressLocality,
       streetAddress: BUSINESS.streetAddress,
     },
-    openingHoursSpecification: BUSINESS.openingHoursSpec.map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: h.opens,
-      closes: h.closes,
-    })),
+    /* dayOfWeek is derived from BUSINESS.closedDays — never list
+       weekdays by hand here, or a closed-day change drifts out of
+       sync with the visible hours. */
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: openDays(),
+        opens: BUSINESS.opens,
+        closes: BUSINESS.closes,
+      },
+    ],
     sameAs: [BUSINESS.instagramUrl, BUSINESS.xUrl, BUSINESS.lineUrl],
     founder: {
       "@type": "Person",
       name: BUSINESS.operator,
       jobTitle: BUSINESS.operatorTitle,
     },
+    /* Mirrors the curated defaults in lib/content.ts (Adam's Polishes
+       埼玉施工代理店 ほか) so every page carries the brand roster as a
+       search/LLM-answer-engine hint. The dedicated /brands page is the
+       live, admin-editable source of truth for the full brand copy. */
+    brand: DEFAULT_BRANDS.map((b) => ({
+      "@type": "Brand",
+      name: b.name,
+    })),
   };
 
   return (

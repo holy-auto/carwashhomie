@@ -463,7 +463,6 @@ function OtherCoatingSection({
                 Glass Coating
               </div>
               <div className="flex items-center gap-3 mt-1">
-                <span className="text-2xl">🪟</span>
                 <span className="font-display text-cream text-xl">
                   窓ガラスコーティング
                 </span>
@@ -516,7 +515,6 @@ function OtherCoatingSection({
                 Wheel Coating
               </div>
               <div className="flex items-center gap-3 mt-1">
-                <span className="text-2xl">🛞</span>
                 <span className="font-display text-cream text-xl">
                   ホイールコーティング
                 </span>
@@ -806,6 +804,16 @@ function BrandsSection({ brands }: { brands: Brand[] }) {
             and more
             <span className="h-[1px] w-8 bg-midnight/20" />
           </div>
+        </div>
+
+        <div className="mt-6 text-center">
+          <Link
+            href="/brands"
+            className="inline-flex items-center gap-2 text-sunset font-bold hover:gap-4 transition-all"
+          >
+            取扱いブランドの詳細を見る
+            <span>→</span>
+          </Link>
         </div>
       </div>
     </section>

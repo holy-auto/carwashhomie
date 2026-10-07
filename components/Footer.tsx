@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, closedDaysLabel, hoursLabel } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -54,7 +54,8 @@ export default function Footer() {
               {[
                 { label: "当院のコンセプト", href: "/concept" },
                 { label: "施術メニュー", href: "/menu" },
-                { label: "施術事例", href: "/gallery" },
+                { label: "取扱いブランド", href: "/brands" },
+                { label: "症例カルテ", href: "/gallery" },
                 { label: "お役立ち情報", href: "/useful" },
                 { label: "院長紹介", href: "/doctor" },
                 { label: "ご予約・ご相談", href: "/reservation" },
@@ -84,16 +85,16 @@ export default function Footer() {
                   Address
                 </div>
                 <div>
-                  〒339-0021
+                  〒{BUSINESS.postalCode}
                   <br />
-                  埼玉県さいたま市岩槻区末田2421-2
+                  {BUSINESS.addressLine}
                 </div>
               </li>
               <li>
                 <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">
                   Hours
                 </div>
-                <div>10:00 — 19:00（不定休）</div>
+                <div>{hoursLabel}（{closedDaysLabel()}定休）</div>
               </li>
               <li>
                 <div className="text-[8px] text-cyan90/70 uppercase tracking-wider font-pixel">

@@ -7,6 +7,9 @@
    /api/admin route handlers instead. */
 
 import { getPublicClient } from "@/lib/supabase";
+import type { ArticleKind } from "@/lib/articles";
+
+export { articleKey, articlePath, excerptOf } from "@/lib/articles";
 
 export type GalleryCase = {
   id: string;
@@ -49,11 +52,14 @@ export type CollectibleCard = {
 
 export type NewsPost = {
   id: string;
+  /** URL key for /news/<slug>. Optional until the column exists. */
+  slug?: string | null;
   title: string;
   body: string | null;
   image_url: string | null;
   published: boolean;
   published_at: string;
+  updated_at?: string | null;
 };
 
 export type BodyCoating = {
@@ -110,6 +116,9 @@ export type UsefulArticle = {
   sort_order: number;
   published: boolean;
   published_at: string;
+  /** URL key for /useful/<slug>. Optional until the column exists. */
+  slug?: string | null;
+  updated_at?: string | null;
 };
 
 /** 内装コーティング料金表の1行（車種 × 施工範囲）。 */
@@ -339,7 +348,10 @@ export const DEFAULT_B2B_SERVICES: B2BService[] = [
 ];
 
 export const DEFAULT_BRANDS: Brand[] = [
-  { id: "default-1", name: "Adam's Polishes", region: "Premium Car Care, USA", label: "Official Dealer", sort_order: 1, published: true },
+  { id: "default-1", name: "Adam's Polishes", region: "Premium Car Care, USA", label: "埼玉 施工代理店", sort_order: 1, published: true },
+  { id: "default-2", name: "FunCruise", region: "Glass Coating & Car Film, 埼玉", label: "取扱いブランド", sort_order: 2, published: true },
+  { id: "default-3", name: "BULLET", region: "Detailing Supplies, 埼玉", label: "取扱いブランド", sort_order: 3, published: true },
+  { id: "default-4", name: "TACSYSTEM", region: "Touchless Coating, Japan", label: "取扱いブランド", sort_order: 4, published: true },
 ];
 
 /* Fetchers below are called from `force-dynamic` Server Components so
@@ -607,4 +619,78 @@ export async function getBrands(): Promise<Brand[]> {
     return DEFAULT_BRANDS;
   }
   return data && data.length > 0 ? (data as Brand[]) : DEFAULT_BRANDS;
+}
+
+/* ─────────────────────── Article detail pages ─────────────────────── */
+
+const ARTICLE_TABLE: Record<ArticleKind, string> = {
+  news: "news_posts",
+  useful: "useful_articles",
+};
+
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** One published post by slug (or by id, for posts without a slug). */
+async function getArticleByKey<T>(
+  kind: ArticleKind,
+  key: string,
+): Promise<T | null> {
+  const supabase = getPublicClient();
+  if (!supabase) return null;
+
+  const column = UUID_RE.test(key) ? "id" : "slug";
+  const { data, error } = await supabase
+    .from(ARTICLE_TABLE[kind])
+    .select("*")
+    .eq("published", true)
+    .eq(column, key)
+    .maybeSingle();
+
+  if (error) {
+    console.error(`getArticleByKey(${kind}):`, error.message);
+    return null;
+  }
+  return (data as T) ?? null;
+}
+
+export function getNewsPostByKey(key: string): Promise<NewsPost | null> {
+  return getArticleByKey<NewsPost>("news", key);
+}
+
+export function getUsefulArticleByKey(
+  key: string,
+): Promise<UsefulArticle | null> {
+  return getArticleByKey<UsefulArticle>("useful", key);
+}
+
+/* ─────────────────────────── Sitemap ─────────────────────────── */
+
+/** Latest `updated_at` among the PUBLISHED rows of the given tables.
+    `undefined` when unknown (Supabase not configured, empty tables) —
+    the sitemap then omits lastmod rather than guessing. */
+export async function getLastModified(
+  tables: readonly string[],
+): Promise<Date | undefined> {
+  const supabase = getPublicClient();
+  if (!supabase) return undefined;
+
+  const dates = await Promise.all(
+    tables.map(async (table) => {
+      const { data, error } = await supabase
+        .from(table)
+        .select("updated_at")
+        .eq("published", true)
+        .order("updated_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error || !data?.updated_at) return undefined;
+      return new Date(data.updated_at as string);
+    }),
+  );
+
+  const times = dates
+    .filter((d): d is Date => !!d && !Number.isNaN(d.getTime()))
+    .map((d) => d.getTime());
+  return times.length > 0 ? new Date(Math.max(...times)) : undefined;
 }

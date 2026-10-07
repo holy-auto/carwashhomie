@@ -45,18 +45,6 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Opening badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="sticker mb-10 !bg-cyan90/20 !text-cream !border-cyan90 shadow-neon-cyan"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan90 animate-pulse" />
-          <span className="font-pixel">2026.04.15 ★ NOW OPEN</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-magenta animate-pulse" />
-        </motion.div>
-
         {/* Logo image - hero center */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -113,12 +101,16 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.9 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link href="/reservation" className="btn-90s group">
-            <span className="w-2 h-2 rounded-full bg-midnight" />
+          <Link
+            href="/reservation"
+            className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 font-extrabold uppercase tracking-[0.18em] text-xs text-white transition-all shadow-[4px_4px_0_0_#8a3100] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_#8a3100]"
+            style={{ backgroundColor: "#ff6b1a", borderColor: "#8a3100" }}
+          >
+            <span className="w-2 h-2 rounded-full bg-white/90" />
             無料カウンセリングを予約
             <svg
               aria-hidden="true"
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

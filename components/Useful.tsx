@@ -1,24 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { articlePath, excerptOf } from "@/lib/articles";
 import type { UsefulArticle } from "@/lib/content";
-import HiddenCardText from "@/components/collection/HiddenCardText";
-import CardHuntProvider from "@/components/collection/CardHuntProvider";
+import { formatDate } from "@/lib/format";
 
 /* お役立ち情報 — お知らせ（ブログ）とは別の、洗車・メンテナンスに
    まつわるお役立ちコンテンツ枠。データは Supabase から `articles`
-   プロップスとして渡される。本文は改行を保持して表示する。 */
-
-function formatDate(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "";
-  return new Intl.DateTimeFormat("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    timeZone: "Asia/Tokyo",
-  }).format(d);
-}
+   プロップスとして渡される。一覧は要約のみで、本文は各記事の
+   個別ページ（/useful/<slug>）に表示する。 */
 
 export default function Useful({ articles }: { articles: UsefulArticle[] }) {
   return (
@@ -56,7 +47,6 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
             お役立ち情報は現在準備中です。
           </p>
         ) : (
-          <CardHuntProvider limit={2}>
           <div className="space-y-8">
             {articles.map((article, idx) => (
               <motion.article
@@ -78,7 +68,12 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
                   </time>
                 </div>
                 <h2 className="font-display text-2xl md:text-3xl text-midnight mt-1 mb-4 leading-snug">
-                  {article.title}
+                  <Link
+                    href={articlePath("useful", article)}
+                    className="hover:text-sunset transition-colors"
+                  >
+                    {article.title}
+                  </Link>
                 </h2>
 
                 {article.image_url && (
@@ -90,21 +85,22 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
                   />
                 )}
 
-                {article.excerpt && (
-                  <p className="text-sunset/90 text-sm md:text-base font-semibold leading-relaxed mb-3 font-readable">
-                    {article.excerpt}
+                {(article.excerpt || article.body) && (
+                  <p className="text-midnight/75 text-sm md:text-base leading-relaxed font-readable">
+                    {excerptOf(article)}
                   </p>
                 )}
 
-                {article.body && (
-                  <p className="text-midnight/75 text-sm md:text-base leading-relaxed whitespace-pre-wrap font-readable">
-                    <HiddenCardText text={article.body} chance={0.55} />
-                  </p>
-                )}
+                <Link
+                  href={articlePath("useful", article)}
+                  className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-sunset hover:text-midnight transition-colors"
+                >
+                  続きを読む
+                  <span aria-hidden="true">→</span>
+                </Link>
               </motion.article>
             ))}
           </div>
-          </CardHuntProvider>
         )}
       </div>
     </section>

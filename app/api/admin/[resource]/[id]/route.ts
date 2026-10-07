@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server";
-import { getResource, sanitizeBody } from "@/lib/admin-resources";
+import {
+  getResource,
+  needsAutoNumberOnUpdate,
+  prepareSlug,
+  sanitizeBody,
+  writeErrorMessage,
+} from "@/lib/admin-resources";
+import { nextAutoNumber } from "@/lib/admin-sort";
 import { getServiceClient, isSupabaseWritable } from "@/lib/supabase";
 
 /* PATCH  /api/admin/<resource>/<id> — update a row
@@ -25,7 +32,14 @@ export async function PATCH(req: Request, { params }: Ctx) {
   }
 
   const values = sanitizeBody(cfg, body);
+  prepareSlug(cfg, values, "update");
   const supabase = getServiceClient();
+
+  // 表示順を空欄にして保存した場合も、新規追加と同じ規則で採番し直す。
+  if (needsAutoNumberOnUpdate(cfg, values)) {
+    values[cfg.autoNumber!.column] = await nextAutoNumber(supabase, cfg);
+  }
+
   const { data, error } = await supabase
     .from(cfg.table)
     .update(values)
@@ -34,7 +48,7 @@ export async function PATCH(req: Request, { params }: Ctx) {
     .single();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: writeErrorMessage(error) }, { status: 400 });
   }
   return NextResponse.json({ data });
 }
