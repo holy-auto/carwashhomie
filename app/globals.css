@@ -404,6 +404,44 @@ input[type="number"],
 }
 .flicker { animation: flicker 5s infinite; }
 
+/* ─────────── 文中のさりげないカード取得リンク ─────────── */
+.chw-cardlink {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 107, 26, 0.7);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: text-decoration-color 160ms ease;
+}
+.chw-cardlink:hover {
+  text-decoration-color: #ff6b1a;
+}
+.chw-cardlink__mark {
+  margin-left: 2px;
+  font-size: 0.82em;
+  color: #ff6b1a;
+  animation: chwGlint 2.6s ease-in-out infinite;
+}
+.chw-cardlink[data-got="true"] {
+  text-decoration-color: rgba(47, 174, 143, 0.75);
+  cursor: default;
+}
+.chw-cardlink[data-got="true"] .chw-cardlink__mark {
+  color: #2fae8f;
+  animation: none;
+}
+@keyframes chwGlint {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chw-cardlink__mark { animation: none; }
+}
+
 /* ─────────────── Greed Island 風コレクションブック ─────────────── */
 /* 革表紙 + 金縁 */
 .gi-book {

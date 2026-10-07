@@ -71,10 +71,10 @@ export default function Book() {
     setSelectedCode(shown[nextI].code);
   }
 
-  const progressPct =
-    total === 0 ? 0 : Math.round((collectedCount / total) * 100);
   const target = next?.points ?? (MILESTONES[MILESTONES.length - 1]?.points || 1);
   const remaining = Math.max(0, Math.round((target - points) * 10) / 10);
+  const progressPct =
+    next ? Math.min(100, Math.round((points / target) * 100)) : 100;
   const topReward = reached[reached.length - 1] ?? null;
 
   return (
@@ -199,14 +199,12 @@ export default function Book() {
               <div className={styles.progressCard}>
                 <div className={styles.progressHeader}>
                   <span>あつめた枚数</span>
-                  <strong>
-                    {collectedCount}/{total}
-                  </strong>
+                  <strong>{collectedCount} 枚</strong>
                 </div>
                 <div
                   className={styles.progressTrack}
                   role="progressbar"
-                  aria-label="カード収集率"
+                  aria-label="次の特典までの進捗"
                   aria-valuemin={0}
                   aria-valuemax={100}
                   aria-valuenow={progressPct}
@@ -216,7 +214,7 @@ export default function Book() {
                 <p>
                   {next
                     ? <>次の「<strong>{next.title}</strong>」まであと {remaining} ポイント</>
-                    : "全マイルストーン達成！コンプリートを目指そう。"}
+                    : "特典ランク到達！さらに集めると特典が増えます。"}
                 </p>
 
                 {topReward && (
