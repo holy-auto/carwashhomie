@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BUSINESS } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
+import ArticleBodyCards from "@/components/collection/ArticleBodyCards";
 
 /* Single-post layout shared by /news/<slug> and /useful/<slug>.
    Server Component: the whole article is in the initial HTML so
@@ -20,6 +21,8 @@ type Props = {
   body?: string | null;
   /** Show the director as the author (E-E-A-T) — for editorial posts. */
   showAuthor?: boolean;
+  /** Hide one random collectible card somewhere in the body (お役立ち記事). */
+  huntCards?: boolean;
   back: { href: string; label: string };
 };
 
@@ -61,6 +64,7 @@ export default function ArticleDetail({
   lead,
   body,
   showAuthor,
+  huntCards,
   back,
 }: Props) {
   const t = THEMES[theme];
@@ -138,7 +142,7 @@ export default function ArticleDetail({
             <div
               className={`text-sm md:text-base leading-loose whitespace-pre-wrap font-readable ${t.body}`}
             >
-              {body}
+              {huntCards ? <ArticleBodyCards text={body} /> : body}
             </div>
           )}
         </div>

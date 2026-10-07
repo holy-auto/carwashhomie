@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { BUSINESS } from "@/lib/constants";
 import type { GalleryCase } from "@/lib/content";
+import { renderCardText } from "@/components/collection/renderCardText";
+import HiddenCardText from "@/components/collection/HiddenCardText";
+import CardHuntProvider from "@/components/collection/CardHuntProvider";
 
 /* Presentational Before/After gallery. Data comes from the server
    (Supabase, with built-in fallbacks) via the `cases` prop. Each
@@ -161,10 +164,11 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
         </motion.div>
 
         {/* Cases */}
+        <CardHuntProvider limit={2}>
         <div className="space-y-20">
           {cases.map((c, idx) => (
+            <div key={c.id}>
             <motion.div
-              key={c.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -192,8 +196,8 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
                       <span className="mt-1 px-2 py-0.5 rounded bg-chrome/20 text-chrome text-[10px] font-bold tracking-wider">
                         施術前
                       </span>
-                      <p className="text-chrome/70 text-sm leading-relaxed flex-1">
-                        {c.before_note}
+                      <p className="text-chrome/70 text-sm leading-relaxed flex-1 whitespace-pre-wrap">
+                        {renderCardText(c.before_note)}
                       </p>
                     </div>
                   )}
@@ -202,8 +206,8 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
                       <span className="mt-1 px-2 py-0.5 rounded bg-sunset text-midnight text-[10px] font-bold tracking-wider">
                         施術後
                       </span>
-                      <p className="text-cream text-sm leading-relaxed flex-1">
-                        {c.after_note}
+                      <p className="text-cream text-sm leading-relaxed flex-1 whitespace-pre-wrap">
+                        <HiddenCardText text={c.after_note} chance={0.35} />
                       </p>
                     </div>
                   )}
@@ -219,8 +223,10 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
                 )}
               </div>
             </motion.div>
+            </div>
           ))}
         </div>
+        </CardHuntProvider>
 
         {/* CTA */}
         <motion.div

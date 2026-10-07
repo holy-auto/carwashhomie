@@ -74,6 +74,7 @@ export default async function UsefulArticlePage({ params }: Props) {
         lead={article.excerpt}
         body={article.body}
         showAuthor
+        huntCards
         back={{ href: "/useful", label: "お役立ち情報一覧へ戻る" }}
       />
       <PinStripe />
