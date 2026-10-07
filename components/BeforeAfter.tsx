@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { BUSINESS } from "@/lib/constants";
 import type { GalleryCase } from "@/lib/content";
 import { renderCardText } from "@/components/collection/renderCardText";
+import HiddenCardText from "@/components/collection/HiddenCardText";
 
 /* Presentational Before/After gallery. Data comes from the server
    (Supabase, with built-in fallbacks) via the `cases` prop. Each
@@ -204,7 +205,7 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
                         施術後
                       </span>
                       <p className="text-cream text-sm leading-relaxed flex-1 whitespace-pre-wrap">
-                        {renderCardText(c.after_note)}
+                        <HiddenCardText text={c.after_note} chance={0.35} />
                       </p>
                     </div>
                   )}

@@ -60,7 +60,7 @@ export const FORM_SCHEMAS: Record<string, FormSchema> = {
         name: "after_note",
         label: "施術後メモ",
         type: "textarea",
-        help: "文中に [表示テキスト](card:カードのコード) と書くと、その部分がさりげないカード取得リンクになります。例: この艶の[秘密](card:CASE-01)。",
+        help: "カードは閲覧ごとにランダムな場所へ自動で出現します。特定の語に必ず出したいときだけ [表示テキスト](card:コード) と書くとそこに固定できます。",
       },
       { name: "before_color", label: "Before カラー（画像なし時）", type: "color" },
       { name: "after_color", label: "After カラー（画像なし時）", type: "color" },
@@ -177,7 +177,7 @@ export const FORM_SCHEMAS: Record<string, FormSchema> = {
         label: "本文",
         type: "textarea",
         placeholder: "本文を入力…",
-        help: "文中に [表示テキスト](card:カードのコード) と書くと、その部分がさりげないカード取得リンクになります。例: 正しい[拭き上げ](card:WASH-02)のコツ。コードは「コレクションカード」で確認。",
+        help: "カードは閲覧ごとにランダムな場所へ自動で出現します（人・訪問ごとに違う場所）。特定の語に必ず出したいときだけ [表示テキスト](card:コード) と書くとそこに固定できます。",
       },
       { name: "image_url", label: "画像", type: "image" },
       {

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { UsefulArticle } from "@/lib/content";
-import { renderCardText } from "@/components/collection/renderCardText";
+import HiddenCardText from "@/components/collection/HiddenCardText";
 
 /* お役立ち情報 — お知らせ（ブログ）とは別の、洗車・メンテナンスに
    まつわるお役立ちコンテンツ枠。データは Supabase から `articles`
@@ -96,7 +96,7 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
 
                 {article.body && (
                   <p className="text-midnight/75 text-sm md:text-base leading-relaxed whitespace-pre-wrap font-readable">
-                    {renderCardText(article.body)}
+                    <HiddenCardText text={article.body} chance={0.55} />
                   </p>
                 )}
               </motion.article>
