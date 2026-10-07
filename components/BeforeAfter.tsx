@@ -6,6 +6,7 @@ import { BUSINESS } from "@/lib/constants";
 import type { GalleryCase } from "@/lib/content";
 import { renderCardText } from "@/components/collection/renderCardText";
 import HiddenCardText from "@/components/collection/HiddenCardText";
+import CardHuntProvider from "@/components/collection/CardHuntProvider";
 
 /* Presentational Before/After gallery. Data comes from the server
    (Supabase, with built-in fallbacks) via the `cases` prop. Each
@@ -163,6 +164,7 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
         </motion.div>
 
         {/* Cases */}
+        <CardHuntProvider limit={2}>
         <div className="space-y-20">
           {cases.map((c, idx) => (
             <div key={c.id}>
@@ -224,6 +226,7 @@ export default function BeforeAfter({ cases }: { cases: GalleryCase[] }) {
             </div>
           ))}
         </div>
+        </CardHuntProvider>
 
         {/* CTA */}
         <motion.div

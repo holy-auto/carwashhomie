@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import type { UsefulArticle } from "@/lib/content";
 import HiddenCardText from "@/components/collection/HiddenCardText";
+import CardHuntProvider from "@/components/collection/CardHuntProvider";
 
 /* お役立ち情報 — お知らせ（ブログ）とは別の、洗車・メンテナンスに
    まつわるお役立ちコンテンツ枠。データは Supabase から `articles`
@@ -55,6 +56,7 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
             お役立ち情報は現在準備中です。
           </p>
         ) : (
+          <CardHuntProvider limit={2}>
           <div className="space-y-8">
             {articles.map((article, idx) => (
               <motion.article
@@ -102,6 +104,7 @@ export default function Useful({ articles }: { articles: UsefulArticle[] }) {
               </motion.article>
             ))}
           </div>
+          </CardHuntProvider>
         )}
       </div>
     </section>

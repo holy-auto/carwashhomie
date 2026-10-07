@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import CardLink from "@/components/collection/CardLink";
 import { renderCardText, hasCardToken } from "@/components/collection/renderCardText";
 import { useCollection } from "@/components/collection/CollectionProvider";
+import { useCardHunt } from "@/components/collection/CardHuntProvider";
 import type { CollectibleCard } from "@/lib/content";
 
 /* Hides a collectible card at a RANDOM spot in the given text, chosen
@@ -71,6 +72,7 @@ export default function HiddenCardText({
   chance?: number;
 }) {
   const { loaded, cards, collectedSet } = useCollection();
+  const { claim } = useCardHunt();
   const [placement, setPlacement] = useState<{
     start: number;
     end: number;
@@ -87,9 +89,10 @@ export default function HiddenCardText({
     if (Math.random() > chance) return;
     const span = pickSpan(text);
     if (!span) return;
+    if (!claim()) return; // page limit reached
     const card = weightedPick(uncollected);
     setPlacement({ ...span, code: card.code });
-  }, [loaded, text, chance, cards, collectedSet]);
+  }, [loaded, text, chance, cards, collectedSet, claim]);
 
   if (!text) return null;
 
