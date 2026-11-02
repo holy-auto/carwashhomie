@@ -37,11 +37,17 @@ const sections = [
   },
   {
     num: "07",
+    title: "LINEログイン連携・カードコレクション機能",
+    body:
+      "当サイトでは、サイト内で集めたカードを保存・端末間で引き継ぐための任意機能として「LINEログイン」を提供しています。本機能はご利用を希望される場合のみ有効となり、ログインせずゲストとして楽しむこともできます。\n\n【LINEから取得する情報】ログインにあたり、LINE社から次の情報を取得します。（1）LINEユーザー識別子、（2）LINEの表示名、（3）プロフィール画像のURL、（4）当院公式アカウントの友だち登録状況。\n\n【あわせて保存する情報】お客様が集めたカードの取得状況（カードコード・取得日時）を保存します。\n\n【利用目的】（1）集めたカードのアカウントへの保存および端末をまたいだ引き継ぎ、（2）収集達成度に応じた特典（ショップカード等）のご案内、（3）公式アカウントにご登録いただいた方への各種お知らせの配信。\n\n【取得しない情報・行わないこと】当院がお客様に代わってトークを送信すること、トーク内容や友だちリストを閲覧することはありません。LINEログインでは上記プロフィール情報の範囲のみを取得します。\n\n【第三者提供】LINEログインの利用にあたっては、LINEヤフー株式会社の定めるプライバシーポリシーおよび利用規約が適用されます。あわせてご確認ください。\n\n【任意性・削除】ログアウトはいつでも可能です。保存した会員情報・カード取得情報の削除をご希望の場合は、下記お問い合わせ窓口までご連絡ください。ご本人確認のうえ速やかに対応します。",
+  },
+  {
+    num: "08",
     title: "お問い合わせ",
     body: `個人情報の取り扱いに関するお問い合わせは、下記の窓口までご連絡ください。\n${BUSINESS.nameJa}\n〒${BUSINESS.postalCode} ${BUSINESS.addressLine}\nTEL：${BUSINESS.phone}\nInstagram：@${BUSINESS.instagramHandle}`,
   },
   {
-    num: "08",
+    num: "09",
     title: "改定",
     body: "本プライバシーポリシーは、法令の改正や運用の見直しに応じて、予告なく変更することがあります。最新版は本ページに掲載します。",
   },
@@ -113,7 +119,7 @@ export default function PrivacyPolicy() {
           transition={{ duration: 0.8 }}
           className="mt-12 pt-8 border-t border-dashed border-midnight/20 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] tracking-[0.2em] uppercase font-pixel text-midnight/50"
         >
-          <span>制定日：2026年4月15日</span>
+          <span>制定日：2026年4月15日／改定日：2026年11月2日</span>
           <div className="flex items-center gap-6">
             <Link href="/legal" className="hover:text-sunset transition-colors">
               特定商取引法
