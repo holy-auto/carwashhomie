@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { BUSINESS } from "@/lib/constants";
 import { useCollection } from "@/components/collection/CollectionProvider";
 import CardArt from "@/components/collection/CardArt";
+import LineLoginButton from "@/components/collection/LineLoginButton";
 import { MILESTONES } from "@/lib/collection";
 import type { CollectibleCard } from "@/lib/content";
 import styles from "@/components/collection/CollectionBook.module.css";
@@ -28,6 +29,8 @@ export default function Book() {
     reached,
     next,
     overGuestLimit,
+    lineEnabled,
+    member,
   } = useCollection();
 
   const [series, setSeries] = useState<string>(ALL);
@@ -230,10 +233,25 @@ export default function Book() {
                 )}
               </div>
 
-              {overGuestLimit && (
+              {lineEnabled ? (
                 <div className={styles.guestNote}>
-                  いまはこの端末にカードを保存しています。LINE連携（会員登録）で機種変更後も引き継げるようになります（近日公開）。
+                  {member ? (
+                    <LineLoginButton />
+                  ) : (
+                    <>
+                      <p style={{ margin: "0 0 10px" }}>
+                        LINEでログインすると、集めたカードを機種変更後も引き継げます。
+                      </p>
+                      <LineLoginButton />
+                    </>
+                  )}
                 </div>
+              ) : (
+                overGuestLimit && (
+                  <div className={styles.guestNote}>
+                    いまはこの端末にカードを保存しています。
+                  </div>
+                )
               )}
 
               {seriesList.length > 1 && (
