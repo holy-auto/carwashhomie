@@ -122,7 +122,7 @@ export const STATIC_ROUTES: StaticRoute[] = [
     summary: "個人情報の取り扱い",
     priority: 0.3,
     changeFrequency: "yearly",
-    updated: "2026-04-14",
+    updated: "2026-11-02",
   },
   {
     path: "/legal",

@@ -13,6 +13,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ChromeGate from "@/components/ChromeGate";
 import JsonLd from "@/components/JsonLd";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CollectionProvider from "@/components/collection/CollectionProvider";
 import CollectionBadge from "@/components/collection/CollectionBadge";
 import { SITE, BUSINESS } from "@/lib/constants";
@@ -142,6 +143,12 @@ export const metadata: Metadata = {
     address: true,
     email: true,
   },
+  /* Google Search Console ownership (HTML tag method). Set
+     GOOGLE_SITE_VERIFICATION to the `content` value of the
+     <meta name="google-site-verification"> tag Search Console shows. */
+  ...(process.env.GOOGLE_SITE_VERIFICATION && {
+    verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  }),
 };
 
 export default function RootLayout({
@@ -165,6 +172,10 @@ export default function RootLayout({
         </CollectionProvider>
         <ChromeGate>
           <Footer />
+        </ChromeGate>
+        {/* Analytics on the public site only — not on /admin. */}
+        <ChromeGate>
+          <GoogleAnalytics />
         </ChromeGate>
       </body>
     </html>
