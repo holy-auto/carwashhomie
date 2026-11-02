@@ -392,11 +392,15 @@ cards: {
 - [ ] 簡易イベントログ（`card_collected` 等）※未着手
 
 ### Phase 1b — LINE会員化・友だち（方針Aの本体 / ショップカード止まり）
-- [ ] LINE **Loginチャネル** 作成、`members` / `user_collections` テーブル + RLS + サーバーAPI
-- [ ] 「LINEではじめる」導線 + **ログイン時に友だち追加を同時プロンプト**（`bot_prompt`）
-- [ ] ログイン直後に **ゲストのlocalStorage分をサーバーへマージ**
+- [x] `members` / `user_collections` テーブル + RLS（service-role のみ）+ サーバーAPI
+      （`/api/me`・`/api/me/collection`・`/api/line/{login,callback,logout}`）
+- [x] LINEログイン実装（`lib/line.ts` 認可→トークン→id_token検証→友だち状態取得、
+      署名cookie `lib/member-auth.ts`、`CollectionProvider` 連携）
+- [x] 「LINEではじめる」導線（`LineLoginButton`、`/book` に配置）+ **友だち追加を同時プロンプト**（`bot_prompt=aggressive`）
+- [x] ログイン直後に **ゲストのlocalStorage分をサーバーへマージ**（`/api/me/collection` upsert）
+- [ ] **オーナー作業**: LINE Developers で Loginチャネル作成、Channel ID/Secret とコールバックURLを
+      Vercel 環境変数に設定（`.env.example` 参照）。設定するまではゲスト動作のまま（ボタン非表示）。
 - [ ] マイルストーン到達／`instant_reward` 取得で **LINEショップカードのQR/URLを提示**（店頭付与）
-- [ ] `count_weight` 合計でのマイルストーン判定（重み・閾値はデータ調整可能に）
 - [ ] `/privacy` に利用目的（カード保存・告知）を追記
 
 ### Phase 2 — 告知・運用（標準機能で）

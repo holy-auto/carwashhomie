@@ -20,6 +20,13 @@ import {
   type Milestone,
 } from "@/lib/collection";
 
+export type MemberInfo = {
+  lineUserId: string;
+  displayName: string | null;
+  pictureUrl: string | null;
+  isFriend: boolean;
+};
+
 type CollectionContextValue = {
   cards: CollectibleCard[];
   cardsByCode: Record<string, CollectibleCard>;
@@ -35,6 +42,11 @@ type CollectionContextValue = {
   next: Milestone | null;
   overGuestLimit: boolean;
   toast: (message: string) => void;
+  // membership (Phase 1b)
+  lineEnabled: boolean;
+  member: MemberInfo | null;
+  login: (returnTo?: string) => void;
+  logout: () => void;
 };
 
 const CollectionContext = createContext<CollectionContextValue | null>(null);
@@ -82,34 +94,87 @@ export default function CollectionProvider({
   const [cards, setCards] = useState<CollectibleCard[]>([]);
   const [collected, setCollected] = useState<string[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [lineEnabled, setLineEnabled] = useState(false);
+  const [member, setMember] = useState<MemberInfo | null>(null);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Load persisted collection + card master on mount (client only).
-  useEffect(() => {
-    setCollected(readStored());
-    let cancelled = false;
-    fetch("/api/cards", { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : { cards: [] }))
-      .then((j) => {
-        if (!cancelled) setCards((j.cards ?? []) as CollectibleCard[]);
-      })
-      .catch(() => {
-        /* offline / not configured — feature stays inert */
-      })
-      .finally(() => {
-        if (!cancelled) setLoaded(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const memberRef = useRef(false); // latest "is logged in" for callbacks
 
   const toast = useCallback((message: string) => {
     setToastMsg(message);
     if (toastTimer.current) clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToastMsg(null), 3200);
   }, []);
+
+  // Load cards + membership + collection on mount.
+  useEffect(() => {
+    let cancelled = false;
+    const guest = readStored();
+    setCollected(guest);
+
+    async function init() {
+      // Card master (public).
+      try {
+        const r = await fetch("/api/cards", { cache: "no-store" });
+        const j = r.ok ? await r.json() : { cards: [] };
+        if (!cancelled) setCards((j.cards ?? []) as CollectibleCard[]);
+      } catch {
+        /* inert */
+      }
+
+      // Membership.
+      try {
+        const r = await fetch("/api/me", { cache: "no-store" });
+        const j = r.ok ? await r.json() : { lineEnabled: false, member: null };
+        if (cancelled) return;
+        setLineEnabled(Boolean(j.lineEnabled));
+        if (j.member) {
+          setMember(j.member as MemberInfo);
+          memberRef.current = true;
+          // Merge any guest cards into the account, then use the server
+          // collection as the source of truth.
+          const res = await fetch("/api/me/collection", {
+            method: guest.length ? "POST" : "GET",
+            headers: guest.length ? { "Content-Type": "application/json" } : undefined,
+            body: guest.length ? JSON.stringify({ codes: guest }) : undefined,
+            cache: "no-store",
+          });
+          if (!cancelled && res.ok) {
+            const { codes } = (await res.json()) as { codes: string[] };
+            setCollected(codes);
+            writeStored(codes);
+          }
+        }
+      } catch {
+        /* membership optional */
+      } finally {
+        if (!cancelled) setLoaded(true);
+      }
+    }
+    init();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // One-time login result toast.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = new URLSearchParams(window.location.search);
+    const login = p.get("login");
+    if (!login) return;
+    if (login === "ok") toast("LINEでログインしました");
+    else if (login === "error") toast("ログインに失敗しました。もう一度お試しください");
+    // strip the params from the URL
+    p.delete("login");
+    p.delete("reason");
+    const qs = p.toString();
+    window.history.replaceState(
+      {},
+      "",
+      window.location.pathname + (qs ? `?${qs}` : "") + window.location.hash,
+    );
+  }, [toast]);
 
   const cardsByCode = useMemo(() => {
     const map: Record<string, CollectibleCard> = {};
@@ -118,23 +183,45 @@ export default function CollectionProvider({
   }, [cards]);
 
   const collectedSet = useMemo(() => new Set(collected), [collected]);
-
   const has = useCallback((code: string) => collectedSet.has(code), [collectedSet]);
 
-  const collect = useCallback(
-    (code: string) => {
-      setCollected((prev) => {
-        if (prev.includes(code)) return prev;
-        const nextCodes = [...prev, code];
-        writeStored(nextCodes);
-        return nextCodes;
-      });
-    },
-    [],
-  );
+  const collect = useCallback((code: string) => {
+    setCollected((prev) => {
+      if (prev.includes(code)) return prev;
+      const nextCodes = [...prev, code];
+      writeStored(nextCodes);
+      return nextCodes;
+    });
+    // Persist to the account when logged in.
+    if (memberRef.current) {
+      fetch("/api/me/collection", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+        cache: "no-store",
+      }).catch(() => {});
+    }
+  }, []);
 
-  // Progress is computed against PUBLISHED cards only, so unpublished /
-  // deleted codes lingering in storage don't inflate the count.
+  const login = useCallback((returnTo?: string) => {
+    const back =
+      returnTo ||
+      (typeof window !== "undefined"
+        ? window.location.pathname + window.location.search
+        : "/book");
+    window.location.href = `/api/line/login?returnTo=${encodeURIComponent(back)}`;
+  }, []);
+
+  const logout = useCallback(() => {
+    fetch("/api/line/logout", { method: "POST" })
+      .catch(() => {})
+      .finally(() => {
+        memberRef.current = false;
+        setMember(null);
+        toast("ログアウトしました");
+      });
+  }, [toast]);
+
   const publishedCodes = useMemo(() => new Set(cards.map((c) => c.code)), [cards]);
   const collectedCount = useMemo(
     () => collected.filter((c) => publishedCodes.has(c)).length,
@@ -159,8 +246,13 @@ export default function CollectionProvider({
       points,
       reached: reachedMilestones(points),
       next: nextMilestone(points),
-      overGuestLimit: loaded && collectedCount >= GUEST_LIMIT,
+      // Only nudge guests to register; members already persist server-side.
+      overGuestLimit: loaded && !member && collectedCount >= GUEST_LIMIT,
       toast,
+      lineEnabled,
+      member,
+      login,
+      logout,
     }),
     [
       cards,
@@ -172,6 +264,10 @@ export default function CollectionProvider({
       loaded,
       collectedCount,
       points,
+      member,
+      lineEnabled,
+      login,
+      logout,
       toast,
     ],
   );
