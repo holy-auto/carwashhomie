@@ -4,7 +4,7 @@
 以下は **Googleの管理画面と Vercel で行う作業** です。所要時間は30分ほど。
 
 ```
-① GA4プロパティ作成 → ② 測定IDをVercelに設定 → ③ サーチコンソールで所有権確認
+① GA4プロパティ作成 → ② 測定ID組み込み（済） → ③ サーチコンソールで所有権確認
 → ④ サイトマップ送信 → ⑤ GA4とサーチコンソールをリンク → ⑥ レポートを公開
 ```
 
@@ -20,18 +20,15 @@
    - 「拡張計測機能」は **ON のまま**（ページ遷移・スクロール・外部リンククリック等が自動で計測されます）
 6. 表示された **測定ID（`G-` で始まる）** を控える
 
-## ② 測定IDを Vercel に設定
+## ② 測定ID（設定済み）
 
-1. Vercel → プロジェクト → **Settings → Environment Variables**
-2. 追加：
-   | Key | Value | Environment |
-   |---|---|---|
-   | `NEXT_PUBLIC_GA_ID` | `G-XXXXXXXXXX` | Production のみ推奨 |
-3. **Redeploy**（`NEXT_PUBLIC_*` はビルド時に埋め込まれるため再デプロイ必須）
-4. サイトを開いて GA4 → **レポート → リアルタイム** に自分のアクセスが出れば成功
+測定ID **`G-JF9WTVBEL3`** は `components/GoogleAnalytics.tsx` に組み込み済みです。
+**Vercel側の設定は不要**で、本番デプロイ（carwashhomies.com）でのみタグが出力されます。
 
-> Preview 環境にも入れるとテスト閲覧がカウントされます。本番のみがおすすめ。
-> `/admin`（管理画面）ではタグを出さないようにしてあります。
+- 確認：本番サイトを開き、GA4 → **レポート → リアルタイム** に自分のアクセスが出れば成功
+- ローカル開発・Previewでは計測しません（テスト閲覧が数字に混ざらないように）
+- `/admin`（管理画面）でもタグを出しません
+- 別のプロパティに切り替える場合だけ、Vercelの環境変数 `NEXT_PUBLIC_GA_ID` で上書きできます
 
 ## ③ サーチコンソールで所有権を確認
 
@@ -88,6 +85,6 @@ https://search.google.com/search-console → **プロパティを追加**。方�
 
 | ファイル | 内容 |
 |---|---|
-| `components/GoogleAnalytics.tsx` | gtag.js を読み込み。`NEXT_PUBLIC_GA_ID` 未設定なら何も出力しない |
+| `components/GoogleAnalytics.tsx` | gtag.js を読み込み（測定ID `G-JF9WTVBEL3`、本番のみ。`NEXT_PUBLIC_GA_ID` で上書き可） |
 | `app/layout.tsx` | 上記を公開ページに配置（`/admin` は除外）、`GOOGLE_SITE_VERIFICATION` があれば認証メタタグを出力 |
 | `components/PrivacyPolicy.tsx` | 「Cookie・アクセス解析」にGoogleアナリティクス利用・オプトアウト方法を明記（GA利用規約で必須） |
